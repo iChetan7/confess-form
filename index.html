@@ -376,13 +376,13 @@
       });
     }
 
-    // Initialize Lottie Animation (New Particle/Wave Effect)
+    // Initialize Lottie Animation
     lottie.loadAnimation({
       container: document.getElementById('lottie-animation'),
       renderer: 'svg',
       loop: true,
       autoplay: true,
-      path: 'https://assets.lottiefiles.com/packages/lf20_rovf9gzu.json' // Sleek particle wave animation
+      path: 'https://assets.lottiefiles.com/packages/lf20_rovf9gzu.json'
     });
 
     // Initialize JSConfetti
@@ -416,6 +416,48 @@
         form.submit();
       }, 2000);
     }
+
+    // Optional AJAX Submission (uncomment to use instead of redirect)
+    /*
+    function showPopup(event) {
+      event.preventDefault();
+      const form = event.target;
+      document.getElementById('popup').classList.add('active');
+      jsConfetti.addConfetti({
+        confettiNumber: 100,
+        confettiRadius: 6
+      });
+
+      const formData = new FormData(form);
+      fetch('https://formspree.io/f/xrbleboq', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => {
+        if (response.ok) {
+          document.querySelector('.popup-box h2').textContent = 'Confession Sent! 🎉';
+          document.querySelector('.popup-box p').textContent = 'Your feelings have been shared safely.';
+          setTimeout(() => {
+            document.getElementById('popup').classList.remove('active');
+            form.reset();
+          }, 2000);
+        } else {
+          throw new Error('Submission failed');
+        }
+      })
+      .catch(error => {
+        document.querySelector('.popup-box h2').textContent = 'Oops! Something went wrong.';
+        document.querySelector('.popup-box p').textContent = 'Please try again later.';
+        console.error('Formspree submission error:', error);
+        setTimeout(() => {
+          document.getElementById('popup').classList.remove('active');
+        }, 2000);
+      });
+    }
+    */
   </script>
 </body>
 </html>
