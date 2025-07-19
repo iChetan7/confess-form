@@ -15,13 +15,14 @@ export default async function handler(req, res) {
     return res.status(400).send('Confession is required');
   }
 
-  const formPayload = new URLSearchParams();
-  formPayload.append('displayName', display_name || 'Anonymous');
-  formPayload.append('confession', confession);
-  formPayload.append('category', category || 'Other');
-  formPayload.append('_subject', 'New Confession Submission');
-  formPayload.append('_captcha', 'false');
-  formPayload.append('_next', 'https://yourdomain.vercel.app/thankyou.html'); // Apna Vercel URL
+  const formData = new URLSearchParams();
+  formData.append('displayName', display_name || 'Anonymous');
+  formData.append('confession', confession);
+  formData.append('category', category || 'Other');
+  formData.append('_subject', 'New Confession Submission');
+  formData.append('_captcha', 'false');
+  formData.append('_template', 'table'); // Prettier email format
+  formData.append('_next', 'https://yourdomain.vercel.app/thankyou.html'); // Apna Vercel URL
 
   try {
     const response = await fetch('https://formsubmit.co/infinitycsgamer@gmail.com', {
@@ -29,16 +30,17 @@ export default async function handler(req, res) {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: formPayload.toString(),
+      body: formData.toString(),
     });
 
-    if (!response.ok) {
-      throw new Error(`Formsubmit error: ${response.statusText}`);
+    if (response.ok) {
+      res.writeHead(302, { Location: '/thankyou.html' });
+      res.end();
+    } else {
+      res.status(500).send('FormSubmit failed.');
     }
-
-    return res.writeHead(302, { Location: '/thankyou.html' }).end();
-  } catch (error) {
-    console.error('Error sending to Formsubmit:', error);
-    return res.status(500).send('Something went wrong, please try again later');
+  } catch (err) {
+    console.error('Error:', err);
+    res.status(500).send('Error submitting confession');
   }
 }
