@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confess your feelings here! :)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff;
+      color: #000;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    .container {
+      max-width: 500px;
+      margin: 2rem auto;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      font-size: 1.8rem;
+    }
+    .tagline {
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    textarea, input, select, button {
+      width: 100%;
+      margin: 0.5rem 0;
+      padding: 0.7rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+    button {
+      background: #d62828;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #a81d1d;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Confess your feelings here! :)</h1>
+    <div class="tagline">SAFE</div>
+    <div class="tagline">SECURE</div>
+    <div class="tagline">PRIVACY FOCUSED</div>
+    <form method="POST" action="https://formsubmit.co/infinitycsgamer@gmail.com">
+      <label for="confession">Your Confession:</label>
+      <textarea id="confession" name="confession" rows="5" placeholder="Type your confession here..." required></textarea>
+
+      <input type="text" name="display_name" placeholder="Display Name (Optional)" />
+
+      <label for="category">Category:</label>
+      <select name="category" id="category">
+        <option>Love Confessions</option>
+        <option>Crush Reveal</option>
+        <option>Regrets / Sorry</option>
+        <option>Friendship Zone</option>
+        <option>College Drama</option>
+        <option>Random Thoughts</option>
+        <option>Other</option>
+      </select>
+
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="box">
+
+      <button type="submit">SUBMIT CONFESSION</button>
+    </form>
+  </div>
+</body>
+</html>
