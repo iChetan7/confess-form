@@ -13,14 +13,14 @@
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Poppins', 'Segoe UI', sans-serif;
+      font-family: 'Poppins', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       background: linear-gradient(270deg, #e0c3fc, #8ec5fc, #fbc2eb);
       background-size: 600% 600%;
-      animation: gradientShift 12s ease infinite;
+      animation: gradientShift 15s ease infinite;
     }
 
     @keyframes gradientShift {
@@ -30,23 +30,34 @@
     }
 
     .container {
-      max-width: 95%;
-      width: 500px;
-      background: white;
-      padding: 2rem 1.5rem;
+      width: 90%;
+      max-width: 480px;
+      background: #fff;
+      padding: 2.2rem 1.8rem;
       border-radius: 20px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.08);
-      border: 2px solid transparent;
-      background-clip: padding-box;
-      border-image: linear-gradient(45deg, #a78bfa, #e879f9) 1;
+      box-shadow: 0 20px 30px rgba(0,0,0,0.1);
       text-align: center;
     }
 
-    h1 {
-      font-size: 1.7rem;
+    .typewriter {
+      font-size: 1.8rem;
       font-weight: 700;
       color: #2f2f2f;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.6rem;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid #333;
+      width: 0;
+      animation: typing 3s steps(30, end) forwards, blink 0.8s infinite;
+    }
+
+    @keyframes typing {
+      to { width: 100%; }
+    }
+
+    @keyframes blink {
+      0%, 100% { border-color: transparent; }
+      50% { border-color: #333; }
     }
 
     .subline {
@@ -56,50 +67,62 @@
       margin-bottom: 1.2rem;
     }
 
-    .tagline {
-      font-weight: 600;
-      font-size: 0.9rem;
-      background: #f5f3ff;
-      border-radius: 8px;
-      padding: 0.3rem 1rem;
-      margin: 0.2rem auto;
-      width: fit-content;
-      color: #6c63ff;
-    }
-
     form {
-      margin-top: 1.5rem;
+      margin-top: 1rem;
       text-align: left;
     }
 
-    label {
-      font-weight: 500;
-      margin-top: 1rem;
-      display: inline-block;
-      font-size: 0.95rem;
+    .form-group {
+      position: relative;
+      margin-bottom: 1.5rem;
     }
 
-    textarea, input, select {
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
       width: 100%;
-      margin-top: 0.4rem;
-      padding: 0.7rem;
+      padding: 1rem 0.8rem 0.5rem;
       font-size: 1rem;
-      border-radius: 10px;
       border: 1px solid #ccc;
+      border-radius: 12px;
       outline: none;
-      transition: 0.3s ease;
       font-family: 'Poppins', sans-serif;
+      transition: border-color 0.3s ease;
     }
 
-    textarea:focus, input:focus, select:focus {
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
       border-color: #6c63ff;
-      box-shadow: 0 0 5px rgba(108, 99, 255, 0.3);
+    }
+
+    .form-group label {
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      font-size: 0.9rem;
+      color: #999;
+      background: white;
+      padding: 0 4px;
+      transition: 0.2s ease;
+      pointer-events: none;
+    }
+
+    .form-group input:focus + label,
+    .form-group input:not(:placeholder-shown) + label,
+    .form-group textarea:focus + label,
+    .form-group textarea:not(:placeholder-shown) + label,
+    .form-group select:focus + label,
+    .form-group select:not(:placeholder-shown) + label {
+      top: -8px;
+      left: 10px;
+      font-size: 0.75rem;
+      color: #6c63ff;
     }
 
     button {
-      margin-top: 1.5rem;
       width: 100%;
-      padding: 0.85rem;
+      padding: 0.9rem;
       background: #d62828;
       color: white;
       font-weight: bold;
@@ -112,12 +135,12 @@
 
     button:hover {
       background: #a81d1d;
-      box-shadow: 0 0 12px #a81d1d;
+      box-shadow: 0 0 10px #a81d1d;
     }
 
     .footer {
       margin-top: 2rem;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: #888;
     }
 
@@ -146,66 +169,57 @@
     }
 
     @keyframes zoomIn {
-      from {
-        transform: scale(0.6);
-        opacity: 0;
-      }
-      to {
-        transform: scale(1);
-        opacity: 1;
-      }
+      from { transform: scale(0.6); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
 
     @media (max-width: 480px) {
-      h1 {
-        font-size: 1.5rem;
-      }
       .container {
         padding: 1.5rem 1rem;
       }
-      .tagline {
-        font-size: 0.85rem;
-      }
-      label {
-        font-size: 0.9rem;
+      .typewriter {
+        font-size: 1.5rem;
       }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Confess your feelings here! 🙂</h1>
+    <div class="typewriter">Confess your feelings here! 🙂</div>
     <div class="subline">Sometimes sharing anonymously is all we need.</div>
-
-    <div class="tagline">SAFE</div>
-    <div class="tagline">SECURE</div>
-    <div class="tagline">PRIVACY FOCUSED</div>
 
     <form method="POST" action="https://formsubmit.co/infinitycsgamer@gmail.com" onsubmit="showPopup()">
       <input type="hidden" name="_next" value="https://confess-form-mu.vercel.app/thankyou.html" />
       <input type="hidden" name="_captcha" value="false" />
 
-      <label for="confession">Your Confession:</label>
-      <textarea id="confession" name="confession" rows="5" placeholder="Type your confession here..." required></textarea>
+      <div class="form-group">
+        <textarea name="confession" rows="5" placeholder=" " required></textarea>
+        <label>Your Confession</label>
+      </div>
 
-      <label for="display_name">Display Name (Optional):</label>
-      <input type="text" name="display_name" id="display_name" placeholder="Enter name or leave blank" />
+      <div class="form-group">
+        <input type="text" name="display_name" placeholder=" " />
+        <label>Display Name (Optional)</label>
+      </div>
 
-      <label for="category">Category:</label>
-      <select name="category" id="category">
-        <option>Love Confessions</option>
-        <option>Crush Reveal</option>
-        <option>Regrets / Sorry</option>
-        <option>Friendship Zone</option>
-        <option>College Drama</option>
-        <option>Random Thoughts</option>
-        <option>Other</option>
-      </select>
+      <div class="form-group">
+        <select name="category" required>
+          <option value="" disabled selected hidden></option>
+          <option>Love Confessions</option>
+          <option>Crush Reveal</option>
+          <option>Regrets / Sorry</option>
+          <option>Friendship Zone</option>
+          <option>College Drama</option>
+          <option>Random Thoughts</option>
+          <option>Other</option>
+        </select>
+        <label>Category</label>
+      </div>
 
       <button type="submit">SUBMIT CONFESSION</button>
     </form>
 
-    <div class="footer">© @galgotias.gc | Confessions are safe with us 💌</div>
+    <div class="footer">© @galgotias.gc | Your secrets are safe 💌</div>
   </div>
 
   <!-- Popup -->
