@@ -2,67 +2,136 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Confess your feelings here! :)</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #fff;
-      color: #000;
+      font-family: 'Segoe UI', sans-serif;
+      background: #E6E6FA; /* Light Lavender */
       margin: 0;
       padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 520px;
+      background: white;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      border: 2px solid transparent;
+      background-clip: padding-box;
+      border-image: linear-gradient(45deg, #a78bfa, #e879f9) 1;
       text-align: center;
     }
-    .container {
-      max-width: 500px;
-      margin: 2rem auto;
-      padding: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+    h1 {
+      font-size: 1.9rem;
+      margin-bottom: 0.5rem;
     }
-    h1 { font-size: 1.8rem; }
-    .tagline { font-weight: bold; margin: 10px 0; }
-    textarea, input, select, button {
+
+    .subline {
+      font-style: italic;
+      color: #555;
+      margin-bottom: 1rem;
+    }
+
+    .tagline {
+      font-weight: bold;
+      color: #6c63ff;
+      margin: 0.3rem 0;
+    }
+
+    form {
+      margin-top: 1rem;
+      text-align: left;
+    }
+
+    label {
+      font-weight: 500;
+      margin-top: 1rem;
+      display: inline-block;
+    }
+
+    textarea, input, select {
       width: 100%;
-      margin: 0.5rem 0;
-      padding: 0.7rem;
-      border-radius: 6px;
-      border: 1px solid #ccc;
+      margin-top: 0.4rem;
+      padding: 0.75rem;
       font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+      transition: border-color 0.3s ease;
     }
+
+    textarea:focus, input:focus, select:focus {
+      border-color: #6c63ff;
+      box-shadow: 0 0 5px rgba(108, 99, 255, 0.3);
+    }
+
     button {
+      margin-top: 1.2rem;
+      width: 100%;
+      padding: 0.8rem;
       background: #d62828;
       color: white;
       font-weight: bold;
+      font-size: 1rem;
+      border-radius: 8px;
       border: none;
       cursor: pointer;
+      transition: 0.3s ease;
     }
-    button:hover { background: #a81d1d; }
+
+    button:hover {
+      background: #a81d1d;
+      box-shadow: 0 0 10px #a81d1d;
+    }
+
+    .footer {
+      margin-top: 1.8rem;
+      font-size: 0.85rem;
+      color: #888;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Confess your feelings here! :)</h1>
+    <div class="subline">Sometimes sharing anonymously is all we need.</div>
+
     <div class="tagline">SAFE</div>
     <div class="tagline">SECURE</div>
     <div class="tagline">PRIVACY FOCUSED</div>
 
-  <form method="POST" action="https://formsubmit.co/infinitycsgamer@gmail.com">
-  <input type="hidden" name="_next" value="https://confess-form-qkc1k3bq6-galgotias-s-projects.vercel.app/thankyou.html" />
-  <textarea name="confession" placeholder="Type your confession here..." required></textarea>
-  <input type="text" name="display_name" placeholder="Display Name (Optional)" />
-  <select name="category">
-    <option>Love Confessions</option>
-    <option>Crush Reveal</option>
-    <option>Regrets / Sorry</option>
-    <option>Friendship Zone</option>
-    <option>College Drama</option>
-    <option>Random Thoughts</option>
-    <option>Other</option>
-  </select>
-  <button type="submit">SUBMIT CONFESSION</button>
-</form>
+    <form method="POST" action="https://formsubmit.co/infinitycsgamer@gmail.com">
+      <input type="hidden" name="_next" value="https://confess-form-qkc1k3bq6-galgotias-s-projects.vercel.app/thankyou.html" />
+      <input type="hidden" name="_captcha" value="false" />
 
+      <label for="confession">Your Confession:</label>
+      <textarea id="confession" name="confession" rows="5" placeholder="Type your confession here..." required></textarea>
+
+      <label for="display_name">Display Name (Optional):</label>
+      <input type="text" name="display_name" id="display_name" placeholder="Enter name or leave blank" />
+
+      <label for="category">Category:</label>
+      <select name="category" id="category">
+        <option>Love Confessions</option>
+        <option>Crush Reveal</option>
+        <option>Regrets / Sorry</option>
+        <option>Friendship Zone</option>
+        <option>College Drama</option>
+        <option>Random Thoughts</option>
+        <option>Other</option>
+      </select>
+
+      <button type="submit">SUBMIT CONFESSION</button>
+    </form>
+
+    <div class="footer">© @galgotias.gc | Confessions are safe with us 💌</div>
   </div>
 </body>
 </html>
