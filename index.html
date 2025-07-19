@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #E6E6FA; /* Light Lavender */
+      background: #E6E6FA;
       margin: 0;
       padding: 0;
       display: flex;
@@ -97,7 +97,6 @@
       color: #888;
     }
 
-    /* Popup styling */
     .popup {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -123,14 +122,25 @@
     }
 
     @keyframes zoomIn {
-      from {
-        transform: scale(0.6);
-        opacity: 0;
-      }
-      to {
-        transform: scale(1);
-        opacity: 1;
-      }
+      from { transform: scale(0.6); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .loader {
+      margin-top: 1rem;
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #d62828;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
   </style>
 </head>
@@ -143,8 +153,8 @@
     <div class="tagline">SECURE</div>
     <div class="tagline">PRIVACY FOCUSED</div>
 
-    <form method="POST" action="https://formsubmit.co/infinitycsgamer@gmail.com" onsubmit="showPopup()">
-      <input type="hidden" name="_next" value="https://confess-form-mu.vercel.app/thankyou.html/" />
+    <form method="POST" action="https://formsubmit.co/infinitycsgamer@gmail.com" onsubmit="return handleSubmit()">
+      <input type="hidden" name="_next" value="https://confess-form-mu.vercel.app/thankyou.html" />
       <input type="hidden" name="_captcha" value="false" />
 
       <label for="confession">Your Confession:</label>
@@ -175,12 +185,14 @@
     <div class="popup-box">
       <h2>Sending your confession... 💌</h2>
       <p>Please wait while we submit your feelings safely.</p>
+      <div class="loader"></div>
     </div>
   </div>
 
   <script>
-    function showPopup() {
+    function handleSubmit() {
       document.getElementById("popup").classList.add("active");
+      return true; // Allow form to submit after popup shows
     }
   </script>
 </body>
