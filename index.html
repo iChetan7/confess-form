@@ -47,29 +47,22 @@
     <div class="tagline">SECURE</div>
     <div class="tagline">PRIVACY FOCUSED</div>
 
-    <form method="POST" action="https://formsubmit.co/infinitycsgamer@gmail.com">
-      <!-- Redirect to thank you page after submit -->
-      <input type="hidden" name="_next" value="https://your-vercel-project.vercel.app/thankyou.html" />
-      <input type="hidden" name="_captcha" value="false" />
+  <form method="POST" action="https://formsubmit.co/infinitycsgamer@gmail.com">
+  <input type="hidden" name="_next" value="https://confess-form-qkc1k3bq6-galgotias-s-projects.vercel.app/thankyou.html" />
+  <textarea name="confession" placeholder="Type your confession here..." required></textarea>
+  <input type="text" name="display_name" placeholder="Display Name (Optional)" />
+  <select name="category">
+    <option>Love Confessions</option>
+    <option>Crush Reveal</option>
+    <option>Regrets / Sorry</option>
+    <option>Friendship Zone</option>
+    <option>College Drama</option>
+    <option>Random Thoughts</option>
+    <option>Other</option>
+  </select>
+  <button type="submit">SUBMIT CONFESSION</button>
+</form>
 
-      <label for="confession">Your Confession:</label>
-      <textarea id="confession" name="confession" rows="5" placeholder="Type your confession here..." required></textarea>
-
-      <input type="text" name="display_name" placeholder="Display Name (Optional)" />
-
-      <label for="category">Category:</label>
-      <select name="category" id="category">
-        <option>Love Confessions</option>
-        <option>Crush Reveal</option>
-        <option>Regrets / Sorry</option>
-        <option>Friendship Zone</option>
-        <option>College Drama</option>
-        <option>Random Thoughts</option>
-        <option>Other</option>
-      </select>
-
-      <button type="submit">SUBMIT CONFESSION</button>
-    </form>
   </div>
 </body>
 </html>
