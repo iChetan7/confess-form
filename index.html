@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galgotians Confessions | Share Your Feelings</title>
+    <title>Galgotians Confessions | Share Your Feelings Securely</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -25,6 +25,18 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        input, textarea, select, .input-wrapper {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
         }
 
         body {
@@ -40,6 +52,8 @@
                 radial-gradient(circle at 10% 20%, rgba(245, 245, 245, 0.7) 0%, transparent 20%),
                 radial-gradient(circle at 90% 80%, rgba(245, 245, 245, 0.7) 0%, transparent 20%);
             line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
         }
 
         .container {
@@ -52,6 +66,7 @@
             position: relative;
             margin: 2rem auto;
             transition: var(--transition);
+            z-index: 10;
         }
 
         .header {
@@ -255,6 +270,53 @@
             font-size: 0.95rem;
         }
 
+        .floating-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0;
+            animation: float 6s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .confession-counter {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--primary);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
         @media (max-width: 600px) {
             .container {
                 margin: 1rem auto;
@@ -285,6 +347,13 @@
                 top: 1rem;
                 right: 1rem;
             }
+            
+            .confession-counter {
+                top: 10px;
+                left: 10px;
+                font-size: 0.8rem;
+                padding: 0.3rem 0.8rem;
+            }
         }
 
         /* Dark mode styles */
@@ -305,9 +374,20 @@
         body.dark-mode .social-promo {
             background: rgba(26, 32, 44, 0.5);
         }
+
+        body.dark-mode .confession-counter {
+            background: rgba(30, 41, 59, 0.8);
+            color: #e2e8f0;
+        }
     </style>
 </head>
 <body>
+    <div class="confession-counter">
+        <i class="fas fa-lock"></i> Secure Confessions
+    </div>
+    
+    <div class="floating-hearts" id="heartsContainer"></div>
+    
     <div class="container">
         <div class="theme-toggle" onclick="toggleTheme()">
             <i class="fas fa-moon"></i>
@@ -426,6 +506,35 @@
         
         // Check on resize
         window.addEventListener('resize', checkMobileLayout);
+        
+        // Create floating hearts
+        function createHearts() {
+            const heartsContainer = document.getElementById('heartsContainer');
+            const heartColors = ['#ff6b6b', '#4a6fa5', '#ff9e6b', '#6b8fc5'];
+            
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '<i class="fas fa-heart"></i>';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 10 + 5) + 's';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heart.style.color = heartColors[Math.floor(Math.random() * heartColors.length)];
+                heartsContainer.appendChild(heart);
+            }
+        }
+        
+        // Initialize the page
+        window.addEventListener('load', function() {
+            createHearts();
+            
+            // Prevent context menu
+            document.addEventListener('contextmenu', function(e) {
+                if (!e.target.matches('input, textarea, select, .input-wrapper')) {
+                    e.preventDefault();
+                }
+            });
+        });
     </script>
 </body>
 </html>
