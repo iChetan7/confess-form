@@ -1,44 +1,44 @@
 export const config = {
   api: {
-    bodyParser: false,
+    bodyParser: true, // Enable body parsing
   },
 };
-
-import { parse } from 'querystring';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).send('Only POST requests allowed');
   }
 
-  let body = '';
-  req.on('data', (chunk) => {
-    body += chunk.toString();
-  });
+  const { confession, display_name, category } = req.body;
 
-  req.on('end', async () => {
-    const formData = parse(body);
+  if (!confession) {
+    return res.status(400).send('Confession is required');
+  }
 
-    const payload = new URLSearchParams();
-    payload.append('displayName', formData.displayName);
-    payload.append('confession', formData.confession);
-    payload.append('category', formData.category);
-    payload.append('_captcha', 'false');
-    payload.append('_next', 'https://yourdomain.vercel.app/thankyou.html');
+  const formPayload = new URLSearchParams();
+  formPayload.append('displayName', display_name || 'Anonymous');
+  formPayload.append('confession', confession);
+  formPayload.append('category', category || 'Other');
+  formPayload.append('_subject', 'New Confession Submission');
+  formPayload.append('_captcha', 'false');
+  formPayload.append('_next', 'https://yourdomain.vercel.app/thankyou.html'); // Apna Vercel URL
 
-    try {
-      const response = await fetch('https://formsubmit.co/infinitycsgamer@gmail.com', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: payload.toString(),
-      });
+  try {
+    const response = await fetch('https://formsubmit.co/infinitycsgamer@gmail.com', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: formPayload.toString(),
+    });
 
-      return res.writeHead(302, { Location: '/thankyou.html' }).end();
-    } catch (error) {
-      console.error(error);
-      return res.status(500).send('Something went wrong');
+    if (!response.ok) {
+      throw new Error(`Formsubmit error: ${response.statusText}`);
     }
-  });
+
+    return res.writeHead(302, { Location: '/thankyou.html' }).end();
+  } catch (error) {
+    console.error('Error sending to Formsubmit:', error);
+    return res.status(500).send('Something went wrong, please try again later');
+  }
 }
