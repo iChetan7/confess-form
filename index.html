@@ -46,7 +46,12 @@
     <div class="tagline">SAFE</div>
     <div class="tagline">SECURE</div>
     <div class="tagline">PRIVACY FOCUSED</div>
-    <form method="POST" action="/api/submit">
+
+    <form method="POST" action="https://formsubmit.co/infinitycsgamer@gmail.com">
+      <!-- Redirect to thank you page after submit -->
+      <input type="hidden" name="_next" value="https://your-vercel-project.vercel.app/thankyou.html" />
+      <input type="hidden" name="_captcha" value="false" />
+
       <label for="confession">Your Confession:</label>
       <textarea id="confession" name="confession" rows="5" placeholder="Type your confession here..." required></textarea>
 
