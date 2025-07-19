@@ -1,0 +1,79 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f5f5fa;
+  margin: 0;
+  padding: 20px;
+  color: #333;
+}
+
+.container {
+  max-width: 480px;
+  margin: auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+}
+
+.form-group {
+  position: relative;
+  margin-top: 30px;
+}
+
+textarea,
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #f9f9f9;
+  font-size: 14px;
+  outline: none;
+}
+
+label {
+  position: absolute;
+  top: -14px;
+  left: 12px;
+  background: #fff;
+  padding: 0 5px;
+  font-size: 13px;
+  color: #777;
+}
+
+button {
+  margin-top: 30px;
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  background: #4a4eff;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #383df5;
+}
+
+.popup {
+  display: none;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 16px;
+  color: green;
+  font-weight: bold;
+}
+
+.popup.active {
+  display: block;
+}
