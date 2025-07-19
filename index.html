@@ -1,422 +1,429 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Confess your feelings here! :)</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-  <!-- Inline Manifest for PWA -->
-  <link rel="manifest" href="data:application/manifest+json,{
-    'name': 'Confess Your Feelings',
-    'short_name': 'Confess',
-    'start_url': '/',
-    'display': 'standalone',
-    'background_color': '#e0c3fc',
-    'theme_color': '#6c63ff',
-    'icons': [
-      {
-        'src': 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRF/4CA////rVJTUQAAABVJREFUeNpiYGBgYGBiZmBgYAYAAwABNgABj9K3QQAAAABJRU5ErkJggg==',
-        'sizes': '32x32',
-        'type': 'image/png'
-      }
-    ]
-  }">
-  <!-- Lottie Animation Library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
-  <!-- Vanilla Tilt for 3D tilt effect -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
-  <!-- JSConfetti for confetti effect -->
-  <script src="https://cdn.jsdelivr.net/npm/js-confetti@0.11.0/dist/js-confetti.browser.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confess Your Feelings | Minimal Design</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    :root {
+      --primary: #4a6fa5;
+      --primary-light: #6b8fc5;
+      --text: #333;
+      --text-light: #666;
+      --background: #f8f9fa;
+      --surface: #ffffff;
+      --border: #e0e0e0;
+      --shadow: rgba(0, 0, 0, 0.05);
+      --error: #e53935;
+      --success: #43a047;
+      --transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
     }
 
     body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Poppins', sans-serif;
+      background-color: var(--background);
+      color: var(--text);
+      min-height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      background: linear-gradient(270deg, #e0c3fc, #8ec5fc, #fbc2eb);
-      background-size: 600% 600%;
-      animation: gradientShift 15s ease infinite;
-      transition: background-color 0.5s ease;
-    }
-
-    body.dark-mode {
-      background: linear-gradient(270deg, #2b1055, #7597de, #962e6d);
-    }
-
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      padding: 2rem;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(245, 245, 245, 0.5) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(245, 245, 245, 0.5) 0%, transparent 20%);
     }
 
     .container {
-      width: 90%;
-      max-width: 480px;
-      background: #fff;
-      padding: 2.2rem 1.8rem;
-      border-radius: 20px;
-      box-shadow: 0 20px 30px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 500px;
+      background: var(--surface);
+      border-radius: 16px;
+      box-shadow: 0 12px 30px var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .header {
+      padding: 2.5rem 2rem 1.5rem;
       text-align: center;
       position: relative;
-      overflow: hidden;
-      transition: transform 0.3s ease, background 0.5s ease;
     }
 
-    .dark-mode .container {
-      background: #1e1e2f;
-      color: #e0e0e0;
+    .header::after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: var(--primary);
+      margin: 1.5rem auto 0;
+      border-radius: 2px;
     }
 
-    .sparkle::before,
-    .sparkle::after {
-      content: "✨";
-      position: absolute;
-      font-size: 1.4rem;
-      opacity: 0.7;
-      animation: sparkle 3s linear infinite;
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text);
+      margin-bottom: 0.5rem;
     }
 
-    .sparkle::before {
-      top: -20px;
-      left: 10%;
-    }
-
-    .sparkle::after {
-      bottom: -20px;
-      right: 10%;
-      animation-direction: reverse;
-    }
-
-    @keyframes sparkle {
-      0% { transform: translateY(0); opacity: 0.6; }
-      50% { transform: translateY(10px) scale(1.2); opacity: 1; }
-      100% { transform: translateY(0); opacity: 0.6; }
-    }
-
-    .heading-text {
-      font-family: 'Poppins', sans-serif;
-      font-size: 1.9rem;
-      font-weight: 600;
-      color: #2f2f2f;
-      margin-bottom: 0.6rem;
-      z-index: 2;
-      position: relative;
-      animation: scaleIn 1s ease-out;
-    }
-
-    @keyframes scaleIn {
-      0% { transform: scale(0.8); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-
-    .dark-mode .heading-text {
-      color: #e0e0e0;
-    }
-
-    form {
+    .subtitle {
+      font-size: 0.95rem;
+      color: var(--text-light);
       margin-top: 0.5rem;
-      text-align: left;
+      line-height: 1.5;
+    }
+
+    .form-container {
+      padding: 0 2rem 2.5rem;
     }
 
     .form-group {
+      margin-bottom: 1.8rem;
       position: relative;
-      margin-bottom: 1.5rem;
     }
 
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-      width: 100%;
-      padding: 1rem 0.8rem 0.5rem;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 12px;
-      outline: none;
-      font-family: 'Poppins', sans-serif;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .dark-mode .form-group input,
-    .dark-mode .form-group textarea,
-    .dark-mode .form-group select {
-      background: #2a2a3b;
-      border-color: #444;
-      color: #e0e0e0;
-    }
-
-    .form-group select {
-      appearance: none;
-      background: white url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20fill%3D'%236c63ff'%20height%3D'24'%20viewBox%3D'0%200%2024%2024'%20width%3D'24'%20xmlns%3D'http%3A//www.w3.org/2000/svg'%3E%3Cpath%20d%3D'M7%2010l5%205%205-5z'/%3E%3C/svg%3E") no-repeat right 1rem center;
-      background-size: 1.2rem;
-    }
-
-    .dark-mode .form-group select {
-      background: #2a2a3b url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20fill%3D'%23a0a0ff'%20height%3D'24'%20viewBox%3D'0%200%2024%2024'%20width%3D'24'%20xmlns%3D'http%3A//www.w3.org/2000/svg'%3E%3Cpath%20d%3D'M7%2010l5%205%205-5z'/%3E%3C/svg%3E") no-repeat right 1rem center;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus,
-    .form-group select:focus {
-      border-color: #6c63ff;
-      box-shadow: 0 0 8px rgba(108, 99, 255, 0.3);
-    }
-
-    .form-group input:invalid:not(:placeholder-shown),
-    .form-group textarea:invalid:not(:placeholder-shown) {
-      border-color: #ff4d4d;
-    }
-
-    .form-group label {
-      position: absolute;
-      left: 14px;
-      top: 14px;
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
       font-size: 0.9rem;
-      color: #999;
-      background: white;
-      padding: 0 4px;
-      transition: 0.2s ease;
-      pointer-events: none;
+      font-weight: 500;
+      color: var(--text-light);
+      transition: var(--transition);
     }
 
-    .dark-mode .form-group label {
-      background: #2a2a3b;
-      color: #aaa;
-    }
-
-    .form-group input:focus + label,
-    .form-group input:not(:placeholder-shown) + label,
-    .form-group textarea:focus + label,
-    .form-group textarea:not(:placeholder-shown) + label,
-    .form-group select:focus + label,
-    .form-group select:not(:placeholder-shown) + label {
-      top: -8px;
-      left: 10px;
-      font-size: 0.75rem;
-      color: #6c63ff;
-    }
-
-    button {
-      width: 100%;
-      padding: 0.9rem;
-      background: #d62828;
-      color: white;
-      font-weight: bold;
-      font-size: 1rem;
-      border-radius: 12px;
-      border: none;
-      cursor: pointer;
-      transition: 0.3s ease;
+    .input-wrapper {
       position: relative;
-      overflow: hidden;
     }
 
-    button:hover {
-      background: #a81d1d;
-      box-shadow: 0 0 10px #a81d1d;
+    input, textarea, select {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      transition: var(--transition);
+      color: var(--text);
     }
 
-    button::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      transition: width 0.6s ease, height 0.6s ease;
+    textarea {
+      min-height: 140px;
+      resize: vertical;
     }
 
-    button:hover::after {
-      width: 200%;
-      height: 200%;
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%234a6fa5' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 14px;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.1);
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 1rem;
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .submit-btn:hover {
+      background: var(--primary-light);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(74, 111, 165, 0.2);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
     }
 
     .footer {
-      margin-top: 2rem;
-      font-size: 0.75rem;
-      color: #888;
+      padding: 1.5rem 2rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      border-top: 1px solid var(--border);
     }
 
-    .dark-mode .footer {
-      color: #aaa;
+    .footer a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
     }
 
     .popup {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.4);
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 9999;
-      visibility: hidden;
+      z-index: 1000;
       opacity: 0;
-      transition: opacity 0.3s ease;
+      visibility: hidden;
+      transition: var(--transition);
+      backdrop-filter: blur(4px);
     }
 
     .popup.active {
+      opacity: 1;
       visibility: visible;
+    }
+
+    .popup-content {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 2.5rem;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      transform: translateY(20px);
+      opacity: 0;
+      transition: var(--transition);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .popup.active .popup-content {
+      transform: translateY(0);
       opacity: 1;
     }
 
-    .popup-box {
-      background: white;
-      padding: 2rem;
-      border-radius: 16px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
-      text-align: center;
-      animation: zoomIn 0.4s ease;
-      position: relative;
+    .popup h2 {
+      margin-bottom: 1rem;
+      font-weight: 600;
+      color: var(--text);
     }
 
-    .dark-mode .popup-box {
-      background: #2a2a3b;
-      color: #e0e0e0;
+    .popup p {
+      color: var(--text-light);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
     }
 
-    @keyframes zoomIn {
-      from { transform: scale(0.6); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+    .loader {
+      width: 40px;
+      height: 40px;
+      margin: 0 auto;
+      border: 3px solid rgba(74, 111, 165, 0.2);
+      border-top: 3px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     .theme-toggle {
       position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: none;
-      border: none;
-      font-size: 1.5rem;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
       cursor: pointer;
+      transition: var(--transition);
+      z-index: 10;
     }
 
-    #lottie-animation {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0.15;
-      pointer-events: none;
-      z-index: 1;
+    .theme-toggle:hover {
+      box-shadow: 0 4px 10px var(--shadow);
     }
 
-    @media (max-width: 480px) {
-      .container {
-        padding: 1.5rem 1rem;
+    @media (max-width: 600px) {
+      body {
+        padding: 1rem;
       }
-      .heading-text {
-        font-size: 1.6rem;
+      
+      .container {
+        border-radius: 12px;
+      }
+      
+      .header, .form-container {
+        padding: 1.5rem;
+      }
+      
+      .footer {
+        padding: 1rem 1.5rem;
+      }
+      
+      h1 {
+        font-size: 1.5rem;
       }
     }
   </style>
 </head>
 <body>
-  <div class="container sparkle" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-perspective="500">
-    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
-    <div id="lottie-animation"></div>
-    <div class="heading-text">Confess your feelings here!</div>
-
-    <form method="POST" action="https://formsubmit.co/infinitycsgamer@gmail.com" onsubmit="showPopup(event)">
-      <input type="hidden" name="_next" value="https://confession-galgotians.netlify.app/thankyou.html" />
-      <input type="hidden" name="_captcha" value="false" />
-
-      <div class="form-group">
-        <textarea name="confession" rows="5" placeholder=" " required oninput="validateInput(this)"></textarea>
-        <label>Your Confession</label>
-      </div>
-
-      <div class="form-group">
-        <input type="text" name="name" placeholder=" " oninput="validateInput(this)" />
-        <label> Display Name (Optional)</label>
-      </div>
-
-      <div class="form-group">
-        <select name="category" required oninput="validateInput(this)">
-          <option value="" disabled selected hidden></option>
-          <option>Love Confessions</option>
-          <option>Crush Reveal</option>
-          <option>Regrets / Sorry</option>
-          <option>Friendship</option>
-          <option>Sopu Gang</option>
-          <option>Lafda</option>
-          <option>Thoughts</option>
-          <option>Other</option>
-        </select>
-        <label>Category</label>
-      </div>
-
-      <button type="submit">SUBMIT CONFESSION</button>
-    </form>
-
-    <div class="footer">© @galgotias.gc | Your secrets are safe 💌</div>
-  </div>
-
-  <div class="popup" id="popup">
-    <div class="popup-box">
-      <h2>Sending your confession... 💌</h2>
-      <p>Please wait while we submit your feelings safely.</p>
+  <div class="container">
+    <div class="theme-toggle" onclick="toggleTheme()">
+      <i class="fas fa-moon"></i>
+    </div>
+    
+    <div class="header">
+      <h1>Confess Your Feelings</h1>
+      <p class="subtitle">Share your thoughts anonymously and securely</p>
+    </div>
+    
+    <div class="form-container">
+      <form id="confessionForm">
+        <div class="form-group">
+          <label for="confession">Your Confession</label>
+          <div class="input-wrapper">
+            <textarea id="confession" name="confession" placeholder="Express your feelings..." required></textarea>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="name">Display Name (Optional)</label>
+          <div class="input-wrapper">
+            <input type="text" id="name" name="name" placeholder="How you'd like to be referred to">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="category">Category</label>
+          <div class="input-wrapper">
+            <select id="category" name="category" required>
+              <option value="" disabled selected>Select a category</option>
+              <option value="Love Confessions">Love Confessions</option>
+              <option value="Crush Reveal">Crush Reveal</option>
+              <option value="Regrets / Sorry">Regrets / Sorry</option>
+              <option value="Friendship">Friendship</option>
+              <option value="Sopu Gang">Sopu Gang</option>
+              <option value="Lafda">Lafda</option>
+              <option value="Thoughts">Thoughts</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+        
+        <button type="submit" class="submit-btn">
+          <i class="fas fa-paper-plane"></i>
+          Submit Confession
+        </button>
+      </form>
+    </div>
+    
+    <div class="footer">
+      <p>© <a href="https://instagram.com/galgotias.gc" target="_blank">@galgotias.gc</a> | Your secrets are safe with us</p>
     </div>
   </div>
-
+  
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <h2>Sending Your Confession</h2>
+      <p>Your thoughts are being securely delivered. Please wait a moment...</p>
+      <div class="loader"></div>
+    </div>
+  </div>
+  
   <script>
-    // Register Service Worker
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').then(() => {
-        console.log('Service Worker Registered');
-      }).catch((error) => {
-        console.error('Service Worker Registration Failed:', error);
-      });
-    }
-
-    // Initialize Lottie Animation (New Particle/Wave Effect)
-    lottie.loadAnimation({
-      container: document.getElementById('lottie-animation'),
-      renderer: 'svg',
-      loop: true,
-      autoplay: true,
-      path: 'https://assets.lottiefiles.com/packages/lf20_rovf9gzu.json' // Sleek particle wave animation
-    });
-
-    // Initialize JSConfetti
-    const jsConfetti = new JSConfetti();
-
-    // Dark Mode Toggle
+    // Theme toggle
     function toggleTheme() {
       document.body.classList.toggle('dark-mode');
-      document.querySelector('.theme-toggle').textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
-    }
-
-    // Form Validation
-    function validateInput(input) {
-      if (input.value.trim() === '' && input.required) {
-        input.style.borderColor = '#ff4d4d';
+      const icon = document.querySelector('.theme-toggle i');
+      if (document.body.classList.contains('dark-mode')) {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+        document.documentElement.style.setProperty('--primary', '#6b8fc5');
+        document.documentElement.style.setProperty('--primary-light', '#8fa9d1');
+        document.documentElement.style.setProperty('--text', '#f0f0f0');
+        document.documentElement.style.setProperty('--text-light', '#b0b0b0');
+        document.documentElement.style.setProperty('--background', '#121212');
+        document.documentElement.style.setProperty('--surface', '#1e1e1e');
+        document.documentElement.style.setProperty('--border', '#333');
+        document.documentElement.style.setProperty('--shadow', 'rgba(0, 0, 0, 0.3)');
       } else {
-        input.style.borderColor = '#6c63ff';
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+        document.documentElement.style.setProperty('--primary', '#4a6fa5');
+        document.documentElement.style.setProperty('--primary-light', '#6b8fc5');
+        document.documentElement.style.setProperty('--text', '#333');
+        document.documentElement.style.setProperty('--text-light', '#666');
+        document.documentElement.style.setProperty('--background', '#f8f9fa');
+        document.documentElement.style.setProperty('--surface', '#ffffff');
+        document.documentElement.style.setProperty('--border', '#e0e0e0');
+        document.documentElement.style.setProperty('--shadow', 'rgba(0, 0, 0, 0.05)');
       }
     }
-
-    // Show Popup and Confetti
-    function showPopup(event) {
-      event.preventDefault();
-      const form = event.target;
-      document.getElementById('popup').classList.add('active');
-      jsConfetti.addConfetti({
-        confettiNumber: 100,
-        confettiRadius: 6
-      });
+    
+    // Form submission
+    document.getElementById('confessionForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Show popup
+      const popup = document.getElementById('popup');
+      popup.classList.add('active');
+      
+      // Disable submit button
+      const submitBtn = document.querySelector('.submit-btn');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Sending...`;
+      
+      // Simulate form submission
       setTimeout(() => {
-        form.submit();
-      }, 2000);
-    }
+        popup.classList.remove('active');
+        
+        // Reset form
+        this.reset();
+        
+        // Re-enable button
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<i class="fas fa-paper-plane"></i> Submit Confession`;
+        
+        // Show success message (in a real app, this would redirect)
+        alert('Your confession has been submitted successfully!');
+      }, 2500);
+    });
+    
+    // Add subtle input animation
+    const inputs = document.querySelectorAll('input, textarea, select');
+    inputs.forEach(input => {
+      input.addEventListener('focus', () => {
+        input.parentElement.style.transform = 'translateY(-2px)';
+      });
+      
+      input.addEventListener('blur', () => {
+        input.parentElement.style.transform = 'translateY(0)';
+      });
+    });
   </script>
 </body>
 </html>
