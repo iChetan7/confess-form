@@ -1,6 +1,6 @@
 export const config = {
   api: {
-    bodyParser: false, // Disable built-in body parsing
+    bodyParser: false, // turn off default parsing
   },
 };
 
@@ -10,15 +10,14 @@ export default async function handler(req, res) {
   }
 
   try {
-    const bodyText = await new Promise((resolve, reject) => {
-      let body = '';
-      req.on('data', chunk => (body += chunk));
-      req.on('end', () => resolve(body));
+    const body = await new Promise((resolve, reject) => {
+      let data = '';
+      req.on('data', chunk => (data += chunk));
+      req.on('end', () => resolve(data));
       req.on('error', reject);
     });
 
-    const formData = new URLSearchParams(bodyText);
-
+    const formData = new URLSearchParams(body);
     formData.append('_captcha', 'false');
     formData.append('_template', 'table');
 
@@ -34,11 +33,12 @@ export default async function handler(req, res) {
       res.writeHead(302, { Location: '/thankyou.html' });
       res.end();
     } else {
-      console.error(await response.text());
+      const errorText = await response.text();
+      console.error('FormSubmit error:', errorText);
       res.status(500).send('FormSubmit failed.');
     }
   } catch (err) {
     console.error('Error:', err);
-    res.status(500).send('Error submitting confession.');
+    res.status(500).send('Internal server error.');
   }
 }
