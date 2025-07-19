@@ -325,26 +325,22 @@
     <div id="lottie-animation"></div>
     <div class="heading-text">Confess your feelings here!</div>
 
-   <form action="https://formsubmit.co/infinitycsgamer@gmail.com" method="POST" onsubmit="showPopup(event)">
-  <!-- Hidden fields -->
-  <input type="hidden" name="_next" value="https://confession-galgotians.netlify.app/thankyou.html">
-  <input type="hidden" name="_captcha" value="false">
-  <input type="hidden" name="_template" value="table">
-  <input type="text" name="_honey" style="display:none"> <!-- Anti-bot field -->
+  <form action="https://formspree.io/f/xrblebzy" method="POST" onsubmit="showPopup(event)">
+  <input type="hidden" name="_next" value="https://confession-galgotians.netlify.app/thankyou.html" />
+  <input type="hidden" name="_captcha" value="false" />
+  <input type="hidden" name="_template" value="table" />
+  <input type="text" name="_honey" style="display:none"> <!-- Anti-bot -->
 
-  <!-- Confession Textarea -->
   <div class="form-group">
     <textarea name="confession" rows="5" placeholder=" " required oninput="validateInput(this)"></textarea>
     <label>Your Confession</label>
   </div>
 
-  <!-- Display Name -->
   <div class="form-group">
-    <input type="text" name="display_name" placeholder=" " oninput="validateInput(this)">
+    <input type="text" name="display_name" placeholder=" " oninput="validateInput(this)" />
     <label>Display Name (Optional)</label>
   </div>
 
-  <!-- Category Dropdown -->
   <div class="form-group">
     <select name="category" required oninput="validateInput(this)">
       <option value="" disabled selected hidden></option>
@@ -360,9 +356,9 @@
     <label>Category</label>
   </div>
 
-  <!-- Submit Button -->
   <button type="submit">SUBMIT CONFESSION</button>
 </form>
+
 
 
     <div class="footer">© @galgotias.gc | Your secrets are safe 💌</div>
