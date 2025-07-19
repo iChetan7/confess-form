@@ -1,29 +1,31 @@
 export default async function handler(req, res) {
-  if (req.method === 'POST') {
-    const { confession, display_name, category } = req.body;
+  if (req.method !== 'POST') {
+    return res.status(405).send('Only POST allowed');
+  }
 
-    const data = {
-      confession: confession || '',
-      display_name: display_name || 'Anonymous',
-      category: category || 'Other',
-    };
+  const formData = new URLSearchParams();
+  Object.entries(req.body).forEach(([key, value]) => {
+    formData.append(key, value);
+  });
 
-    // Send mail using FormSubmit
-    const response = await fetch('https://formsubmit.co/ajax/infinitycsgamer@gmail.com', {
+  // Add email address here privately
+  formData.append('_captcha', 'false');
+  formData.append('_template', 'box');
+  formData.append('_next', 'https://your-domain.vercel.app/thankyou.html');
+
+  try {
+    const response = await fetch('https://formsubmit.co/infinitycsgamer@gmail.com', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/x-www-form-urlencoded'
       },
-      body: JSON.stringify(data)
+      body: formData.toString(),
     });
 
-    if (response.ok) {
-      res.writeHead(302, { Location: '/thankyou.html' });
-      res.end();
-    } else {
-      res.status(500).send('Email failed');
-    }
-  } else {
-    res.status(405).send('Method Not Allowed');
+    res.writeHead(302, { Location: '/thankyou.html' });
+    res.end();
+  } catch (err) {
+    console.error('Error:', err);
+    res.status(500).send('Error submitting confession');
   }
 }
