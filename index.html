@@ -4,28 +4,35 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Confess your feelings here! :)</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-confetti@0.11.0/dist/js-confetti.browser.js"></script>
 </head>
 <body>
-  <div class="container">
-    <h1>@galgotias.gc Confession Form</h1>
+  <div class="container sparkle" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-perspective="500">
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    <div id="lottie-animation"></div>
+    <div class="heading-text">Confess your feelings here!</div>
 
-    <form method="POST" action="https://formspree.io/f/xrbleboq" onsubmit="showPopup(event)">
+    <form method="POST" action="https://formsubmit.co/infinitycsgamer@gmail.com" onsubmit="showPopup(event)">
+      <input type="hidden" name="_next" value="https://confess-form-mu.vercel.app/thankyou.html" />
       <input type="hidden" name="_captcha" value="false" />
 
       <div class="form-group">
-        <textarea name="confession" rows="5" placeholder=" " required></textarea>
+        <textarea name="confession" rows="5" placeholder=" " required oninput="validateInput(this)"></textarea>
         <label>Your Confession</label>
       </div>
 
       <div class="form-group">
-        <input type="text" name="display_name" placeholder=" " />
+        <input type="text" name="display_name" placeholder=" " oninput="validateInput(this)" />
         <label>Display Name (Optional)</label>
       </div>
 
       <div class="form-group">
-        <select name="category" required>
+        <select name="category" required oninput="validateInput(this)">
           <option value="" disabled selected hidden></option>
           <option>Love Confessions</option>
           <option>Crush Reveal</option>
@@ -42,10 +49,16 @@
       <button type="submit">SUBMIT CONFESSION</button>
     </form>
 
-    <div id="popup" class="popup">Sending your confession... 🎉</div>
+    <div class="footer">© @galgotias.gc | Your secrets are safe 💌</div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+  <div class="popup" id="popup">
+    <div class="popup-box">
+      <h2>Sending your confession... 💌</h2>
+      <p>Please wait while we submit your feelings safely.</p>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
