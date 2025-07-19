@@ -1,27 +1,40 @@
+export const config = {
+  api: {
+    bodyParser: false, // disable built-in parser
+  },
+};
+
+import { parse } from 'querystring';
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).send('Only POST allowed');
   }
 
-  const formData = new URLSearchParams();
-  Object.entries(req.body).forEach(([key, value]) => {
-    formData.append(key, value);
+  let body = '';
+  req.on('data', chunk => {
+    body += chunk.toString();
   });
 
-  formData.append('_captcha', 'false');
+  req.on('end', async () => {
+    const formData = parse(body);
 
-  try {
-    const response = await fetch('https://formsubmit.co/infinitycsgamer@gmail.com', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: formData.toString()
-    });
+    const forward = new URLSearchParams(formData);
+    forward.append('_captcha', 'false');
 
-    return res.writeHead(302, { Location: '/thankyou.html' }).end();
-  } catch (err) {
-    console.error(err);
-    return res.status(500).send('Submission failed');
-  }
+    try {
+      const response = await fetch('https://formsubmit.co/infinitycsgamer@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: forward.toString(),
+      });
+
+      return res.writeHead(302, { Location: '/thankyou.html' }).end();
+    } catch (err) {
+      console.error('Error:', err);
+      return res.status(500).send('Submission failed');
+    }
+  });
 }
