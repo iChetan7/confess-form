@@ -5,53 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Confess your feelings here! :)</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="manifest" href="data:application/manifest+json,{
-    'name': 'Confess Your Feelings',
-    'short_name': 'Confess',
-    'start_url': '/',
-    'display': 'standalone',
-    'background_color': '#e0c3fc',
-    'theme_color': '#6c63ff',
-    'icons': [
-      {
-        'src': 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRF/4CA////rVJTUQAAABVJREFUeNpiYGBgYGBiZmBgYAYAAwABNgABj9K3QQAAAABJRU5ErkJggg==',
-        'sizes': '32x32',
-        'type': 'image/png'
-      }
-    ]
-  }">
+  <link rel="manifest" href="manifest.webmanifest">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/js-confetti@0.11.0/dist/js-confetti.browser.js"></script>
   <style>
-    /* your full style block remains unchanged */
+    /* [Add all your styles here, already complete in your message above — no need to change] */
   </style>
 </head>
 <body>
-  <div class="container sparkle" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-perspective="500">
+  <div class="container sparkle" data-tilt>
     <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
     <div id="lottie-animation"></div>
     <div class="heading-text">Confess your feelings here!</div>
 
-    <!-- ✅ Form -->
-    <form action="https://formspree.io/f/xrblebzy" method="POST">
+    <form method="POST" action="https://formsubmit.co/infinitycsgamer@gmail.com" onsubmit="showPopup(event)">
+      <input type="hidden" name="_next" value="https://confess-form-mu.vercel.app/thankyou.html" />
       <input type="hidden" name="_captcha" value="false" />
-      <input type="hidden" name="_template" value="table" />
-      <input type="hidden" name="_redirect" value="https://confess-form-mu.vercel.app/thankyou.html" />
-      <input type="text" name="_honey" style="display:none" />
 
       <div class="form-group">
-        <textarea name="Your Confession" rows="5" required></textarea>
+        <textarea name="confession" rows="5" placeholder=" " required oninput="validateInput(this)"></textarea>
         <label>Your Confession</label>
       </div>
 
       <div class="form-group">
-        <input type="text" name="Display Name" />
+        <input type="text" name="display_name" placeholder=" " oninput="validateInput(this)" />
         <label>Display Name (Optional)</label>
       </div>
 
       <div class="form-group">
-        <select name="Category" required>
+        <select name="category" required oninput="validateInput(this)">
           <option value="" disabled selected hidden></option>
           <option>Love Confessions</option>
           <option>Crush Reveal</option>
@@ -71,7 +54,6 @@
     <div class="footer">© @galgotias.gc | Your secrets are safe 💌</div>
   </div>
 
-  <!-- 🎉 Popup left as-is, but unused -->
   <div class="popup" id="popup">
     <div class="popup-box">
       <h2>Sending your confession... 💌</h2>
@@ -80,16 +62,12 @@
   </div>
 
   <script>
-    // Service Worker
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js').then(() => {
         console.log('Service Worker Registered');
-      }).catch((error) => {
-        console.error('Service Worker Registration Failed:', error);
       });
     }
 
-    // Lottie animation
     lottie.loadAnimation({
       container: document.getElementById('lottie-animation'),
       renderer: 'svg',
@@ -98,22 +76,28 @@
       path: 'https://assets.lottiefiles.com/packages/lf20_rovf9gzu.json'
     });
 
-    // Confetti init
     const jsConfetti = new JSConfetti();
 
-    // Theme toggle
     function toggleTheme() {
       document.body.classList.toggle('dark-mode');
-      document.querySelector('.theme-toggle').textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+      document.querySelector('.theme-toggle').textContent =
+        document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
     }
 
-    // Field validation visual (optional)
     function validateInput(input) {
-      if (input.value.trim() === '' && input.required) {
-        input.style.borderColor = '#ff4d4d';
-      } else {
-        input.style.borderColor = '#6c63ff';
-      }
+      input.style.borderColor = (input.value.trim() === '' && input.required)
+        ? '#ff4d4d'
+        : '#6c63ff';
+    }
+
+    function showPopup(event) {
+      event.preventDefault();
+      const form = event.target;
+      document.getElementById('popup').classList.add('active');
+      jsConfetti.addConfetti({ confettiNumber: 100 });
+      setTimeout(() => {
+        form.submit();
+      }, 2000);
     }
   </script>
 </body>
