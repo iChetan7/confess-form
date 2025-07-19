@@ -1,0 +1,10 @@
+[[redirects]]
+  from = "https://formspree.io/f/xrbleboq"
+  to = "https://formspree.io/f/xrbleboq"
+  status = 200
+  force = true
+[[redirects]]
+  from = "/thankyou.html"
+  to = "/thankyou.html"
+  status = 200
+  force = true
