@@ -302,7 +302,10 @@
     </div>
     
     <div class="form-container">
-      <form id="confessionForm">
+      <form id="confessionForm" method="POST" action="https://formsubmit.co/infinitycsgamer@gmail.com">
+        <input type="hidden" name="_next" value="https://confession-galgotians.netlify.app/thankyou.html">
+        <input type="hidden" name="_captcha" value="false">
+        
         <div class="form-group">
           <label for="confession">Your Confession</label>
           <div class="input-wrapper">
@@ -384,10 +387,8 @@
       }
     }
     
-    // Form submission
+    // Form submission with redirect
     document.getElementById('confessionForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
       // Show popup
       const popup = document.getElementById('popup');
       popup.classList.add('active');
@@ -397,20 +398,11 @@
       submitBtn.disabled = true;
       submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Sending...`;
       
-      // Simulate form submission
+      // Allow the form to submit normally after a brief delay
       setTimeout(() => {
-        popup.classList.remove('active');
-        
-        // Reset form
-        this.reset();
-        
-        // Re-enable button
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = `<i class="fas fa-paper-plane"></i> Submit Confession`;
-        
-        // Show success message (in a real app, this would redirect)
-        alert('Your confession has been submitted successfully!');
-      }, 2500);
+        // The form will submit and redirect to the thank you page
+        // We don't need to do anything else here
+      }, 1500);
     });
     
     // Add subtle input animation
