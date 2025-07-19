@@ -21,6 +21,7 @@
       }
     ]
   }">
+  <script src="https://s.pageclip.co/v1/pageclip.js" charset="utf-8"></script>
   <!-- Lottie Animation Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
   <!-- Vanilla Tilt for 3D tilt effect -->
@@ -325,9 +326,10 @@
     <div id="lottie-animation"></div>
     <div class="heading-text">Confess your feelings here!</div>
 
-     <form method="POST" action="https://formspree.io/f/xrbleboq" onsubmit="showPopup(event)">
+   <form action="https://send.pageclip.co/NqRqfSQpFMe3C8Yn2DgLn70Vjl0mHbu9" class="pageclip-form" method="post">
   <input type="hidden" name="_redirect" value="https://confession-galgotians.netlify.app/thankyou.html" />
-  <input type="hidden" name="_captcha" value="false" />
+  <input type="text" name="name" value="Roscoe Jones" />
+  <input type="email" name="email" value="roscoe@example.com" />
 
   <div class="form-group">
     <textarea name="confession" rows="5" placeholder=" " required oninput="validateInput(this)"></textarea>
