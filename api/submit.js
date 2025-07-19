@@ -1,36 +1,29 @@
 export default async function handler(req, res) {
-  if (req.method === "POST") {
-    let body = '';
-    req.on('data', chunk => { body += chunk.toString(); });
-    req.on('end', async () => {
-      const formData = new URLSearchParams(body);
+  if (req.method === 'POST') {
+    const { confession, display_name, category } = req.body;
 
-      // Optional: Add fallback fields if user left something blank
-      if (!formData.has("display_name")) {
-        formData.append("display_name", "Anonymous");
-      }
+    const data = {
+      confession: confession || '',
+      display_name: display_name || 'Anonymous',
+      category: category || 'Other',
+    };
 
-      try {
-        const response = await fetch("https://formsubmit.co/infinitycsgamer@gmail.com", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
-          body: formData.toString()
-        });
-
-        if (response.ok) {
-          res.writeHead(302, { Location: "/thanks.html" }); // redirect to thank-you page
-          res.end();
-        } else {
-          res.status(500).send("❌ Failed to send email");
-        }
-      } catch (error) {
-        console.error("Error forwarding form:", error);
-        res.status(500).send("❌ Internal Error");
-      }
+    // Send mail using FormSubmit
+    const response = await fetch('https://formsubmit.co/ajax/infinitycsgamer@gmail.com', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
     });
+
+    if (response.ok) {
+      res.writeHead(302, { Location: '/thankyou.html' });
+      res.end();
+    } else {
+      res.status(500).send('Email failed');
+    }
   } else {
-    res.status(405).send("❌ Method Not Allowed");
+    res.status(405).send('Method Not Allowed');
   }
 }
