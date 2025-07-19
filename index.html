@@ -6,7 +6,9 @@
   <title>Confess your feelings here! :)</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -45,22 +47,25 @@
       position: absolute;
       font-size: 1.4rem;
       opacity: 0.7;
-      font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+      animation: sparkle 3s linear infinite;
+      font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
     }
 
     .sparkle::before {
-      top: -20px; left: 10%;
-      animation: sparkle 3s linear infinite;
+      top: -20px;
+      left: 10%;
     }
 
     .sparkle::after {
-      bottom: -20px; right: 10%;
-      animation: sparkle 3s linear infinite reverse;
+      bottom: -20px;
+      right: 10%;
+      animation-direction: reverse;
     }
 
     @keyframes sparkle {
-      0%, 100% { transform: translateY(0); opacity: 0.6; }
+      0% { transform: translateY(0); opacity: 0.6; }
       50% { transform: translateY(10px) scale(1.2); opacity: 1; }
+      100% { transform: translateY(0); opacity: 0.6; }
     }
 
     .heading-text {
@@ -69,8 +74,8 @@
       font-weight: 600;
       color: #2f2f2f;
       margin-bottom: 0.6rem;
-      position: relative;
       z-index: 2;
+      position: relative;
     }
 
     form {
@@ -95,8 +100,22 @@
       transition: border-color 0.3s ease;
     }
 
+    .form-group select {
+      width: 100%;
+      padding: 1rem 0.8rem 0.5rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      outline: none;
+      font-family: 'Poppins', sans-serif;
+      appearance: none;
+      background: white url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20fill%3D'%236c63ff'%20height%3D'24'%20viewBox%3D'0%200%2024%2024'%20width%3D'24'%20xmlns%3D'http%3A//www.w3.org/2000/svg'%3E%3Cpath%20d%3D'M7%2010l5%205%205-5z'/%3E%3C/svg%3E") no-repeat right 1rem center;
+      background-size: 1.2rem;
+    }
+
     .form-group input:focus,
-    .form-group textarea:focus {
+    .form-group textarea:focus,
+    .form-group select:focus {
       border-color: #6c63ff;
     }
 
@@ -115,38 +134,13 @@
     .form-group input:focus + label,
     .form-group input:not(:placeholder-shown) + label,
     .form-group textarea:focus + label,
-    .form-group textarea:not(:placeholder-shown) + label {
+    .form-group textarea:not(:placeholder-shown) + label,
+    .form-group select:focus + label,
+    .form-group select:not(:placeholder-shown) + label {
       top: -8px;
       left: 10px;
       font-size: 0.75rem;
       color: #6c63ff;
-    }
-
-    .custom-select {
-      position: relative;
-      width: 100%;
-    }
-
-    .custom-select select {
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      padding: 1rem 0.8rem 0.5rem;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 12px;
-      font-family: 'Poppins', sans-serif;
-      width: 100%;
-      outline: none;
-      background-color: white;
-      background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%204%205'%3E%3Cpath%20fill='gray'%20d='M2%205L0%200h4z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 0.75rem center;
-      background-size: 10px 12px;
-    }
-
-    .custom-select select:focus {
-      border-color: #6c63ff;
     }
 
     button {
@@ -203,8 +197,12 @@
     }
 
     @media (max-width: 480px) {
-      .container { padding: 1.5rem 1rem; }
-      .heading-text { font-size: 1.6rem; }
+      .container {
+        padding: 1.5rem 1rem;
+      }
+      .heading-text {
+        font-size: 1.6rem;
+      }
     }
   </style>
 </head>
@@ -226,17 +224,19 @@
         <label>Display Name (Optional)</label>
       </div>
 
-      <div class="form-group custom-select">
+      <div class="form-group">
         <select name="category" required>
-          <option value="" disabled selected hidden>Select Category</option>
+          <option value="" disabled selected hidden></option>
           <option>Love Confessions</option>
           <option>Crush Reveal</option>
           <option>Regrets / Sorry</option>
-          <option>Friendship Zone</option>
-          <option>College Drama</option>
-          <option>Random Thoughts</option>
+          <option>Friendship</option>
+          <option>Sopu Gang</option>
+          <option>Lafda</option>
+          <option>=Thoughts</option>
           <option>Other</option>
         </select>
+        <label>Category</label>
       </div>
 
       <button type="submit">SUBMIT CONFESSION</button>
@@ -245,7 +245,6 @@
     <div class="footer">© @galgotias.gc | Your secrets are safe 💌</div>
   </div>
 
-  <!-- Popup -->
   <div class="popup" id="popup">
     <div class="popup-box">
       <h2>Sending your confession... 💌</h2>
