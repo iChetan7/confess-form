@@ -10,7 +10,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/js-confetti@0.11.0/dist/js-confetti.browser.js"></script>
   <style>
-    /* [Add all your styles here, already complete in your message above — no need to change] */
+    /* Your existing styles here (not repeated to save space) */
   </style>
 </head>
 <body>
@@ -19,22 +19,25 @@
     <div id="lottie-animation"></div>
     <div class="heading-text">Confess your feelings here!</div>
 
-    <form method="POST" action="https://formsubmit.co/infinitycsgamer@gmail.com" onsubmit="showPopup(event)">
-      <input type="hidden" name="_next" value="https://confess-form-mu.vercel.app/thankyou.html" />
+    <!-- ✅ Formspree version -->
+    <form method="POST" action="https://formspree.io/f/xrblebzy" onsubmit="submitForm(event)">
       <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_template" value="table" />
+      <input type="hidden" name="_next" value="https://confess-form-mu.vercel.app/thankyou.html" />
+      <input type="text" name="_honey" style="display:none"> <!-- Anti-bot -->
 
       <div class="form-group">
-        <textarea name="confession" rows="5" placeholder=" " required oninput="validateInput(this)"></textarea>
+        <textarea name="Your Confession" rows="5" placeholder=" " required oninput="validateInput(this)"></textarea>
         <label>Your Confession</label>
       </div>
 
       <div class="form-group">
-        <input type="text" name="display_name" placeholder=" " oninput="validateInput(this)" />
+        <input type="text" name="Display Name" placeholder=" " oninput="validateInput(this)" />
         <label>Display Name (Optional)</label>
       </div>
 
       <div class="form-group">
-        <select name="category" required oninput="validateInput(this)">
+        <select name="Category" required oninput="validateInput(this)">
           <option value="" disabled selected hidden></option>
           <option>Love Confessions</option>
           <option>Crush Reveal</option>
@@ -90,7 +93,7 @@
         : '#6c63ff';
     }
 
-    function showPopup(event) {
+    function submitForm(event) {
       event.preventDefault();
       const form = event.target;
       document.getElementById('popup').classList.add('active');
