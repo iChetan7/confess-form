@@ -4,17 +4,72 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Confess your feelings here! :)</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Poppins', 'Segoe UI', sans-serif;
+      font-family: 'Poppins', sans-serif;
       background: #E6E6FA; /* Light Lavender */
       margin: 0;
       padding: 0;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Background animation */
+    .bg-animation {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0; left: 0;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      animation: float 10s linear infinite;
+    }
+
+    .circle:nth-child(1) {
+      width: 120px;
+      height: 120px;
+      left: 10%;
+      animation-duration: 18s;
+    }
+
+    .circle:nth-child(2) {
+      width: 80px;
+      height: 80px;
+      left: 70%;
+      animation-duration: 12s;
+    }
+
+    .circle:nth-child(3) {
+      width: 150px;
+      height: 150px;
+      left: 40%;
+      animation-duration: 20s;
+    }
+
+    @keyframes float {
+      0% {
+        top: 100%;
+        transform: translateY(0) rotate(0deg);
+      }
+      100% {
+        top: -200px;
+        transform: translateY(-100%) rotate(360deg);
+      }
     }
 
     .container {
@@ -27,35 +82,30 @@
       background-clip: padding-box;
       border-image: linear-gradient(45deg, #a78bfa, #e879f9) 1;
       text-align: center;
+      z-index: 1;
     }
 
     h1 {
-      font-size: 2rem;
-      font-weight: 700;
-      color: #2f2f2f;
-      margin-bottom: 0.5rem;
+      font-size: 1.9rem;
+      margin-bottom: 0.3rem;
+      color: #222;
     }
 
     .subline {
       font-style: italic;
-      font-size: 0.95rem;
       color: #666;
-      margin-bottom: 1.4rem;
+      margin-bottom: 1rem;
     }
 
     .tagline {
-      font-weight: 600;
+      font-weight: bold;
       font-size: 0.95rem;
-      background: #f3f3ff;
-      border-radius: 8px;
-      padding: 0.3rem 1rem;
-      margin: 0.2rem auto;
-      width: fit-content;
       color: #6c63ff;
+      margin: 0.2rem 0;
     }
 
     form {
-      margin-top: 1.5rem;
+      margin-top: 1rem;
       text-align: left;
     }
 
@@ -63,7 +113,6 @@
       font-weight: 500;
       margin-top: 1rem;
       display: inline-block;
-      font-size: 0.95rem;
     }
 
     textarea, input, select {
@@ -75,7 +124,6 @@
       border: 1px solid #ccc;
       outline: none;
       transition: border-color 0.3s ease;
-      font-family: 'Poppins', sans-serif;
     }
 
     textarea:focus, input:focus, select:focus {
@@ -84,14 +132,14 @@
     }
 
     button {
-      margin-top: 1.5rem;
+      margin-top: 1.2rem;
       width: 100%;
-      padding: 0.9rem;
+      padding: 0.8rem;
       background: #d62828;
       color: white;
       font-weight: bold;
       font-size: 1rem;
-      border-radius: 10px;
+      border-radius: 8px;
       border: none;
       cursor: pointer;
       transition: 0.3s ease;
@@ -103,7 +151,7 @@
     }
 
     .footer {
-      margin-top: 2rem;
+      margin-top: 1.8rem;
       font-size: 0.85rem;
       color: #888;
     }
@@ -146,10 +194,16 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Confess your feelings here! 🙂</h1>
-    <div class="subline">Sometimes sharing anonymously is all we need.</div>
+  <!-- Background Animation -->
+  <div class="bg-animation">
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+  </div>
 
+  <div class="container">
+    <h1>Confess your feelings here! :)</h1>
+    <div class="subline">Sometimes sharing anonymously is all we need.</div>
     <div class="tagline">SAFE</div>
     <div class="tagline">SECURE</div>
     <div class="tagline">PRIVACY FOCUSED</div>
