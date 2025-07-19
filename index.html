@@ -20,13 +20,8 @@
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    h1 {
-      font-size: 1.8rem;
-    }
-    .tagline {
-      font-weight: bold;
-      margin: 10px 0;
-    }
+    h1 { font-size: 1.8rem; }
+    .tagline { font-weight: bold; margin: 10px 0; }
     textarea, input, select, button {
       width: 100%;
       margin: 0.5rem 0;
@@ -42,9 +37,7 @@
       border: none;
       cursor: pointer;
     }
-    button:hover {
-      background: #a81d1d;
-    }
+    button:hover { background: #a81d1d; }
   </style>
 </head>
 <body>
@@ -54,7 +47,6 @@
     <div class="tagline">SECURE</div>
     <div class="tagline">PRIVACY FOCUSED</div>
     <form method="POST" action="/api/submit">
-
       <label for="confession">Your Confession:</label>
       <textarea id="confession" name="confession" rows="5" placeholder="Type your confession here..." required></textarea>
 
@@ -70,9 +62,6 @@
         <option>Random Thoughts</option>
         <option>Other</option>
       </select>
-
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_template" value="box">
 
       <button type="submit">SUBMIT CONFESSION</button>
     </form>
