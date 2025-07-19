@@ -8,10 +8,9 @@ export default async function handler(req, res) {
     formData.append(key, value);
   });
 
-  // Add email address here privately
+  // Prevent CAPTCHA and show thankyou.html after submission
   formData.append('_captcha', 'false');
-  formData.append('_template', 'box');
-  formData.append('_next', 'https://your-domain.vercel.app/thankyou.html');
+  formData.append('_template', 'table'); // prettier email
 
   try {
     const response = await fetch('https://formsubmit.co/infinitycsgamer@gmail.com', {
@@ -22,8 +21,13 @@ export default async function handler(req, res) {
       body: formData.toString(),
     });
 
-    res.writeHead(302, { Location: '/thankyou.html' });
-    res.end();
+    if (response.ok) {
+      // Redirect to thank you page
+      res.writeHead(302, { Location: '/thankyou.html' });
+      res.end();
+    } else {
+      res.status(500).send('FormSubmit failed.');
+    }
   } catch (err) {
     console.error('Error:', err);
     res.status(500).send('Error submitting confession');
