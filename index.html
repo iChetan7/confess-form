@@ -326,24 +326,23 @@
     <div id="lottie-animation"></div>
     <div class="heading-text">Confess your feelings here!</div>
 
-  <form action="https://formspree.io/f/xrblebzy"
-  method="POST" onsubmit="submitForm(event)">
+<form action="https://formspree.io/f/xrblebzy" method="POST">
   <input type="hidden" name="_captcha" value="false" />
   <input type="hidden" name="_template" value="table" />
-  <input type="text" name="_honey" style="display:none"> <!-- Anti-bot -->
+  <input type="text" name="_honey" style="display:none" />
 
   <div class="form-group">
-    <textarea name="Your Confession" rows="5" placeholder=" " required oninput="validateInput(this)"></textarea>
+    <textarea name="Your Confession" rows="5" required></textarea>
     <label>Your Confession</label>
   </div>
 
   <div class="form-group">
-    <input type="text" name="Display Name" placeholder=" " oninput="validateInput(this)" />
+    <input type="text" name="Display Name" />
     <label>Display Name (Optional)</label>
   </div>
 
   <div class="form-group">
-    <select name="Category" required oninput="validateInput(this)">
+    <select name="Category" required>
       <option value="" disabled selected hidden></option>
       <option>Love Confessions</option>
       <option>Crush Reveal</option>
@@ -359,6 +358,7 @@
 
   <button type="submit">SUBMIT CONFESSION</button>
 </form>
+
 
     <div class="footer">© @galgotias.gc | Your secrets are safe 💌</div>
   </div>
