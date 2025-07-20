@@ -2,40 +2,393 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Thank You!</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You | Galgotias Confessions</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
     body {
-      background: #f0fff0;
+      background: linear-gradient(135deg, #f8f9ff 0%, #f0f7ff 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      font-family: Arial, sans-serif;
-      color: #2d6a4f;
-    }
-    .message {
-      text-align: center;
-      max-width: 400px;
+      min-height: 100vh;
       padding: 20px;
-      border-radius: 10px;
-      background: #ffffff;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+      color: #333;
     }
-    h1 {
-      font-size: 1.8rem;
+    
+    /* Floating hearts container */
+    .floating-hearts {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    
+    .heart {
+      position: absolute;
+      font-size: 1.5rem;
+      opacity: 0;
+      animation: float 8s linear infinite;
+      color: #ff6b6b;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.8;
+      }
+      90% {
+        opacity: 0.6;
+      }
+      100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    
+    /* Main container */
+    .container {
+      max-width: 500px;
+      width: 100%;
+      position: relative;
+      z-index: 10;
+    }
+    
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 40px 35px;
+      box-shadow: 0 15px 40px rgba(74, 111, 165, 0.1);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      animation: fadeIn 0.8s ease-out forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Header section */
+    .header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+    
+    .icon-container {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 25px;
+      position: relative;
+      cursor: pointer;
+    }
+    
+    .icon-wrapper {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    .icon-wrapper i {
+      font-size: 4.5rem;
+      color: #4a6fa5;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .icon-container:hover .icon-wrapper {
+      transform: scale(1.1) rotate(5deg);
+    }
+    
+    .icon-container:active .icon-wrapper {
+      transform: scale(0.9) rotate(-5deg);
+    }
+    
+    .title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: #2d6a4f;
+      letter-spacing: -0.5px;
+    }
+    
+    .message {
+      font-size: 17px;
+      line-height: 1.6;
+      color: #555;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    
+    /* Social sections */
+    .social-section {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      margin: 40px 0 30px;
+    }
+    
+    .social-card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(248, 249, 255, 0.85) 100%);
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 8px 20px rgba(74, 111, 165, 0.08);
+      border: 1px solid rgba(74, 111, 165, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .social-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(74, 111, 165, 0.15);
+    }
+    
+    .social-card h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #4a6fa5;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: linear-gradient(135deg, #4a6fa5 0%, #6b8fc5 100%);
+      color: white;
+      padding: 14px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+    
+    .social-btn:hover {
+      background: linear-gradient(135deg, #3d5c8a 0%, #5a7ab0 100%);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(74, 111, 165, 0.25);
+    }
+    
+    .social-btn i {
+      font-size: 18px;
+    }
+    
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 35px;
+      padding-top: 25px;
+      border-top: 1px solid rgba(74, 111, 165, 0.1);
+    }
+    
+    .footer p {
+      font-size: 15px;
+      color: #777;
       margin-bottom: 10px;
     }
-    p {
-      font-size: 1rem;
+    
+    .handle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(74, 111, 165, 0.08);
+      padding: 12px 25px;
+      border-radius: 50px;
+      font-weight: 600;
+      color: #4a6fa5;
+      font-size: 17px;
+      margin-top: 5px;
+    }
+    
+    /* Responsive design */
+    @media (max-width: 600px) {
+      .card {
+        padding: 30px 25px;
+      }
+      
+      .title {
+        font-size: 24px;
+      }
+      
+      .message {
+        font-size: 16px;
+      }
+      
+      .icon-wrapper i {
+        font-size: 4rem;
+      }
+      
+      .social-card {
+        padding: 20px;
+      }
+      
+      .social-btn {
+        padding: 12px;
+        font-size: 15px;
+      }
+      
+      .handle {
+        font-size: 16px;
+        padding: 10px 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="message">
-    <h1>Thank you for your confession!</h1>
-    <p>We respect your privacy. Your message has been received securely.</p>
-    <p>Stay tuned on Instagram: <strong>@galgotias.gc</strong></p>
+  <!-- Floating hearts background -->
+  <div class="floating-hearts" id="heartsContainer"></div>
+  
+  <div class="container">
+    <div class="card">
+      <!-- Header -->
+      <div class="header">
+        <div class="icon-container" id="iconContainer">
+          <div class="icon-wrapper">
+            <i class="fas fa-lock" id="mainIcon"></i>
+          </div>
+        </div>
+        <h1 class="title">Thank You for Your Confession!</h1>
+        <p class="message">
+          We respect your privacy. Your message has been received securely and will remain anonymous.
+        </p>
+      </div>
+      
+      <!-- Social Section -->
+      <div class="social-section">
+        <!-- GU GC Group -->
+        <div class="social-card">
+          <h3><i class="fas fa-users"></i> Join GU GC</h3>
+          <p>Connect with fellow Galgotians in our private Instagram group</p>
+          <a href="https://www.instagram.com/j/AbaZ_cChfLcO6Ihx/" class="social-btn" target="_blank">
+            <i class="fab fa-instagram"></i> Join Instagram Group
+          </a>
+        </div>
+        
+        <!-- Follow Us -->
+        <div class="social-card">
+          <h3><i class="fab fa-instagram"></i> Follow Us</h3>
+          <p>Stay updated with the latest confessions and campus stories</p>
+          <a href="https://www.instagram.com/galgotias.gc" class="social-btn" target="_blank">
+            <i class="fab fa-instagram"></i> Follow @galgotias.gc
+          </a>
+        </div>
+      </div>
+      
+      <!-- Footer -->
+      <div class="footer">
+        <p>Your secrets are safe with us</p>
+        <div class="handle">
+          <i class="fas fa-at"></i> @galgotias.gc
+        </div>
+      </div>
+    </div>
   </div>
+  
+  <script>
+    // Create floating hearts
+    function createHearts() {
+      const heartsContainer = document.getElementById('heartsContainer');
+      const heartColors = ['#ff6b6b', '#4a6fa5', '#ff9e6b', '#6b8fc5', '#e1306c', '#2d6a4f'];
+      
+      for (let i = 0; i < 25; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerHTML = '<i class="fas fa-heart"></i>';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (Math.random() * 10 + 8) + 's';
+        heart.style.animationDelay = Math.random() * 5 + 's';
+        heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+        heart.style.color = heartColors[Math.floor(Math.random() * heartColors.length)];
+        heartsContainer.appendChild(heart);
+      }
+    }
+    
+    // Icon transformation
+    const iconContainer = document.getElementById('iconContainer');
+    const mainIcon = document.getElementById('mainIcon');
+    
+    // Icons to cycle through
+    const icons = [
+      { class: 'fas fa-lock', color: '#4a6fa5' },
+      { class: 'fas fa-heart', color: '#ff6b6b' },
+      { class: 'fas fa-shield-alt', color: '#2d6a4f' },
+      { class: 'fas fa-check-circle', color: '#4a6fa5' }
+    ];
+    
+    let currentIconIndex = 0;
+    
+    iconContainer.addEventListener('click', function() {
+      // Add animation effect
+      this.classList.add('icon-click');
+      setTimeout(() => {
+        this.classList.remove('icon-click');
+      }, 300);
+      
+      // Change to next icon
+      currentIconIndex = (currentIconIndex + 1) % icons.length;
+      const nextIcon = icons[currentIconIndex];
+      
+      // Create a temporary element for smooth transition
+      const tempIcon = document.createElement('i');
+      tempIcon.className = nextIcon.class;
+      tempIcon.style.color = nextIcon.color;
+      tempIcon.style.position = 'absolute';
+      tempIcon.style.opacity = '0';
+      tempIcon.style.transform = 'scale(0)';
+      
+      iconContainer.querySelector('.icon-wrapper').appendChild(tempIcon);
+      
+      // Animate transition
+      setTimeout(() => {
+        mainIcon.style.opacity = '0';
+        mainIcon.style.transform = 'scale(0.5) rotate(-30deg)';
+        tempIcon.style.opacity = '1';
+        tempIcon.style.transform = 'scale(1)';
+      }, 10);
+      
+      // Complete transition
+      setTimeout(() => {
+        mainIcon.className = nextIcon.class;
+        mainIcon.style.color = nextIcon.color;
+        mainIcon.style.opacity = '1';
+        mainIcon.style.transform = 'scale(1)';
+        iconContainer.querySelector('.icon-wrapper').removeChild(tempIcon);
+      }, 300);
+    });
+    
+    // Initialize the page
+    window.addEventListener('load', function() {
+      createHearts();
+    });
+  </script>
 </body>
 </html>
