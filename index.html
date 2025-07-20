@@ -467,19 +467,14 @@
                 <input type="hidden" name="_next" value="https://confession-galgotians.netlify.app/thankyou.html">
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_subject" value="New Galgotians Confession">
-                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_template" value="custom">
                 <input type="hidden" name="_autoresponse" value="Thank you for your confession! Your message has been received and will be posted anonymously on our Instagram page. Stay tuned!">
-                <!-- Hidden fields for table rows -->
-                <input type="hidden" name="Confession" id="confession_value">
-                <input type="hidden" name="Name" id="name_value">
-                <input type="hidden" name="Category" id="category_value">
-                <input type="hidden" name="Local time Indian IST" id="time_value">
-                <input type="hidden" name="copyright" value="© 2025 Galgotians Confessions">
+                <input type="hidden" name="_blacklist" value="copyright">
                 
                 <div class="form-group">
                     <label for="confession"><i class="fas fa-pen"></i> Your Confession</label>
                     <div class="input-wrapper">
-                        <textarea id="confession" name="confession" placeholder="Express your feelings, thoughts, or secrets..." maxlength="1000" required></textarea>
+                        <textarea id="confession" name="Confession" placeholder="Express your feelings, thoughts, or secrets..." maxlength="1000" required></textarea>
                         <div class="char-counter"><span id="charCount">0</span>/1000</div>
                     </div>
                 </div>
@@ -487,14 +482,14 @@
                 <div class="form-group">
                     <label for="name"><i class="fas fa-user"></i> Display Name (Optional)</label>
                     <div class="input-wrapper">
-                        <input type="text" id="name" name="name" placeholder="How you'd like to be referred to">
+                        <input type="text" id="name" name="Name" placeholder="How you'd like to be referred to">
                     </div>
                 </div>
                 
                 <div class="form-group">
                     <label for="category"><i class="fas fa-tag"></i> Category</label>
                     <div class="input-wrapper">
-                        <select id="category" name="category" required>
+                        <select id="category" name="Category" required>
                             <option value="" disabled selected>Choose a category</option>
                             <option value="Love Confessions">Love Confessions</option>
                             <option value="Crush Reveal">Crush Reveal</option>
@@ -605,16 +600,18 @@
             const confession = document.getElementById('confession').value;
             const name = document.getElementById('name').value || 'Anonymous';
             const category = document.getElementById('category').value;
-            const time = '20/07/2025, 17:32'; // Current time in IST
+            const time = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
             
-            document.getElementById('confession_value').value = confession;
-            document.getElementById('name_value').value = name;
-            document.getElementById('category_value').value = category;
-            document.getElementById('time_value').value = time;
-            
-            document.getElementById('confession').value = '';
-            document.getElementById('name').value = '';
-            document.getElementById('category').value = '';
+            // Set the hidden input for time
+            let timeInput = document.getElementById('time_value');
+            if (!timeInput) {
+                timeInput = document.createElement('input');
+                timeInput.type = 'hidden';
+                timeInput.name = 'Local time IST';
+                timeInput.id = 'time_value';
+                this.appendChild(timeInput);
+            }
+            timeInput.value = time;
             
             this.submit();
             
