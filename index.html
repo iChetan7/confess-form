@@ -464,60 +464,50 @@
         </div>
         
         <div class="form-container">
-           <div class="form-container">
-  <form id="confessionForm" method="POST" action="https://formsubmit.co/infinitycsgamer@gmail.com">
-    <!-- existing hidden inputs -->
-    <input type="hidden" name="_next" value="https://confession-galgotians.netlify.app/thankyou.html">
-    <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="_subject" value="New Galgotians Confession">
-    <input type="hidden" name="_template" value="table">
-    <input type="hidden" name="_autoresponse" value="Thank you for your confession! Your message has been received and will be posted anonymously on our Instagram page. Stay tuned!">
-
-    <!-- visible fields -->
-    <div class="form-group">
-      <label for="confession"><i class="fas fa-pen"></i> Your Confession</label>
-      <div class="input-wrapper">
-        <textarea id="confession" name="confession" placeholder="Express your feelings, thoughts, or secrets..." maxlength="1000" required></textarea>
-        <div class="char-counter"><span id="charCount">0</span>/1000</div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="name"><i class="fas fa-user"></i> Display Name (Optional)</label>
-      <div class="input-wrapper">
-        <input type="text" id="name" name="name" placeholder="How you'd like to be referred to">
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="category"><i class="fas fa-tag"></i> Category</label>
-      <div class="input-wrapper">
-        <select id="category" name="category" required>
-          <option value="" disabled selected>Choose a category</option>
-          <option value="Love Confessions">Love Confessions</option>
-          <option value="Crush Reveal">Crush Reveal</option>
-          <option value="Regrets / Sorry">Regrets / Sorry</option>
-          <option value="Friendship">Friendship</option>
-          <option value="Sopu Gang">Sopu Gang</option>
-          <option value="Lafda">Lafda</option>
-          <option value="Thoughts">Thoughts</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
-    </div>
-
-    <!-- ✨ New hidden structured fields -->
-    <input type="hidden" name="Submission_Time" id="submission_time">
-    <input type="hidden" name="Confession" id="confession_structured">
-    <input type="hidden" name="Name" id="name_structured">
-    <input type="hidden" name="Category" id="category_structured">
-    <input type="hidden" name="Footer" id="footer_structured">
-
-    <button type="submit" class="submit-btn">
-      <i class="fas fa-paper-plane"></i>
-      Submit Confession
-    </button>
-  </form>
+            <form id="confessionForm" method="POST" action="https://formsubmit.co/infinitycsgamer@gmail.com">
+                <input type="hidden" name="_next" value="https://confession-galgotians.netlify.app/thankyou.html">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_subject" value="New Galgotians Confession">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_autoresponse" value="Thank you for your confession! Your message has been received and will be posted anonymously on our Instagram page. Stay tuned!">
+                
+                <div class="form-group">
+                    <label for="confession"><i class="fas fa-pen"></i> Your Confession</label>
+                    <div class="input-wrapper">
+                        <textarea id="confession" name="confession" placeholder="Express your feelings, thoughts, or secrets..." maxlength="1000" required></textarea>
+                        <div class="char-counter"><span id="charCount">0</span>/1000</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="name"><i class="fas fa-user"></i> Display Name (Optional)</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="name" name="name" placeholder="How you'd like to be referred to">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="category"><i class="fas fa-tag"></i> Category</label>
+                    <div class="input-wrapper">
+                        <select id="category" name="category" required>
+                            <option value="" disabled selected>Choose a category</option>
+                            <option value="Love Confessions">Love Confessions</option>
+                            <option value="Crush Reveal">Crush Reveal</option>
+                            <option value="Regrets / Sorry">Regrets / Sorry</option>
+                            <option value="Friendship">Friendship</option>
+                            <option value="Sopu Gang">Sopu Gang</option>
+                            <option value="Lafda">Lafda</option>
+                            <option value="Thoughts">Thoughts</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i>
+                    Submit Confession
+                </button>
+            </form>
             
             <div class="feature-card">
                 <h3><i class="fas fa-shield-alt"></i> Your Privacy Matters</h3>
@@ -543,112 +533,105 @@
         <span id="notificationText">Confession submitted successfully!</span>
     </div>
     
-   <script>
-    // Theme toggle
-    function toggleTheme() {
-        document.body.classList.toggle('dark-mode');
-        const icon = document.querySelector('.theme-toggle i');
-        if (document.body.classList.contains('dark-mode')) {
-            icon.classList.remove('fa-moon');
-            icon.classList.add('fa-sun');
-        } else {
-            icon.classList.remove('fa-sun');
-            icon.classList.add('fa-moon');
+    <script>
+        // Theme toggle
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.querySelector('.theme-toggle i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+            
+            // Save theme preference
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
         }
-        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
-    }
-
-    // Check for saved theme preference
-    if (localStorage.getItem('darkMode') === 'true') {
-        document.body.classList.add('dark-mode');
-        document.querySelector('.theme-toggle i').classList.remove('fa-moon');
-        document.querySelector('.theme-toggle i').classList.add('fa-sun');
-    }
-
-    // Character counter
-    const confessionTextarea = document.getElementById('confession');
-    const charCount = document.getElementById('charCount');
-    confessionTextarea.addEventListener('input', function () {
-        charCount.textContent = this.value.length;
-    });
-
-    // Floating hearts
-    function createHearts() {
-        const heartsContainer = document.getElementById('heartsContainer');
-        const heartColors = ['#ff6b6b', '#ff9e6b', '#4a6fa5', '#6b8fc5', '#ffb6c1', '#9370db', '#ffd166', '#48bb78'];
-        for (let i = 0; i < 20; i++) {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '<i class="fas fa-heart"></i>';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 15 + 10) + 's';
-            heart.style.animationDelay = Math.random() * 10 + 's';
-            heart.style.color = heartColors[Math.floor(Math.random() * heartColors.length)];
-            heartsContainer.appendChild(heart);
+        
+        // Check for saved theme preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+            document.querySelector('.theme-toggle i').classList.remove('fa-moon');
+            document.querySelector('.theme-toggle i').classList.add('fa-sun');
         }
-    }
-
-    // Capitalize each word
-    function capitalizeWords(str) {
-        return str.replace(/\b\w/g, char => char.toUpperCase());
-    }
-
-    // Format email content
-    function generateFormattedMessage(name, category, confession, timestamp) {
-        return `Thank you for your Confession! 🌸\n\nCategory: ${category}\nName: ${name}\nTime: ${timestamp}\n\nConfession:\n"${confession}"\n\n© Follow @galgotias.gc`;
-    }
-
-    // Form submission
-    document.getElementById('confessionForm').addEventListener('submit', function (e) {
-        const submitBtn = document.querySelector('.submit-btn');
-        const originalBtnContent = submitBtn.innerHTML;
-
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-
-        // Format and set hidden message field
-        const nameInput = document.getElementById('name');
-        const categoryInput = document.getElementById('category');
-        const confessionInput = document.getElementById('confession');
-        const messageInput = document.getElementById('formattedMessage');
-
-        const name = capitalizeWords(nameInput.value.trim());
-        const category = capitalizeWords(categoryInput.value.trim());
-        const confession = confessionInput.value.trim();
-        const timestamp = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
-
-        messageInput.value = generateFormattedMessage(name, category, confession, timestamp);
-
-        // Show notification and reset
-        setTimeout(() => {
-            showNotification('Confession submitted successfully!');
-            document.getElementById('confessionForm').reset();
-            charCount.textContent = '0';
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = originalBtnContent;
-        }, 1500);
-    });
-
-    // Notification
-    function showNotification(message, isSuccess = true) {
-        const notification = document.getElementById('notification');
-        const notificationText = document.getElementById('notificationText');
-
-        notificationText.textContent = message;
-        notification.querySelector('i').className = isSuccess ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
-
-        notification.classList.add('show');
-        setTimeout(() => notification.classList.remove('show'), 3000);
-    }
-
-    window.addEventListener('load', function () {
-        createHearts();
-        setTimeout(() => {
-            document.querySelector('.container').style.transform = 'translateY(0)';
-            document.querySelector('.container').style.opacity = '1';
-        }, 300);
-    });
-</script>
-
+        
+        // Character counter
+        const confessionTextarea = document.getElementById('confession');
+        const charCount = document.getElementById('charCount');
+        
+        confessionTextarea.addEventListener('input', function() {
+            charCount.textContent = this.value.length;
+        });
+        
+        // Create floating hearts
+        function createHearts() {
+            const heartsContainer = document.getElementById('heartsContainer');
+            const heartColors = [
+                '#ff6b6b', '#ff9e6b', '#4a6fa5', '#6b8fc5',
+                '#ffb6c1', '#9370db', '#ffd166', '#48bb78'
+            ];
+            
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '<i class="fas fa-heart"></i>';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 15 + 10) + 's';
+                heart.style.animationDelay = Math.random() * 10 + 's';
+                heart.style.color = heartColors[Math.floor(Math.random() * heartColors.length)];
+                heartsContainer.appendChild(heart);
+            }
+        }
+        
+        // Show notification
+        function showNotification(message, isSuccess = true) {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notificationText');
+            
+            notificationText.textContent = message;
+            notification.querySelector('i').className = isSuccess ? 
+                'fas fa-check-circle' : 'fas fa-exclamation-circle';
+            
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Form submission
+        document.getElementById('confessionForm').addEventListener('submit', function(e) {
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalBtnContent = submitBtn.innerHTML;
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            
+            // Simulate form submission for demo
+            setTimeout(() => {
+                showNotification('Confession submitted successfully!');
+                
+                // Reset form
+                document.getElementById('confessionForm').reset();
+                document.getElementById('charCount').textContent = '0';
+                
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnContent;
+            }, 1500);
+        });
+        
+        // Initialize the page
+        window.addEventListener('load', function() {
+            createHearts();
+            
+            // Animate container
+            setTimeout(() => {
+                document.querySelector('.container').style.transform = 'translateY(0)';
+                document.querySelector('.container').style.opacity = '1';
+            }, 300);
+        });
+    </script>
 </body>
 </html>
