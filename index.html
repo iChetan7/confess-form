@@ -470,15 +470,10 @@
                 <input type="hidden" name="_template" value="table">
                 <input type="hidden" name="_autoresponse" value="Thank you for your confession! Your message has been received and will be posted anonymously on our Instagram page. Stay tuned!">
                 <!-- Hidden fields for table rows -->
-                <input type="hidden" name="confession_label" value="Confession">
-                <input type="hidden" name="confession_value" id="confession_value">
-                <input type="hidden" name="name_label" value="Name">
-                <input type="hidden" name="name_value" id="name_value">
-                <input type="hidden" name="category_label" value="Category">
-                <input type="hidden" name="category_value" id="category_value">
-                <input type="hidden" name="time_label" value="Local time Indian IST">
-                <input type="hidden" name="time_value" id="time_value">
-                <input type="hidden" name="follow" value="Follow @galgotias.gc">
+                <input type="hidden" name="Confession" id="confession_value">
+                <input type="hidden" name="Name" id="name_value">
+                <input type="hidden" name="Category" id="category_value">
+                <input type="hidden" name="Local time Indian IST" id="time_value">
                 <input type="hidden" name="copyright" value="© 2025 Galgotians Confessions">
                 
                 <div class="form-group">
@@ -556,11 +551,9 @@
                 icon.classList.add('fa-moon');
             }
             
-            // Save theme preference
             localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
         }
         
-        // Check for saved theme preference
         if (localStorage.getItem('darkMode') === 'true') {
             document.body.classList.add('dark-mode');
             document.querySelector('.theme-toggle i').classList.remove('fa-moon');
@@ -570,7 +563,6 @@
         // Character counter
         const confessionTextarea = document.getElementById('confession');
         const charCount = document.getElementById('charCount');
-        
         confessionTextarea.addEventListener('input', function() {
             charCount.textContent = this.value.length;
         });
@@ -578,11 +570,7 @@
         // Create floating hearts
         function createHearts() {
             const heartsContainer = document.getElementById('heartsContainer');
-            const heartColors = [
-                '#ff6b6b', '#ff9e6b', '#4a6fa5', '#6b8fc5',
-                '#ffb6c1', '#9370db', '#ffd166', '#48bb78'
-            ];
-            
+            const heartColors = ['#ff6b6b', '#ff9e6b', '#4a6fa5', '#6b8fc5', '#ffb6c1', '#9370db', '#ffd166', '#48bb78'];
             for (let i = 0; i < 20; i++) {
                 const heart = document.createElement('div');
                 heart.classList.add('heart');
@@ -599,87 +587,48 @@
         function showNotification(message, isSuccess = true) {
             const notification = document.getElementById('notification');
             const notificationText = document.getElementById('notificationText');
-            
             notificationText.textContent = message;
-            notification.querySelector('i').className = isSuccess ? 
-                'fas fa-check-circle' : 'fas fa-exclamation-circle';
-            
+            notification.querySelector('i').className = isSuccess ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
             notification.classList.add('show');
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
-        
-        // Format submission time in IST
-        function getFormattedDateTime() {
-            const now = new Date();
-            const options = {
-                timeZone: 'Asia/Kolkata',
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: false
-            };
-            const formatter = new Intl.DateTimeFormat('en-GB', options);
-            const parts = formatter.formatToParts(now);
-            const day = parts.find(p => p.type === 'day').value;
-            const month = parts.find(p => p.type === 'month').value;
-            const year = parts.find(p => p.type === 'year').value;
-            const hour = parts.find(p => p.type === 'hour').value;
-            const minute = parts.find(p => p.type === 'minute').value;
-            return `${day}/${month}/${year}, ${hour}:${minute}`;
+            setTimeout(() => notification.classList.remove('show'), 3000);
         }
         
         // Form submission
         document.getElementById('confessionForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent default submission to allow formatting
+            e.preventDefault();
             
             const submitBtn = document.querySelector('.submit-btn');
             const originalBtnContent = submitBtn.innerHTML;
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
             
-            // Get form values
             const confession = document.getElementById('confession').value;
             const name = document.getElementById('name').value || 'Anonymous';
             const category = document.getElementById('category').value;
-            const submissionTime = getFormattedDateTime();
+            const time = '20/07/2025, 17:32'; // Current time in IST
             
-            // Set values for hidden fields to create the table
             document.getElementById('confession_value').value = confession;
             document.getElementById('name_value').value = name;
             document.getElementById('category_value').value = category;
-            document.getElementById('time_value').value = submissionTime;
+            document.getElementById('time_value').value = time;
             
-            // Clear original form fields to avoid duplicate data
             document.getElementById('confession').value = '';
             document.getElementById('name').value = '';
             document.getElementById('category').value = '';
             
-            // Submit the form
             this.submit();
             
-            // Simulate success for notification
             setTimeout(() => {
                 showNotification('Confession submitted successfully!');
-                
-                // Reset form
                 document.getElementById('confessionForm').reset();
                 document.getElementById('charCount').textContent = '0';
-                
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalBtnContent;
             }, 1500);
         });
         
-        // Initialize the page
         window.addEventListener('load', function() {
             createHearts();
-            
-            // Animate container
             setTimeout(() => {
                 document.querySelector('.container').style.transform = 'translateY(0)';
                 document.querySelector('.container').style.opacity = '1';
