@@ -473,8 +473,6 @@
                 <input type="hidden" name="Confession" id="confession_value">
                 <input type="hidden" name="Name" id="name_value">
                 <input type="hidden" name="Category" id="category_value">
-                <input type="hidden" name="Local time Indian IST" id="time_value">
-                <input type="hidden" name="copyright" value="© 2025 Galgotians Confessions">
                 
                 <div class="form-group">
                     <label for="confession"><i class="fas fa-pen"></i> Your Confession</label>
@@ -605,12 +603,10 @@
             const confession = document.getElementById('confession').value;
             const name = document.getElementById('name').value || 'Anonymous';
             const category = document.getElementById('category').value;
-            const time = '20/07/2025, 17:32'; // Current time in IST
             
             document.getElementById('confession_value').value = confession;
             document.getElementById('name_value').value = name;
             document.getElementById('category_value').value = category;
-            document.getElementById('time_value').value = time;
             
             document.getElementById('confession').value = '';
             document.getElementById('name').value = '';
