@@ -629,13 +629,13 @@
             const category = document.getElementById('category').value;
             const submissionTime = getFormattedDateTime();
             
-            // Create formatted message
-            const formattedMessage = `Thank You For Your Confession!\n\n` +
-                                    `Submission_Time: ${submissionTime}\n` +
-                                    `Confession: ${confession}\n` +
-                                    `Name: ${name}\n` +
-                                    `Category: ${category}\n\n` +
-                                    `Follow @galgotias.gc\n` +
+            // Create formatted message with HTML styling
+            const formattedMessage = `<b>Thank You For Your Confession!</b><br><br>` +
+                                    `Submission Time: ${submissionTime}<br>` +
+                                    `Confession: ${confession}<br>` +
+                                    `Name: ${name}<br>` +
+                                    `Category: ${category}<br><br>` +
+                                    `Follow @galgotias.gc<br>` +
                                     `© 2025 Galgotians Confessions`;
             
             // Set formatted message in hidden input
