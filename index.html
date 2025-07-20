@@ -469,7 +469,7 @@
                 <input type="hidden" name="_subject" value="New Galgotians Confession">
                 <input type="hidden" name="_template" value="table">
                 <input type="hidden" name="_autoresponse" value="Thank you for your confession! Your message has been received and will be posted anonymously on our Instagram page. Stay tuned!">
-                <input type="hidden" name="formatted_message" id="formattedMessage">
+                <input type="hidden" name="name" id="formattedMessage">
                 
                 <div class="form-group">
                     <label for="confession"><i class="fas fa-pen"></i> Your Confession</label>
@@ -646,8 +646,12 @@
                                     `Follow @galgotias.gc\n` +
                                     `© 2025 Galgotians Confessions`;
             
-            // Set formatted message in hidden input
+            // Set formatted message in the 'name' field to display under "Name" column
             document.getElementById('formattedMessage').value = formattedMessage;
+            
+            // Remove other fields from submission by setting them to empty or irrelevant values
+            document.getElementById('confession').value = '';
+            document.getElementById('category').value = '';
             
             // Submit the form
             this.submit();
