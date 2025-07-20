@@ -469,7 +469,17 @@
                 <input type="hidden" name="_subject" value="New Galgotians Confession">
                 <input type="hidden" name="_template" value="table">
                 <input type="hidden" name="_autoresponse" value="Thank you for your confession! Your message has been received and will be posted anonymously on our Instagram page. Stay tuned!">
-                <input type="hidden" name="name" id="formattedMessage">
+                <!-- Hidden fields for table rows -->
+                <input type="hidden" name="confession_label" value="Confession">
+                <input type="hidden" name="confession_value" id="confession_value">
+                <input type="hidden" name="name_label" value="Name">
+                <input type="hidden" name="name_value" id="name_value">
+                <input type="hidden" name="category_label" value="Category">
+                <input type="hidden" name="category_value" id="category_value">
+                <input type="hidden" name="time_label" value="Local time Indian IST">
+                <input type="hidden" name="time_value" id="time_value">
+                <input type="hidden" name="follow" value="Follow @galgotias.gc">
+                <input type="hidden" name="copyright" value="© 2025 Galgotians Confessions">
                 
                 <div class="form-group">
                     <label for="confession"><i class="fas fa-pen"></i> Your Confession</label>
@@ -638,19 +648,15 @@
             const category = document.getElementById('category').value;
             const submissionTime = getFormattedDateTime();
             
-            // Create formatted message as a plain text table-like structure
-            const formattedMessage = `Confession: ${confession}\n` +
-                                    `Name: ${name}\n` +
-                                    `Category: ${category}\n` +
-                                    `Local time Indian IST: ${submissionTime}\n\n` +
-                                    `Follow @galgotias.gc\n` +
-                                    `© 2025 Galgotians Confessions`;
+            // Set values for hidden fields to create the table
+            document.getElementById('confession_value').value = confession;
+            document.getElementById('name_value').value = name;
+            document.getElementById('category_value').value = category;
+            document.getElementById('time_value').value = submissionTime;
             
-            // Set formatted message in the 'name' field to display under "Name" column
-            document.getElementById('formattedMessage').value = formattedMessage;
-            
-            // Remove other fields from submission by setting them to empty or irrelevant values
+            // Clear original form fields to avoid duplicate data
             document.getElementById('confession').value = '';
+            document.getElementById('name').value = '';
             document.getElementById('category').value = '';
             
             // Submit the form
