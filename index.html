@@ -3,9 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galgotians Confessions | Share Your Feelings Securely</title>
+    <title>Galgotians Confessions | Share Anonymously</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
         :root {
             --primary: #4a6fa5;
             --primary-light: #6b8fc5;
@@ -20,25 +28,6 @@
             --transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        input, textarea, select, .input-wrapper {
-            -webkit-user-select: text;
-            -moz-user-select: text;
-            -ms-user-select: text;
-            user-select: text;
-        }
-
         body {
             background-color: var(--background);
             color: var(--text);
@@ -48,29 +37,25 @@
             justify-content: center;
             align-items: center;
             padding: 1rem;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(245, 245, 245, 0.7) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(245, 245, 245, 0.7) 0%, transparent 20%);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7f1 100%);
             line-height: 1.6;
             position: relative;
             overflow-x: hidden;
-            overflow-y: hidden;
         }
 
         .container {
             width: 100%;
-            max-width: 520px;
+            max-width: 500px;
             background: var(--surface);
             border-radius: 18px;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
             overflow: hidden;
             position: relative;
-            margin: 2rem auto;
-            transition: var(--transition);
+            margin: 1rem auto;
             z-index: 10;
             transform: translateY(20px);
             opacity: 0;
-            animation: fadeInUp 0.8s ease-out forwards;
+            animation: fadeInUp 0.8s ease-out 0.2s forwards;
         }
 
         @keyframes fadeInUp {
@@ -81,99 +66,84 @@
         }
 
         .header {
-            padding: 2.5rem 2rem 1.8rem;
+            padding: 2.2rem 2rem 1.8rem;
             text-align: center;
             position: relative;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            background: var(--primary);
             color: white;
-            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
         }
 
         .logo {
-            width: 90px;
-            height: 90px;
-            background: white;
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1.5rem;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            margin: 0 auto 1.2rem;
+            backdrop-filter: blur(4px);
             transition: var(--transition);
-        }
-
-        .logo:hover {
-            transform: scale(1.05) rotate(5deg);
         }
 
         .logo i {
-            font-size: 3rem;
-            color: var(--primary);
-            transition: var(--transition);
+            font-size: 2.2rem;
+            color: white;
         }
 
         h1 {
-            font-size: 2.1rem;
+            font-size: 1.9rem;
             font-weight: 700;
             letter-spacing: -0.5px;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 0.3rem;
         }
 
         .subtitle {
             font-size: 1.05rem;
-            opacity: 0.92;
-            margin-top: 0.5rem;
+            opacity: 0.85;
+            margin-top: 0.3rem;
             line-height: 1.5;
             max-width: 400px;
             margin: 0.5rem auto 0;
-            font-weight: 300;
+            font-weight: 400;
         }
 
         .form-container {
-            padding: 2rem;
+            padding: 1.8rem 2rem 1rem;
         }
 
         .form-group {
-            margin-bottom: 1.8rem;
+            margin-bottom: 1.6rem;
             position: relative;
         }
 
         label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            display: block;
             margin-bottom: 0.7rem;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 500;
             color: var(--text);
-            transition: var(--transition);
+            padding-left: 0.3rem;
         }
 
         .input-wrapper {
             position: relative;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            border-radius: 12px;
-            transition: var(--transition);
-        }
-
-        .input-wrapper:focus-within {
-            box-shadow: 0 4px 15px rgba(74, 111, 165, 0.2);
         }
 
         input, textarea, select {
             width: 100%;
-            padding: 1.1rem;
+            padding: 1rem;
             font-size: 1rem;
             border: 1px solid var(--border);
             border-radius: 12px;
             background: var(--surface);
             transition: var(--transition);
             color: var(--text);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
         }
 
         textarea {
-            min-height: 150px;
+            min-height: 140px;
             resize: vertical;
         }
 
@@ -188,7 +158,7 @@
         input:focus, textarea:focus, select:focus {
             outline: none;
             border-color: var(--primary-light);
-            box-shadow: 0 0 0 3px rgba(107, 143, 197, 0.2);
+            box-shadow: 0 0 0 3px rgba(107, 143, 197, 0.15);
         }
 
         .submit-btn {
@@ -206,56 +176,60 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            margin-top: 1.2rem;
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .submit-btn::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -60%;
-            width: 20px;
-            height: 200%;
-            background: rgba(255,255,255,0.3);
-            transform: rotate(25deg);
-            transition: all 0.8s;
+            margin-top: 0.5rem;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
         }
 
         .submit-btn:hover {
             background: #ff5252;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
-        }
-
-        .submit-btn:hover::after {
-            left: 120%;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
         }
 
         .submit-btn:active {
             transform: translateY(0);
         }
 
+        .feature-card {
+            background: rgba(74, 111, 165, 0.03);
+            border-radius: 14px;
+            padding: 1.5rem;
+            margin: 1.2rem 0;
+            border: 1px solid var(--border);
+        }
+
+        .feature-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+            font-size: 1.15rem;
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
         .social-promo {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 1.8rem 2rem;
-            background: rgba(74, 111, 165, 0.06);
+            padding: 1.5rem 2rem;
+            background: rgba(74, 111, 165, 0.05);
             border-top: 1px solid var(--border);
             text-align: center;
         }
 
         .social-promo p {
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: var(--text-light);
             margin-bottom: 1.2rem;
             display: flex;
             align-items: center;
-            gap: 8px;
-            justify-content: center;
+            gap: 0.5rem;
         }
 
         .instagram-btn {
@@ -264,91 +238,61 @@
             gap: 0.6rem;
             background: linear-gradient(45deg, #833ab4, #fd1d1d, #fcb045);
             color: white;
-            padding: 0.8rem 1.8rem;
+            padding: 0.75rem 1.6rem;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
             transition: var(--transition);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .instagram-btn::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -60%;
-            width: 20px;
-            height: 200%;
-            background: rgba(255,255,255,0.3);
-            transform: rotate(25deg);
-            transition: all 0.8s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .instagram-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .instagram-btn:hover::after {
-            left: 120%;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
         }
 
         .theme-toggle {
             position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            width: 46px;
-            height: 46px;
+            top: 1.2rem;
+            right: 1.2rem;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: white;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(4px);
             cursor: pointer;
             transition: var(--transition);
             z-index: 10;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         }
 
         .theme-toggle:hover {
-            transform: scale(1.08) rotate(15deg);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.3);
         }
 
-        .feature-card {
-            background: white;
-            border-radius: 14px;
-            padding: 1.6rem;
-            margin: 1.2rem 0;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
-            border: 1px solid var(--border);
-            transition: var(--transition);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        .feature-card h3 {
+        .confession-counter {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(4px);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: white;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
             display: flex;
             align-items: center;
-            gap: 0.7rem;
-            margin-bottom: 0.9rem;
-            color: var(--primary);
-            font-size: 1.2rem;
-        }
-
-        .feature-card p {
-            color: var(--text-light);
-            font-size: 0.98rem;
-            line-height: 1.7;
+            gap: 0.5rem;
+            z-index: 5;
         }
 
         .floating-hearts {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -360,61 +304,28 @@
 
         .heart {
             position: absolute;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             opacity: 0;
             animation: float 15s linear infinite;
             z-index: -1;
             text-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
-        .heart:nth-child(2n) {
-            animation-duration: 18s;
-        }
-
-        .heart:nth-child(3n) {
-            animation-duration: 12s;
-        }
-
-        .heart:nth-child(4n) {
-            animation-duration: 20s;
-        }
-
-        .heart:nth-child(5n) {
-            animation-duration: 16s;
-        }
-
         @keyframes float {
             0% {
-                transform: translateY(110vh) rotate(0deg) scale(0.5);
+                transform: translateY(110vh) rotate(0deg) scale(0.7);
                 opacity: 0;
             }
             10% {
-                opacity: 0.8;
+                opacity: 0.6;
             }
             90% {
-                opacity: 0.7;
+                opacity: 0.5;
             }
             100% {
-                transform: translateY(-100px) rotate(360deg) scale(1.2);
+                transform: translateY(-100px) rotate(360deg) scale(1.1);
                 opacity: 0;
             }
-        }
-
-        .confession-counter {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 0.6rem 1.2rem;
-            border-radius: 50px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: var(--primary);
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            z-index: 5;
         }
 
         .char-counter {
@@ -454,25 +365,21 @@
 
         @media (max-width: 600px) {
             .container {
-                margin: 1rem auto;
+                margin: 0.5rem auto;
                 border-radius: 16px;
             }
             
             .header {
-                padding: 2rem 1.5rem 1.5rem;
+                padding: 1.8rem 1.5rem 1.5rem;
             }
             
             .logo {
-                width: 80px;
-                height: 80px;
-            }
-            
-            .logo i {
-                font-size: 2.5rem;
+                width: 60px;
+                height: 60px;
             }
             
             h1 {
-                font-size: 1.8rem;
+                font-size: 1.7rem;
             }
             
             .subtitle {
@@ -480,29 +387,29 @@
             }
             
             .form-container {
-                padding: 1.6rem;
+                padding: 1.5rem;
             }
             
             .theme-toggle {
                 top: 1rem;
                 right: 1rem;
-                width: 42px;
-                height: 42px;
+                width: 38px;
+                height: 38px;
             }
             
             .confession-counter {
                 top: 12px;
                 left: 12px;
-                font-size: 0.85rem;
-                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+                padding: 0.4rem 0.9rem;
             }
 
             .feature-card {
-                padding: 1.3rem;
+                padding: 1.2rem;
             }
             
             .heart {
-                font-size: 1.4rem;
+                font-size: 1.2rem;
             }
         }
 
@@ -514,37 +421,31 @@
             --surface: #1e293b;
             --border: #2d3748;
             --shadow: rgba(0, 0, 0, 0.3);
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(30, 30, 40, 0.7) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(30, 30, 40, 0.7) 0%, transparent 20%);
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
         }
 
         body.dark-mode .feature-card {
-            background: #2d3748;
-            border-color: #4a5568;
+            background: rgba(26, 32, 44, 0.3);
+            border-color: #2d3748;
         }
 
         body.dark-mode .social-promo {
-            background: rgba(26, 32, 44, 0.6);
+            background: rgba(26, 32, 44, 0.4);
         }
 
         body.dark-mode .confession-counter {
-            background: rgba(30, 41, 59, 0.9);
+            background: rgba(30, 41, 59, 0.4);
             color: #e2e8f0;
         }
 
         body.dark-mode .input-wrapper {
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
-
-        body.dark-mode .input-wrapper:focus-within {
-            box-shadow: 0 4px 15px rgba(74, 111, 165, 0.4);
-        }
     </style>
 </head>
 <body>
     <div class="confession-counter">
-        <i class="fas fa-lock"></i> <span id="counter">Secure Confessions</span>
+        <i class="fas fa-lock"></i> Secure Confessions
     </div>
     
     <div class="floating-hearts" id="heartsContainer"></div>
@@ -559,7 +460,7 @@
                 <i class="fas fa-heart"></i>
             </div>
             <h1>Galgotians Confessions</h1>
-            <p class="subtitle">Share your feelings anonymously and connect with our college community</p>
+            <p class="subtitle">Share your feelings anonymously with our college community</p>
         </div>
         
         <div class="form-container">
@@ -581,7 +482,7 @@
                 <div class="form-group">
                     <label for="name"><i class="fas fa-user"></i> Display Name (Optional)</label>
                     <div class="input-wrapper">
-                        <input type="text" id="name" name="name" placeholder="How you'd like to be referred to (default: Anonymous)">
+                        <input type="text" id="name" name="name" placeholder="How you'd like to be referred to">
                     </div>
                 </div>
                 
@@ -610,17 +511,17 @@
             
             <div class="feature-card">
                 <h3><i class="fas fa-shield-alt"></i> Your Privacy Matters</h3>
-                <p>All confessions are completely anonymous. We never share your identity with anyone. Your secrets are safe with us.</p>
+                <p>All confessions are completely anonymous. We never share your identity with anyone.</p>
             </div>
             
             <div class="feature-card">
                 <h3><i class="fas fa-users"></i> College Community</h3>
-                <p>Share and connect with fellow Galgotians in a safe, respectful environment. Build connections without revealing your identity.</p>
+                <p>Connect with fellow Galgotians in a safe, respectful environment.</p>
             </div>
         </div>
         
         <div class="social-promo">
-            <p><i class="fas fa-info-circle"></i> Follow us on Instagram for daily confessions and updates!</p>
+            <p><i class="fas fa-info-circle"></i> Follow us for daily confessions & updates!</p>
             <a href="https://instagram.com/galgotias.gc" target="_blank" class="instagram-btn">
                 <i class="fab fa-instagram"></i> @galgotias.gc
             </a>
@@ -664,33 +565,22 @@
             charCount.textContent = this.value.length;
         });
         
-        // Create floating hearts with vibrant colors
+        // Create floating hearts
         function createHearts() {
             const heartsContainer = document.getElementById('heartsContainer');
             const heartColors = [
-                '#ff6b6b', '#ff9e6b', '#ffd166', '#06d6a0', 
-                '#118ab2', '#073b4c', '#ef476f', '#ffb6c1',
-                '#9b5de5', '#f15bb5', '#fee440', '#00bbf9',
-                '#00f5d4', '#ff9e00', '#ff006e', '#8338ec'
+                '#ff6b6b', '#ff9e6b', '#4a6fa5', '#6b8fc5',
+                '#ffb6c1', '#9370db', '#ffd166', '#48bb78'
             ];
             
-            // Create more hearts for a fuller effect
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < 20; i++) {
                 const heart = document.createElement('div');
                 heart.classList.add('heart');
                 heart.innerHTML = '<i class="fas fa-heart"></i>';
-                
-                // Position hearts randomly
                 heart.style.left = Math.random() * 100 + 'vw';
                 heart.style.animationDuration = (Math.random() * 15 + 10) + 's';
                 heart.style.animationDelay = Math.random() * 10 + 's';
-                
-                // Choose a random color from our vibrant palette
                 heart.style.color = heartColors[Math.floor(Math.random() * heartColors.length)];
-                
-                // Add a slight rotation
-                heart.style.transform = `rotate(${Math.random() * 360}deg)`;
-                
                 heartsContainer.appendChild(heart);
             }
         }
@@ -727,15 +617,6 @@
                 document.getElementById('confessionForm').reset();
                 document.getElementById('charCount').textContent = '0';
                 
-                // Update counter animation
-                const counter = document.getElementById('counter');
-                counter.textContent = 'Secure Confessions';
-                counter.style.opacity = '0.5';
-                setTimeout(() => {
-                    counter.style.transition = 'all 0.5s ease';
-                    counter.style.opacity = '1';
-                }, 50);
-                
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalBtnContent;
             }, 1500);
@@ -750,13 +631,6 @@
                 document.querySelector('.container').style.transform = 'translateY(0)';
                 document.querySelector('.container').style.opacity = '1';
             }, 300);
-            
-            // Prevent context menu
-            document.addEventListener('contextmenu', function(e) {
-                if (!e.target.matches('input, textarea, select, .input-wrapper')) {
-                    e.preventDefault();
-                }
-            });
         });
     </script>
 </body>
