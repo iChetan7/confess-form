@@ -470,6 +470,7 @@
                 <input type="hidden" name="_subject" value="New Galgotians Confession">
                 <input type="hidden" name="_template" value="table">
                 <input type="hidden" name="_autoresponse" value="Thank you for your confession! Your message has been received and will be posted anonymously on our Instagram page. Stay tuned!">
+                <input type="hidden" name="formatted_message" id="formattedMessage">
                 
                 <div class="form-group">
                     <label for="confession"><i class="fas fa-pen"></i> Your Confession</label>
@@ -601,15 +602,49 @@
             }, 3000);
         }
         
+        // Format submission time
+        function getFormattedDateTime() {
+            const now = new Date();
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
+        }
+        
         // Form submission
         document.getElementById('confessionForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default submission to allow formatting
+            
             const submitBtn = document.querySelector('.submit-btn');
             const originalBtnContent = submitBtn.innerHTML;
-            
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
             
-            // Simulate form submission for demo
+            // Get form values
+            const confession = document.getElementById('confession').value;
+            const name = document.getElementById('name').value || 'Anonymous';
+            const category = document.getElementById('category').value;
+            const submissionTime = getFormattedDateTime();
+            
+            // Create formatted message
+            const formattedMessage = `Thank You For Your Confession!\n\n` +
+                                    `Submission_Time: ${submissionTime}\n` +
+                                    `Confession: ${confession}\n` +
+                                    `Name: ${name}\n` +
+                                    `Category: ${category}\n\n` +
+                                    `Follow @galgotias.gc\n` +
+                                    `© 2025 Galgotians Confessions`;
+            
+            // Set formatted message in hidden input
+            document.getElementById('formattedMessage').value = formattedMessage;
+            
+            // Submit the form
+            this.submit();
+            
+            // Simulate success for notification (since formsubmit.co handles actual submission)
             setTimeout(() => {
                 showNotification('Confession submitted successfully!');
                 
