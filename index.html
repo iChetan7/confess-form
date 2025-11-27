@@ -520,19 +520,6 @@ document.getElementById('confessionForm').addEventListener('submit', function(e)
     }
 });
 </script>
-<script>
-document.getElementById('confessionForm').addEventListener('submit', function(e) {
-    const nameInput = document.getElementById('name');
-    const finalNameInput = document.getElementById('finalName');
-    
-    // Agar name empty hai to "Anonymous" set karo
-    if (!nameInput.value.trim()) {
-        finalNameInput.value = "Anonymous";
-    } else {
-        finalNameInput.value = nameInput.value.trim();
-    }
-});
-</script>
             
             <div class="feature-card">
                 <h3><i class="fas fa-shield-alt"></i> Your Privacy Matters</h3>
