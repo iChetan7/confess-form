@@ -463,11 +463,15 @@
         </div>
         
         <div class="form-container">
-           <form id="confessionForm" method="POST" action="https://api.web3forms.com/submit">
+         <form id="confessionForm" method="POST" action="https://api.web3forms.com/submit">
     <input type="hidden" name="access_key" value="f6f533b1-e176-4f56-86d8-cfdee09c8a89">
-    <input type="hidden" name="subject" value="New Galgotians Confession">
+    <input type="hidden" name="subject" value="❤️ New Galgotians Confession">
     <input type="hidden" name="redirect" value="https://confession-galgotians.netlify.app/thankyou.html">
-    <input type="hidden" name="from_name" value="Galgotians Confessions">
+    
+    <!-- Ye line IMPORTANT hai - clean format ke liye -->
+    <input type="hidden" name="confession_label" value="📝 Confession:">
+    <input type="hidden" name="name_label" value="👤 Name:">
+    <input type="hidden" name="category_label" value="🏷️ Category:">
     
     <div class="form-group">
         <label for="confession"><i class="fas fa-pen"></i> Your Confession</label>
