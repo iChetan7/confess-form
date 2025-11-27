@@ -463,8 +463,10 @@
         </div>
         
         <div class="form-container">
-          <form name="confession" method="POST" data-netlify="true" action="/thankyou.html">
-    <input type="hidden" name="form-name" value="confession" />
+          <form id="confessionForm" method="POST" action="https://formspree.io/f/xrbleboq">
+    <input type="hidden" name="_subject" value="New Galgotians Confession">
+    <input type="hidden" name="_next" value="https://confession-galgotians.netlify.app/thankyou.html">
+    <input type="text" name="_gotcha" style="display:none">
     
     <div class="form-group">
         <label for="confession"><i class="fas fa-pen"></i> Your Confession</label>
