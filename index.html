@@ -468,15 +468,10 @@
     <input type="hidden" name="subject" value="❤️ New Galgotians Confession">
     <input type="hidden" name="redirect" value="https://confession-galgotians.netlify.app/thankyou.html">
     
-    <!-- Ye line IMPORTANT hai - clean format ke liye -->
-    <input type="hidden" name="confession_label" value="📝 Confession:">
-    <input type="hidden" name="name_label" value="👤 Name:">
-    <input type="hidden" name="category_label" value="🏷️ Category:">
-    
     <div class="form-group">
         <label for="confession"><i class="fas fa-pen"></i> Your Confession</label>
         <div class="input-wrapper">
-            <textarea id="confession" name="confession" placeholder="Express your feelings, thoughts, or secrets..." maxlength="1000" required></textarea>
+            <textarea id="confession" name="📝 Confession" placeholder="Express your feelings, thoughts, or secrets..." maxlength="1000" required></textarea>
             <div class="char-counter"><span id="charCount">0</span>/1000</div>
         </div>
     </div>
@@ -484,14 +479,14 @@
     <div class="form-group">
         <label for="name"><i class="fas fa-user"></i> Display Name (Optional)</label>
         <div class="input-wrapper">
-            <input type="text" id="name" name="name" placeholder="How you'd like to be referred to">
+            <input type="text" id="name" name="👤 Name" placeholder="How you'd like to be referred to">
         </div>
     </div>
     
     <div class="form-group">
         <label for="category"><i class="fas fa-tag"></i> Category</label>
         <div class="input-wrapper">
-            <select id="category" name="category" required>
+            <select id="category" name="🏷️ Category" required>
                 <option value="" disabled selected>Choose a category</option>
                 <option value="Love Confessions">Love Confessions</option>
                 <option value="Crush">Crush</option>
