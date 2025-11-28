@@ -579,7 +579,7 @@
             setTimeout(() => notification.classList.remove('show'), 3000);
         }
         
-       // Form submission - DIRECT TO TELEGRAM ONLY
+  // Form submission - DIRECT TO TELEGRAM ONLY
 document.getElementById('confessionForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
@@ -592,11 +592,21 @@ document.getElementById('confessionForm').addEventListener('submit', function(e)
     const name = document.getElementById('name').value || 'Anonymous';
     const category = document.getElementById('category').value;
     const time = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
-    
+
+    // Category emojis mapping
+    const categoryEmojis = {
+        'Love Confessions': '💖',
+        'Crush': '💕',
+        'Regrets / Sorry': '😞',
+        'Friendship': '🥰📈',
+        'Thoughts': '💭',
+        'Other': ''
+    };
+
     // Exact format aapko chahiye
-    const telegramMessage = `Confession:\n${confession}\n\nName:\n${name}\n\nCategory:\n${category}\n\nLocal_time_IST:\n${time}`;
-    
-    // Direct Telegram API call
+    const telegramMessage = `📃*Confession:*\n\`\`\`\n${confession}\n\`\`\`\n\n✨*Name:*\n\`\`\`\n${name}\n\`\`\`\n\n*Category:*\n\`\`\`\n${category} ${categoryEmojis[category] || ''}\n\`\`\`\n\n*Local_time_IST:*\n\`\`\`\n${time}\n\`\`\``;
+
+    // Direct Telegram API call with Markdown
     fetch(`https://api.telegram.org/bot8260386750:AAFBLXQxDlBzAZnA4zrrRRTX-tCq0lO_zJg/sendMessage`, {
         method: 'POST',
         headers: {
@@ -604,7 +614,8 @@ document.getElementById('confessionForm').addEventListener('submit', function(e)
         },
         body: JSON.stringify({
             chat_id: '7352213052',
-            text: telegramMessage
+            text: telegramMessage,
+            parse_mode: 'Markdown'
         })
     })
     .then(response => response.json())
