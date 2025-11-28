@@ -463,14 +463,10 @@
         </div>
         
         <div class="form-container">
-       <form id="confessionForm" method="POST" action="https://api.web3forms.com/submit">
+     <form id="confessionForm" method="POST" action="https://api.web3forms.com/submit">
     <input type="hidden" name="access_key" value="f6f533b1-e176-4f56-86d8-cfdee09c8a89">
     <input type="hidden" name="subject" value="New Galgotians Confession">
     <input type="hidden" name="redirect" value="https://confession-galgotians.netlify.app/thankyou.html">
-    
-    <!-- Telegram Webhook - WITH YOUR CHAT ID -->
-    <input type="hidden" name="webhook_url" value="https://api.telegram.org/bot8260386750:AAFBLXQxDlBzAZnA4zrrRRTX-tCq0lO_zJg/sendMessage">
-    <input type="hidden" name="webhook_data" value='{"chat_id": "7352213052", "text": "📝 New Galgotians Confession!\n\n❤️ {{confession}}\n\n👤 Name: {{name}}\n🏷️ Category: {{category}}\n⏰ Time: {{submission_time}}"}'>
     
     <!-- Hidden field for final name -->
     <input type="hidden" name="Name" id="finalName" value="Anonymous">
@@ -513,15 +509,42 @@
 
 <script>
 document.getElementById('confessionForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
     const nameInput = document.getElementById('name');
     const finalNameInput = document.getElementById('finalName');
+    const confessionInput = document.getElementById('confession');
+    const categoryInput = document.getElementById('category');
     
     // Agar name empty hai to "Anonymous" set karo
-    if (!nameInput.value.trim()) {
-        finalNameInput.value = "Anonymous";
-    } else {
-        finalNameInput.value = nameInput.value.trim();
-    }
+    const displayName = !nameInput.value.trim() ? "Anonymous" : nameInput.value.trim();
+    finalNameInput.value = displayName;
+    
+    // Telegram message bhejein
+    const telegramMessage = `📝 New Galgotians Confession!\n\n❤️ ${confessionInput.value}\n\n👤 Name: ${displayName}\n🏷️ Category: ${categoryInput.value}\n⏰ Time: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}`;
+    
+    // Telegram API call
+    fetch(`https://api.telegram.org/bot8260386750:AAFBLXQxDlBzAZnA4zrrRRTX-tCq0lO_zJg/sendMessage`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            chat_id: '7352213052',
+            text: telegramMessage
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Telegram message sent:', data);
+        // Ab form submit karo
+        document.getElementById('confessionForm').submit();
+    })
+    .catch(error => {
+        console.error('Telegram error:', error);
+        // Phir bhi form submit karo
+        document.getElementById('confessionForm').submit();
+    });
 });
 </script>
             
