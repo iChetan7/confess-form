@@ -468,6 +468,10 @@
     <input type="hidden" name="subject" value="New Galgotians Confession">
     <input type="hidden" name="redirect" value="https://confession-galgotians.netlify.app/thankyou.html">
     
+    <!-- Telegram Webhook -->
+    <input type="hidden" name="webhook_url" value="https://api.telegram.org/botYOUR_BOT_TOKEN/sendMessage">
+    <input type="hidden" name="webhook_data" value='{"chat_id": "YOUR_CHAT_ID", "text": "📝 New Confession!\n\n❤️ {{confession}}\n\n👤 Name: {{name}}\n🏷️ Category: {{category}}\n⏰ Time: {{submission_time}}"}'>
+    
     <!-- Hidden field for final name -->
     <input type="hidden" name="Name" id="finalName" value="Anonymous">
     
