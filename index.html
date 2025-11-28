@@ -603,8 +603,8 @@ document.getElementById('confessionForm').addEventListener('submit', function(e)
         'Other': ''
     };
 
-    // Exact format aapko chahiye
-    const telegramMessage = `📃*Confession:*\n\`\`\`\n${confession}\n\`\`\`\n\n✨*Name:*\n\`\`\`\n${name}\n\`\`\`\n\n*Category:*\n\`\`\`\n${category} ${categoryEmojis[category] || ''}\n\`\`\`\n\n*Local_time_IST:*\n\`\`\`\n${time}\n\`\`\``;
+    // Exact first format aapne manually banaya tha
+    const telegramMessage = `📃 *Confession:*\n${confession}\n\n✨ *Name:*\n${name}\n\n*Category:*\n${category} ${categoryEmojis[category] || ''}\n\n*Local_time_IST:*\n${time}`;
 
     // Direct Telegram API call with Markdown
     fetch(`https://api.telegram.org/bot8260386750:AAFBLXQxDlBzAZnA4zrrRRTX-tCq0lO_zJg/sendMessage`, {
