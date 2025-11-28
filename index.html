@@ -463,98 +463,42 @@
         </div>
         
         <div class="form-container">
-    <form id="confessionForm">
-    <div class="form-group">
-        <label for="confession"><i class="fas fa-pen"></i> Your Confession</label>
-        <div class="input-wrapper">
-            <textarea id="confession" name="confession" placeholder="Express your feelings, thoughts, or secrets..." maxlength="1000" required></textarea>
-            <div class="char-counter"><span id="charCount">0</span>/1000</div>
-        </div>
-    </div>
-    
-    <div class="form-group">
-        <label for="name"><i class="fas fa-user"></i> Display Name (Optional)</label>
-        <div class="input-wrapper">
-            <input type="text" id="name" placeholder="How you'd like to be referred to">
-        </div>
-    </div>
-    
-    <div class="form-group">
-        <label for="category"><i class="fas fa-tag"></i> Category</label>
-        <div class="input-wrapper">
-            <select id="category" name="category" required>
-                <option value="" disabled selected>Choose a category</option>
-                <option value="Love Confessions">Love Confessions</option>
-                <option value="Crush">Crush</option>
-                <option value="Regrets / Sorry">Regrets / Sorry</option>
-                <option value="Friendship">Friendship</option>
-                <option value="Thoughts">Thoughts</option>
-                <option value="Other">Other</option>
-            </select>
-        </div>
-    </div>
-    
-    <button type="submit" class="submit-btn">
-        <i class="fas fa-paper-plane"></i>
-        Submit Confession
-    </button>
-</form>
-
-<script>
-document.getElementById('confessionForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const submitBtn = document.querySelector('.submit-btn');
-    const originalText = submitBtn.innerHTML;
-    
-    // Loading state
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-    
-    const nameInput = document.getElementById('name');
-    const confessionInput = document.getElementById('confession');
-    const categoryInput = document.getElementById('category');
-    
-    // Agar name empty hai to "Anonymous" set karo
-    const displayName = !nameInput.value.trim() ? "Anonymous" : nameInput.value.trim();
-    
-    // Exact format aapko chahiye
-    const telegramMessage = `Confession:\n${confessionInput.value}\n\nName:\n${displayName}\n\nCategory:\n${categoryInput.value}\n\nLocal_time_IST:\n${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}`;
-    
-    // Direct Telegram API call
-    fetch(`https://api.telegram.org/bot8260386750:AAFBLXQxDlBzAZnA4zrrRRTX-tCq0lO_zJg/sendMessage`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            chat_id: '7352213052',
-            text: telegramMessage
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.ok) {
-            // Success - thankyou page redirect
-            alert('✅ Confession submitted successfully!');
-            window.location.href = 'https://confession-galgotians.netlify.app/thankyou.html';
-        } else {
-            throw new Error(data.description);
-        }
-    })
-    .catch(error => {
-        console.error('Telegram error:', error);
-        alert('❌ Failed to send confession. Please try again.');
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
-    });
-});
-
-// Character counter
-document.getElementById('confession').addEventListener('input', function() {
-    document.getElementById('charCount').textContent = this.value.length;
-});
-</script>
+            <form id="confessionForm">
+                <div class="form-group">
+                    <label for="confession"><i class="fas fa-pen"></i> Your Confession</label>
+                    <div class="input-wrapper">
+                        <textarea id="confession" name="confession" placeholder="Express your feelings, thoughts, or secrets..." maxlength="1000" required></textarea>
+                        <div class="char-counter"><span id="charCount">0</span>/1000</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="name"><i class="fas fa-user"></i> Display Name (Optional)</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="name" placeholder="How you'd like to be referred to">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="category"><i class="fas fa-tag"></i> Category</label>
+                    <div class="input-wrapper">
+                        <select id="category" name="category" required>
+                            <option value="" disabled selected>Choose a category</option>
+                            <option value="Love Confessions">Love Confessions</option>
+                            <option value="Crush">Crush</option>
+                            <option value="Regrets / Sorry">Regrets / Sorry</option>
+                            <option value="Friendship">Friendship</option>
+                            <option value="Thoughts">Thoughts</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i>
+                    Submit Confession
+                </button>
+            </form>
             
             <div class="feature-card">
                 <h3><i class="fas fa-shield-alt"></i> Your Privacy Matters</h3>
@@ -635,7 +579,7 @@ document.getElementById('confession').addEventListener('input', function() {
             setTimeout(() => notification.classList.remove('show'), 3000);
         }
         
-        // Form submission
+        // Form submission - DIRECT TO TELEGRAM ONLY
         document.getElementById('confessionForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -649,26 +593,38 @@ document.getElementById('confession').addEventListener('input', function() {
             const category = document.getElementById('category').value;
             const time = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
             
-            // Set the hidden input for time
-            let timeInput = document.getElementById('time_value');
-            if (!timeInput) {
-                timeInput = document.createElement('input');
-                timeInput.type = 'hidden';
-                timeInput.name = 'Local time IST';
-                timeInput.id = 'time_value';
-                this.appendChild(timeInput);
-            }
-            timeInput.value = time;
+            // Exact format aapko chahiye
+            const telegramMessage = `Confession:\n${confession}\n\nName:\n${name}\n\nCategory:\n${category}\n\nLocal_time_IST:\n${time}`;
             
-            this.submit();
-            
-            setTimeout(() => {
-                showNotification('Confession submitted successfully!');
-                document.getElementById('confessionForm').reset();
-                document.getElementById('charCount').textContent = '0';
+            // Direct Telegram API call
+            fetch(`https://api.telegram.org/bot8260386750:AAFBLXQxDlBzAZnA4zrrRRTX-tCq0lO_zJg/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: '7352213052',
+                    text: telegramMessage
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    showNotification('Confession submitted successfully!');
+                    document.getElementById('confessionForm').reset();
+                    document.getElementById('charCount').textContent = '0';
+                } else {
+                    throw new Error(data.description);
+                }
+            })
+            .catch(error => {
+                console.error('Telegram error:', error);
+                showNotification('Failed to send confession. Please try again.', false);
+            })
+            .finally(() => {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalBtnContent;
-            }, 1500);
+            });
         });
         
         window.addEventListener('load', function() {
