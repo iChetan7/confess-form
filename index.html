@@ -579,53 +579,50 @@
             setTimeout(() => notification.classList.remove('show'), 3000);
         }
         
-        // Form submission - DIRECT TO TELEGRAM ONLY
-        document.getElementById('confessionForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const submitBtn = document.querySelector('.submit-btn');
-            const originalBtnContent = submitBtn.innerHTML;
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-            
-            const confession = document.getElementById('confession').value;
-            const name = document.getElementById('name').value || 'Anonymous';
-            const category = document.getElementById('category').value;
-            const time = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
-            
-            // Exact format aapko chahiye
-            const telegramMessage = `Confession:\n${confession}\n\nName:\n${name}\n\nCategory:\n${category}\n\nLocal_time_IST:\n${time}`;
-            
-            // Direct Telegram API call
-            fetch(`https://api.telegram.org/bot8260386750:AAFBLXQxDlBzAZnA4zrrRRTX-tCq0lO_zJg/sendMessage`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    chat_id: '7352213052',
-                    text: telegramMessage
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.ok) {
-                    showNotification('Confession submitted successfully!');
-                    document.getElementById('confessionForm').reset();
-                    document.getElementById('charCount').textContent = '0';
-                } else {
-                    throw new Error(data.description);
-                }
-            })
-            .catch(error => {
-                console.error('Telegram error:', error);
-                showNotification('Failed to send confession. Please try again.', false);
-            })
-            .finally(() => {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalBtnContent;
-            });
-        });
+       // Form submission - DIRECT TO TELEGRAM ONLY
+document.getElementById('confessionForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const submitBtn = document.querySelector('.submit-btn');
+    const originalBtnContent = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+    
+    const confession = document.getElementById('confession').value;
+    const name = document.getElementById('name').value || 'Anonymous';
+    const category = document.getElementById('category').value;
+    const time = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+    
+    // Exact format aapko chahiye
+    const telegramMessage = `Confession:\n${confession}\n\nName:\n${name}\n\nCategory:\n${category}\n\nLocal_time_IST:\n${time}`;
+    
+    // Direct Telegram API call
+    fetch(`https://api.telegram.org/bot8260386750:AAFBLXQxDlBzAZnA4zrrRRTX-tCq0lO_zJg/sendMessage`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            chat_id: '7352213052',
+            text: telegramMessage
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.ok) {
+            // Success - directly redirect to your existing thankyou page
+            window.location.href = 'https://confession-galgotians.netlify.app/thankyou.html';
+        } else {
+            throw new Error(data.description);
+        }
+    })
+    .catch(error => {
+        console.error('Telegram error:', error);
+        showNotification('Failed to send confession. Please try again.', false);
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnContent;
+    });
+});
         
         window.addEventListener('load', function() {
             createHearts();
