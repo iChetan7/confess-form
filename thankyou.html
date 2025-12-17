@@ -228,6 +228,15 @@
       font-size: 18px;
     }
     
+    /* Instagram username with italic font */
+    .instagram-username {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-style: italic;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      color: #4a6fa5;
+    }
+    
     /* Footer */
     .footer {
       text-align: center;
@@ -253,6 +262,14 @@
       color: #4a6fa5;
       font-size: 17px;
       margin-top: 5px;
+    }
+    
+    /* Italic Instagram handle in footer */
+    .instagram-handle {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-style: italic;
+      font-weight: 500;
+      color: #4a6fa5;
     }
     
     /* Counter Animation */
@@ -326,7 +343,7 @@
         <div class="counter-container">
           <div class="counter-label">Total Confessions</div>
           <div class="counter-number" id="confessionCounter">130</div>
-          <div class="counter-label">And counting...</div>
+          <div class="counter-label">Live Counter</div>
         </div>
       </div>
         
@@ -336,8 +353,9 @@
         <div class="social-card">
           <h3><i class="fab fa-instagram"></i> Follow Us</h3>
           <p>Stay updated with the latest confessions and campus stories</p>
-          <a href="https://www.instagram.com/galgotians.unfiltered" class="social-btn" target="_blank">
-            <i class="fab fa-instagram"></i> @galgotians.unfiltered
+          <a href="https://www.instagram.com/galgotians.confession" class="social-btn" target="_blank">
+            <i class="fab fa-instagram"></i> 
+            <span class="instagram-username">@galgotians.confession</span>
           </a>
         </div>
       </div>
@@ -346,7 +364,8 @@
       <div class="footer">
         <p>Your secrets are safe with us</p>
         <div class="handle">
-          <i class="fas fa-at"></i> @galgotias.gc
+          <i class="fas fa-at"></i> 
+          <span class="instagram-handle">@galgotians.confession</span>
         </div>
       </div>
     </div>
@@ -424,89 +443,80 @@
       }, 300);
     });
     
-    // Counter System
+    // ================== SIMPLE COUNTER - HAR BAAR +1 ==================
+    // Storage Key
     const COUNTER_KEY = 'galgotias_confession_counter';
     
-    // Get current count
+    // Function to get current count
     function getCurrentCount() {
       const storedCount = localStorage.getItem(COUNTER_KEY);
-      return storedCount ? parseInt(storedCount) : 130; // Start from 130
+      return storedCount ? parseInt(storedCount) : 130; // Default 130
     }
     
-    // Increment count
+    // Function to increment counter - HAR BAAR CALL HONE PAR +1
     function incrementCounter() {
       const currentCount = getCurrentCount();
       const newCount = currentCount + 1;
+      
+      // Save to localStorage
       localStorage.setItem(COUNTER_KEY, newCount);
+      
       return newCount;
     }
     
-    // Update counter display
-    function updateCounterDisplay() {
+    // Function to update display
+    function updateDisplay(count) {
       const counterElement = document.getElementById('confessionCounter');
-      const currentCount = getCurrentCount();
+      counterElement.textContent = count;
+      counterElement.classList.add('counting');
       
-      // Check if this is a new visit (using sessionStorage)
-      const visitKey = 'galgotias_visited_today';
-      const hasVisitedToday = sessionStorage.getItem(visitKey);
+      // Update page title
+      document.title = `Confession #${count} Received | Galgotias Confessions`;
       
-      if (!hasVisitedToday) {
-        // First visit today - increment counter
-        const newCount = incrementCounter();
-        counterElement.textContent = newCount;
-        counterElement.classList.add('counting');
-        
-        // Mark as visited
-        sessionStorage.setItem(visitKey, 'true');
-        
-        // Remove animation class
-        setTimeout(() => {
-          counterElement.classList.remove('counting');
-        }, 500);
-        
-        // Update page title
-        document.title = `Confession #${newCount} Received | Galgotias Confessions`;
-        
-        console.log(`🎯 Counter incremented to: ${newCount}`);
-      } else {
-        // Already visited today - just show current count
-        counterElement.textContent = currentCount;
-        console.log(`📊 Current count: ${currentCount} (already visited today)`);
-      }
+      // Remove animation after 0.5 seconds
+      setTimeout(() => {
+        counterElement.classList.remove('counting');
+      }, 500);
+      
+      // Log to console
+      console.log(`✅ Confession counter updated: ${count}`);
     }
     
-    // Initialize the page
+    // ================== MAIN EXECUTION ==================
+    // When page loads
     window.addEventListener('load', function() {
       createHearts();
-      updateCounterDisplay();
       
-      // Easter egg: Press 'C' to manually increment
+      // HAR BAAR PAGE LOAD HONE PAR:
+      // 1. Current count get karo
+      // 2. +1 increment karo
+      // 3. Display update karo
+      
+      const currentCount = getCurrentCount();
+      const newCount = incrementCounter(); // Yehi line har baar +1 karegi
+      updateDisplay(newCount);
+      
+      console.log(`📊 Page accessed! Count: ${currentCount} → ${newCount}`);
+      
+      // Easter egg: Press 'R' to refresh and increment again
       document.addEventListener('keydown', function(e) {
-        if (e.key === 'c' || e.key === 'C') {
-          const newCount = incrementCounter();
-          document.getElementById('confessionCounter').textContent = newCount;
-          document.getElementById('confessionCounter').classList.add('counting');
-          setTimeout(() => {
-            document.getElementById('confessionCounter').classList.remove('counting');
-          }, 500);
-          console.log(`➕ Manually incremented to: ${newCount}`);
+        if (e.key === 'r' || e.key === 'R') {
+          const refreshedCount = incrementCounter();
+          updateDisplay(refreshedCount);
+          console.log(`🔄 Manual refresh increment: ${refreshedCount}`);
         }
       });
-      
-      // Reset session at midnight
-      function checkMidnightReset() {
-        const now = new Date();
-        const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-        const timeUntilMidnight = tomorrow - now;
-        
-        setTimeout(() => {
-          sessionStorage.removeItem('galgotias_visited_today');
-          console.log('🔄 Session reset for new day');
-          checkMidnightReset(); // Schedule next reset
-        }, timeUntilMidnight);
-      }
-      
-      checkMidnightReset();
+    });
+    
+    // ================== EXTRA FEATURE ==================
+    // Agar user page ko refresh kare (F5/Ctrl+R) tab bhi increment ho
+    window.addEventListener('beforeunload', function() {
+      // Small delay to ensure counter increments before page unloads
+      setTimeout(() => {
+        const currentCount = getCurrentCount();
+        const newCount = currentCount + 1;
+        localStorage.setItem(COUNTER_KEY, newCount);
+      }, 100);
     });
   </script>
 </body>
