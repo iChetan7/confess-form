@@ -144,35 +144,30 @@
       margin: 0 auto;
     }
     
-    /* Statistics Banner */
-    .stats-banner {
-      display: flex;
-      justify-content: space-around;
-      background: linear-gradient(135deg, #4a6fa5 0%, #2d6a4f 100%);
-      border-radius: 16px;
-      padding: 20px;
-      margin: 30px 0;
-      color: white;
-      box-shadow: 0 8px 20px rgba(74, 111, 165, 0.2);
-    }
-    
-    .stat-item {
+    /* Counter Display */
+    .counter-container {
       text-align: center;
-      flex: 1;
+      margin: 30px 0;
+      padding: 20px;
+      background: rgba(74, 111, 165, 0.05);
+      border-radius: 15px;
+      border: 2px dashed rgba(74, 111, 165, 0.2);
     }
     
-    .stat-number {
-      font-size: 32px;
+    .counter-number {
+      font-size: 48px;
       font-weight: 800;
-      line-height: 1;
-      margin-bottom: 5px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      color: #2d6a4f;
+      margin: 10px 0;
+      transition: all 0.3s ease;
     }
     
-    .stat-label {
+    .counter-label {
       font-size: 14px;
+      color: #4a6fa5;
       font-weight: 600;
-      opacity: 0.9;
+      text-transform: uppercase;
+      letter-spacing: 2px;
     }
     
     /* Social sections */
@@ -180,7 +175,7 @@
       display: flex;
       flex-direction: column;
       gap: 25px;
-      margin: 30px 0;
+      margin: 40px 0 30px;
     }
     
     .social-card {
@@ -260,15 +255,15 @@
       margin-top: 5px;
     }
     
-    /* Count Animation */
-    .counting {
-      animation: countPulse 1s ease-out;
+    /* Counter Animation */
+    @keyframes countUp {
+      0% { transform: scale(1); color: #2d6a4f; }
+      50% { transform: scale(1.1); color: #4a6fa5; }
+      100% { transform: scale(1); color: #2d6a4f; }
     }
     
-    @keyframes countPulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
+    .counting {
+      animation: countUp 0.5s ease-out;
     }
     
     /* Responsive design */
@@ -303,12 +298,8 @@
         padding: 10px 20px;
       }
       
-      .stats-banner {
-        padding: 15px;
-      }
-      
-      .stat-number {
-        font-size: 26px;
+      .counter-number {
+        font-size: 40px;
       }
     }
   </style>
@@ -328,22 +319,17 @@
         </div>
         <h1 class="title">Thank You for Your Confession!</h1>
         <p class="message">
-          Your secret #<span id="confessionNumber">150</span> has been received securely and will remain anonymous.
+          We respect your privacy. Your message has been received securely and will remain anonymous.
         </p>
         
-        <!-- Statistics Banner -->
-        <div class="stats-banner">
-          <div class="stat-item">
-            <div class="stat-number" id="confessionsCount">150+</div>
-            <div class="stat-label">Confessions</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number" id="daysRunning">150</div>
-            <div class="stat-label">Days Running</div>
-          </div>
+        <!-- Counter Display -->
+        <div class="counter-container">
+          <div class="counter-label">Total Confessions</div>
+          <div class="counter-number" id="confessionCounter">130</div>
+          <div class="counter-label">And counting...</div>
         </div>
       </div>
-      
+        
       <!-- Social sections -->
       <div class="social-section">
         <!-- Follow Us -->
@@ -354,15 +340,6 @@
             <i class="fab fa-instagram"></i> @galgotians.unfiltered
           </a>
         </div>
-        
-        <!-- Submit Another -->
-        <div class="social-card">
-          <h3><i class="fas fa-paper-plane"></i> Submit Another</h3>
-          <p>Have more to share? Submit another anonymous confession</p>
-          <button class="social-btn" id="submitAgainBtn">
-            <i class="fas fa-redo"></i> Submit Again
-          </button>
-        </div>
       </div>
       
       <!-- Footer -->
@@ -371,9 +348,6 @@
         <div class="handle">
           <i class="fas fa-at"></i> @galgotias.gc
         </div>
-        <p style="margin-top: 15px; font-size: 14px; color: #888;">
-          <i class="fas fa-calendar-alt"></i> Started: <span id="startDate">Oct 1, 2023</span>
-        </p>
       </div>
     </div>
   </div>
@@ -450,114 +424,89 @@
       }, 300);
     });
     
-    // Calculate days running from start date
-    function calculateDaysRunning() {
-      // Start date (you can change this to your actual start date)
-      const startDate = new Date('2023-10-01'); // October 1, 2023
-      const today = new Date();
-      
-      // Calculate difference in days
-      const diffTime = Math.abs(today - startDate);
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      
-      // Update the days running counter
-      const daysElement = document.getElementById('daysRunning');
-      daysElement.textContent = diffDays;
-      daysElement.classList.add('counting');
-      
-      // Remove animation class after animation completes
-      setTimeout(() => {
-        daysElement.classList.remove('counting');
-      }, 1000);
-      
-      // Update start date display
-      document.getElementById('startDate').textContent = startDate.toLocaleDateString('en-US', {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric'
-      });
-      
-      return diffDays;
+    // Counter System
+    const COUNTER_KEY = 'galgotias_confession_counter';
+    
+    // Get current count
+    function getCurrentCount() {
+      const storedCount = localStorage.getItem(COUNTER_KEY);
+      return storedCount ? parseInt(storedCount) : 130; // Start from 130
     }
     
-    // Generate random confession number
-    function generateConfessionNumber() {
-      // Base number is 150, add random number between 1-10
-      const baseConfessions = 150;
-      const randomAddition = Math.floor(Math.random() * 10) + 1;
-      const totalConfessions = baseConfessions + randomAddition;
-      
-      // Update confession number
-      const confessionNumElement = document.getElementById('confessionNumber');
-      const confessionsCountElement = document.getElementById('confessionsCount');
-      
-      confessionNumElement.textContent = totalConfessions;
-      confessionsCountElement.textContent = totalConfessions + '+';
-      
-      // Add counting animation
-      confessionNumElement.classList.add('counting');
-      confessionsCountElement.classList.add('counting');
-      
-      // Remove animation class after animation completes
-      setTimeout(() => {
-        confessionNumElement.classList.remove('counting');
-        confessionsCountElement.classList.remove('counting');
-      }, 1000);
-      
-      return totalConfessions;
+    // Increment count
+    function incrementCounter() {
+      const currentCount = getCurrentCount();
+      const newCount = currentCount + 1;
+      localStorage.setItem(COUNTER_KEY, newCount);
+      return newCount;
     }
     
-    // Submit Again Button
-    document.getElementById('submitAgainBtn').addEventListener('click', function() {
-      // Show loading state
-      const originalText = this.innerHTML;
-      this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparing Form...';
-      this.disabled = true;
+    // Update counter display
+    function updateCounterDisplay() {
+      const counterElement = document.getElementById('confessionCounter');
+      const currentCount = getCurrentCount();
       
-      // Simulate form preparation
-      setTimeout(() => {
-        // Increase confession count
-        const currentCount = parseInt(document.getElementById('confessionNumber').textContent);
-        document.getElementById('confessionNumber').textContent = currentCount + 1;
-        document.getElementById('confessionsCount').textContent = (currentCount + 1) + '+';
+      // Check if this is a new visit (using sessionStorage)
+      const visitKey = 'galgotias_visited_today';
+      const hasVisitedToday = sessionStorage.getItem(visitKey);
+      
+      if (!hasVisitedToday) {
+        // First visit today - increment counter
+        const newCount = incrementCounter();
+        counterElement.textContent = newCount;
+        counterElement.classList.add('counting');
         
-        // Animate the count increase
-        document.getElementById('confessionNumber').classList.add('counting');
-        document.getElementById('confessionsCount').classList.add('counting');
+        // Mark as visited
+        sessionStorage.setItem(visitKey, 'true');
         
+        // Remove animation class
         setTimeout(() => {
-          document.getElementById('confessionNumber').classList.remove('counting');
-          document.getElementById('confessionsCount').classList.remove('counting');
-        }, 1000);
+          counterElement.classList.remove('counting');
+        }, 500);
         
-        // Reset button
-        this.innerHTML = originalText;
-        this.disabled = false;
+        // Update page title
+        document.title = `Confession #${newCount} Received | Galgotias Confessions`;
         
-        // Show success message
-        alert("Confession form ready! You would be redirected to submit another confession.");
-      }, 1500);
-    });
+        console.log(`🎯 Counter incremented to: ${newCount}`);
+      } else {
+        // Already visited today - just show current count
+        counterElement.textContent = currentCount;
+        console.log(`📊 Current count: ${currentCount} (already visited today)`);
+      }
+    }
     
     // Initialize the page
     window.addEventListener('load', function() {
       createHearts();
+      updateCounterDisplay();
       
-      // Calculate and display days running
-      const daysRunning = calculateDaysRunning();
+      // Easter egg: Press 'C' to manually increment
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'c' || e.key === 'C') {
+          const newCount = incrementCounter();
+          document.getElementById('confessionCounter').textContent = newCount;
+          document.getElementById('confessionCounter').classList.add('counting');
+          setTimeout(() => {
+            document.getElementById('confessionCounter').classList.remove('counting');
+          }, 500);
+          console.log(`➕ Manually incremented to: ${newCount}`);
+        }
+      });
       
-      // Generate confession numbers
-      generateConfessionNumber();
+      // Reset session at midnight
+      function checkMidnightReset() {
+        const now = new Date();
+        const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+        const timeUntilMidnight = tomorrow - now;
+        
+        setTimeout(() => {
+          sessionStorage.removeItem('galgotias_visited_today');
+          console.log('🔄 Session reset for new day');
+          checkMidnightReset(); // Schedule next reset
+        }, timeUntilMidnight);
+      }
       
-      // Log to console
-      console.log(`🎯 Galgotias Confessions - ${daysRunning} Days Running`);
-      console.log(`📨 Total Confessions: ${document.getElementById('confessionsCount').textContent}`);
-      console.log(`📱 Follow us: @galgotians.unfiltered`);
-      
-      // Update days counter every hour (in real-time)
-      setInterval(() => {
-        calculateDaysRunning();
-      }, 3600000); // 1 hour
+      checkMidnightReset();
     });
   </script>
 </body>
