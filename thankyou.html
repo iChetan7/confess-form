@@ -220,13 +220,41 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(74, 111, 165, 0.08);
+      background: linear-gradient(135deg, rgba(74, 111, 165, 0.1) 0%, rgba(107, 143, 197, 0.1) 100%);
       padding: 12px 25px;
       border-radius: 50px;
       font-weight: 600;
       color: #4a6fa5;
       font-size: 17px;
       margin-top: 5px;
+      border: 1px solid rgba(74, 111, 165, 0.2);
+      transition: all 0.3s ease;
+    }
+    
+    .handle:hover {
+      transform: scale(1.05);
+      background: linear-gradient(135deg, rgba(74, 111, 165, 0.15) 0%, rgba(107, 143, 197, 0.15) 100%);
+      box-shadow: 0 5px 15px rgba(74, 111, 165, 0.1);
+    }
+    
+    /* Unique username badge */
+    .username-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #ff6b6b 0%, #ff9e6b 100%);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 18px;
+      margin: 15px 0;
+      box-shadow: 0 5px 15px rgba(255, 107, 107, 0.2);
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
     }
     
     /* Responsive design */
@@ -260,6 +288,11 @@
         font-size: 16px;
         padding: 10px 20px;
       }
+      
+      .username-badge {
+        font-size: 16px;
+        padding: 6px 16px;
+      }
     }
   </style>
 </head>
@@ -280,14 +313,30 @@
         <p class="message">
           We respect your privacy. Your message has been received securely and will remain anonymous.
         </p>
-      </div>
         
+        <!-- Unique Username Badge -->
+        <div class="username-badge">
+          <i class="fas fa-crown"></i> @galgotias.whispers
+        </div>
+      </div>
+      
+      <!-- Social sections -->
+      <div class="social-section">
         <!-- Follow Us -->
         <div class="social-card">
-          <h3><i class="fab fa-instagram"></i> Follow Us</h3>
+          <h3><i class="fab fa-instagram"></i> Follow Our Main Page</h3>
           <p>Stay updated with the latest confessions and campus stories</p>
-          <a href="https://www.instagram.com/galgotians.unfiltered" class="social-btn" target="_blank">
-            <i class="fab fa-instagram"></i> @galgotians.unfiltered
+          <a href="https://www.instagram.com/galgotias.whispers" class="social-btn" target="_blank">
+            <i class="fab fa-instagram"></i> @galgotias.whispers
+          </a>
+        </div>
+        
+        <!-- Submit Another -->
+        <div class="social-card">
+          <h3><i class="fas fa-paper-plane"></i> Want to Share More?</h3>
+          <p>Have another secret to share? Submit another anonymous confession</p>
+          <a href="#" class="social-btn" id="submitAgainBtn">
+            <i class="fas fa-redo"></i> Submit Another Confession
           </a>
         </div>
       </div>
@@ -296,8 +345,11 @@
       <div class="footer">
         <p>Your secrets are safe with us</p>
         <div class="handle">
-          <i class="fas fa-at"></i> @galgotias.gc
+          <i class="fas fa-at"></i> @galgotias.whispers
         </div>
+        <p style="margin-top: 15px; font-size: 14px; color: #888;">
+          <i class="fas fa-shield-alt"></i> 100% Anonymous • No Data Stored
+        </p>
       </div>
     </div>
   </div>
@@ -330,7 +382,8 @@
       { class: 'fas fa-lock', color: '#4a6fa5' },
       { class: 'fas fa-heart', color: '#ff6b6b' },
       { class: 'fas fa-shield-alt', color: '#2d6a4f' },
-      { class: 'fas fa-check-circle', color: '#4a6fa5' }
+      { class: 'fas fa-check-circle', color: '#4a6fa5' },
+      { class: 'fas fa-user-secret', color: '#6b8fc5' }
     ];
     
     let currentIconIndex = 0;
@@ -374,9 +427,29 @@
       }, 300);
     });
     
+    // Submit Again Button
+    document.getElementById('submitAgainBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      // Show loading state
+      const originalText = this.innerHTML;
+      this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Redirecting...';
+      this.style.opacity = '0.7';
+      
+      // Simulate redirect
+      setTimeout(() => {
+        alert("You would be redirected to the confession submission page. In a real implementation, this would redirect to your form.");
+        this.innerHTML = originalText;
+        this.style.opacity = '1';
+      }, 1500);
+    });
+    
     // Initialize the page
     window.addEventListener('load', function() {
       createHearts();
+      
+      // Add a welcome message in console
+      console.log("%c🔒 Galgotias Confessions - Secure & Anonymous", "color: #4a6fa5; font-size: 16px; font-weight: bold;");
+      console.log("%cFollow us: @galgotias.whispers", "color: #2d6a4f;");
     });
   </script>
 </body>
