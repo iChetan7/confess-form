@@ -14,7 +14,7 @@
     }
     
     body {
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      background: linear-gradient(135deg, #f8f9ff 0%, #f0f7ff 100%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -22,125 +22,68 @@
       padding: 20px;
       position: relative;
       overflow: hidden;
-      color: #f1f5f9;
+      color: #333;
     }
     
-    /* Animated gradient background */
-    .gradient-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(
-        45deg,
-        rgba(99, 102, 241, 0.1),
-        rgba(168, 85, 247, 0.1),
-        rgba(236, 72, 153, 0.1),
-        rgba(99, 102, 241, 0.1)
-      );
-      background-size: 400% 400%;
-      animation: gradient 15s ease infinite;
-      z-index: 1;
-    }
-    
-    @keyframes gradient {
-      0% { transform: translate(-25%, -25%) rotate(0deg); }
-      50% { transform: translate(-25%, -25%) rotate(180deg); }
-      100% { transform: translate(-25%, -25%) rotate(360deg); }
-    }
-    
-    /* Floating elements container */
-    .floating-elements {
+    /* Floating hearts container */
+    .floating-hearts {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 2;
+      z-index: 0;
       overflow: hidden;
     }
     
-    .floating-element {
+    .heart {
       position: absolute;
+      font-size: 1.5rem;
       opacity: 0;
-      animation: float 15s linear infinite;
-      filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.3));
+      animation: float 8s linear infinite;
+      color: #ff6b6b;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
     
     @keyframes float {
       0% {
-        transform: translateY(100vh) rotate(0deg) scale(0.5);
+        transform: translateY(100vh) rotate(0deg);
         opacity: 0;
       }
       10% {
-        opacity: 0.7;
+        opacity: 0.8;
       }
       90% {
-        opacity: 0.5;
+        opacity: 0.6;
       }
       100% {
-        transform: translateY(-100px) rotate(360deg) scale(1);
+        transform: translateY(-100px) rotate(360deg);
         opacity: 0;
       }
-    }
-    
-    /* Glow effect */
-    .glow {
-      position: absolute;
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(99, 102, 241, 0) 70%);
-      filter: blur(40px);
-      z-index: 3;
-      animation: pulse 4s ease-in-out infinite;
-    }
-    
-    .glow-1 {
-      top: 10%;
-      right: 10%;
-      background: radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, rgba(236, 72, 153, 0) 70%);
-      animation-delay: 1s;
-    }
-    
-    .glow-2 {
-      bottom: 10%;
-      left: 10%;
-      background: radial-gradient(circle, rgba(168, 85, 247, 0.1) 0%, rgba(168, 85, 247, 0) 70%);
-      animation-delay: 2s;
-    }
-    
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 0.5; }
-      50% { transform: scale(1.2); opacity: 0.8; }
     }
     
     /* Main container */
     .container {
-      max-width: 520px;
+      max-width: 500px;
       width: 100%;
       position: relative;
       z-index: 10;
     }
     
     .card {
-      background: rgba(15, 23, 42, 0.7);
-      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
       padding: 40px 35px;
-      box-shadow: 
-        0 20px 60px rgba(0, 0, 0, 0.3),
-        0 0 0 1px rgba(99, 102, 241, 0.2),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      animation: slideUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      box-shadow: 0 15px 40px rgba(74, 111, 165, 0.1);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      animation: fadeIn 0.8s ease-out forwards;
       opacity: 0;
-      transform: translateY(30px);
+      transform: translateY(20px);
     }
     
-    @keyframes slideUp {
+    @keyframes fadeIn {
       to {
         opacity: 1;
         transform: translateY(0);
@@ -154,38 +97,11 @@
     }
     
     .icon-container {
-      width: 110px;
-      height: 110px;
+      width: 100px;
+      height: 100px;
       margin: 0 auto 25px;
       position: relative;
       cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    
-    .icon-container::before {
-      content: '';
-      position: absolute;
-      inset: -5px;
-      background: linear-gradient(135deg, #6366f1, #ec4899, #8b5cf6);
-      border-radius: 50%;
-      z-index: 1;
-      animation: rotate 3s linear infinite;
-      opacity: 0.7;
-      filter: blur(10px);
-    }
-    
-    .icon-container::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.9);
-      border-radius: 50%;
-      z-index: 2;
-    }
-    
-    @keyframes rotate {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
     }
     
     .icon-wrapper {
@@ -194,67 +110,69 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
-      z-index: 3;
       transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     
     .icon-wrapper i {
       font-size: 4.5rem;
-      background: linear-gradient(135deg, #6366f1, #ec4899);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: #4a6fa5;
       position: relative;
-      z-index: 3;
+      z-index: 2;
     }
     
     .icon-container:hover .icon-wrapper {
-      transform: scale(1.15) rotate(10deg);
+      transform: scale(1.1) rotate(5deg);
     }
     
     .icon-container:active .icon-wrapper {
-      transform: scale(0.95) rotate(-5deg);
+      transform: scale(0.9) rotate(-5deg);
     }
     
     .title {
-      font-size: 32px;
-      font-weight: 800;
+      font-size: 28px;
+      font-weight: 700;
       margin-bottom: 15px;
-      background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: #2d6a4f;
       letter-spacing: -0.5px;
     }
     
     .message {
       font-size: 17px;
-      line-height: 1.7;
-      color: #cbd5e1;
-      max-width: 420px;
+      line-height: 1.6;
+      color: #555;
+      max-width: 400px;
       margin: 0 auto;
     }
     
-    /* Verified badge */
-    .verified-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: linear-gradient(135deg, #10b981, #059669);
+    /* Statistics Banner */
+    .stats-banner {
+      display: flex;
+      justify-content: space-around;
+      background: linear-gradient(135deg, #4a6fa5 0%, #2d6a4f 100%);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 30px 0;
       color: white;
-      padding: 10px 22px;
-      border-radius: 50px;
-      font-weight: 700;
-      font-size: 16px;
-      margin: 20px auto;
-      box-shadow: 0 5px 20px rgba(16, 185, 129, 0.3);
-      animation: verifiedPulse 2.5s ease-in-out infinite;
+      box-shadow: 0 8px 20px rgba(74, 111, 165, 0.2);
     }
     
-    @keyframes verifiedPulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+    .stat-item {
+      text-align: center;
+      flex: 1;
+    }
+    
+    .stat-number {
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 5px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .stat-label {
+      font-size: 14px;
+      font-weight: 600;
+      opacity: 0.9;
     }
     
     /* Social sections */
@@ -262,58 +180,31 @@
       display: flex;
       flex-direction: column;
       gap: 25px;
-      margin: 40px 0 30px;
+      margin: 30px 0;
     }
     
     .social-card {
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.6) 100%);
-      border-radius: 20px;
-      padding: 28px;
-      box-shadow: 
-        0 10px 30px rgba(0, 0, 0, 0.2),
-        0 0 0 1px rgba(99, 102, 241, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      transition: all 0.4s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .social-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
-      transition: left 0.7s ease;
-    }
-    
-    .social-card:hover::before {
-      left: 100%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(248, 249, 255, 0.85) 100%);
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 8px 20px rgba(74, 111, 165, 0.08);
+      border: 1px solid rgba(74, 111, 165, 0.1);
+      transition: all 0.3s ease;
     }
     
     .social-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.4),
-        0 0 0 1px rgba(99, 102, 241, 0.3);
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(74, 111, 165, 0.15);
     }
     
     .social-card h3 {
-      font-size: 20px;
-      font-weight: 700;
-      color: #f1f5f9;
+      font-size: 18px;
+      font-weight: 600;
+      color: #4a6fa5;
       margin-bottom: 15px;
       display: flex;
       align-items: center;
-      gap: 12px;
-    }
-    
-    .social-card p {
-      color: #94a3b8;
-      line-height: 1.6;
-      margin-bottom: 20px;
+      gap: 10px;
     }
     
     .social-btn {
@@ -321,143 +212,63 @@
       align-items: center;
       justify-content: center;
       gap: 12px;
-      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      background: linear-gradient(135deg, #4a6fa5 0%, #6b8fc5 100%);
       color: white;
-      padding: 16px 24px;
-      border-radius: 14px;
+      padding: 14px;
+      border-radius: 12px;
       text-decoration: none;
-      font-weight: 700;
+      font-weight: 600;
       font-size: 16px;
-      transition: all 0.4s ease;
-      position: relative;
-      overflow: hidden;
-      border: none;
-      cursor: pointer;
-    }
-    
-    .social-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.7s ease;
-    }
-    
-    .social-btn:hover::before {
-      left: 100%;
+      transition: all 0.3s ease;
+      margin-top: 10px;
     }
     
     .social-btn:hover {
-      background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+      background: linear-gradient(135deg, #3d5c8a 0%, #5a7ab0 100%);
       transform: translateY(-3px);
-      box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
+      box-shadow: 0 8px 20px rgba(74, 111, 165, 0.25);
     }
     
     .social-btn i {
-      font-size: 20px;
-    }
-    
-    /* Stats counter */
-    .stats {
-      display: flex;
-      justify-content: space-around;
-      background: rgba(30, 41, 59, 0.5);
-      border-radius: 16px;
-      padding: 20px;
-      margin: 25px 0;
-      border: 1px solid rgba(99, 102, 241, 0.1);
-    }
-    
-    .stat-item {
-      text-align: center;
-    }
-    
-    .stat-number {
-      font-size: 28px;
-      font-weight: 800;
-      background: linear-gradient(135deg, #6366f1, #ec4899);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1;
-    }
-    
-    .stat-label {
-      font-size: 14px;
-      color: #94a3b8;
-      margin-top: 6px;
-      font-weight: 600;
+      font-size: 18px;
     }
     
     /* Footer */
     .footer {
       text-align: center;
-      margin-top: 40px;
+      margin-top: 35px;
       padding-top: 25px;
-      border-top: 1px solid rgba(99, 102, 241, 0.15);
+      border-top: 1px solid rgba(74, 111, 165, 0.1);
     }
     
     .footer p {
       font-size: 15px;
-      color: #94a3b8;
-      margin-bottom: 15px;
+      color: #777;
+      margin-bottom: 10px;
     }
     
     .handle {
       display: inline-flex;
       align-items: center;
-      gap: 12px;
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
-      padding: 16px 32px;
-      border-radius: 50px;
-      font-weight: 800;
-      color: #e2e8f0;
-      font-size: 20px;
-      margin-top: 10px;
-      border: 1px solid rgba(99, 102, 241, 0.2);
-      transition: all 0.4s ease;
-      text-decoration: none;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .handle::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-      transition: left 0.7s ease;
-    }
-    
-    .handle:hover::before {
-      left: 100%;
-    }
-    
-    .handle:hover {
-      transform: scale(1.05);
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
-      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
-      border-color: rgba(99, 102, 241, 0.3);
-    }
-    
-    .security-badge {
-      display: inline-flex;
-      align-items: center;
       gap: 8px;
-      background: rgba(16, 185, 129, 0.15);
-      color: #10b981;
-      padding: 10px 20px;
+      background: rgba(74, 111, 165, 0.08);
+      padding: 12px 25px;
       border-radius: 50px;
       font-weight: 600;
-      font-size: 14px;
-      margin-top: 15px;
-      border: 1px solid rgba(16, 185, 129, 0.2);
+      color: #4a6fa5;
+      font-size: 17px;
+      margin-top: 5px;
+    }
+    
+    /* Count Animation */
+    .counting {
+      animation: countPulse 1s ease-out;
+    }
+    
+    @keyframes countPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
     }
     
     /* Responsive design */
@@ -467,58 +278,44 @@
       }
       
       .title {
-        font-size: 26px;
+        font-size: 24px;
       }
       
       .message {
         font-size: 16px;
       }
       
-      .icon-container {
-        width: 90px;
-        height: 90px;
-      }
-      
       .icon-wrapper i {
-        font-size: 3.5rem;
+        font-size: 4rem;
       }
       
       .social-card {
-        padding: 22px;
+        padding: 20px;
       }
       
       .social-btn {
-        padding: 14px 20px;
+        padding: 12px;
         font-size: 15px;
       }
       
       .handle {
-        font-size: 18px;
-        padding: 14px 26px;
+        font-size: 16px;
+        padding: 10px 20px;
       }
       
-      .verified-badge {
-        font-size: 14px;
-        padding: 8px 18px;
+      .stats-banner {
+        padding: 15px;
       }
       
       .stat-number {
-        font-size: 22px;
+        font-size: 26px;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Animated background -->
-  <div class="gradient-bg"></div>
-  
-  <!-- Floating elements background -->
-  <div class="floating-elements" id="elementsContainer"></div>
-  
-  <!-- Glow effects -->
-  <div class="glow"></div>
-  <div class="glow glow-1"></div>
-  <div class="glow glow-2"></div>
+  <!-- Floating hearts background -->
+  <div class="floating-hearts" id="heartsContainer"></div>
   
   <div class="container">
     <div class="card">
@@ -529,29 +326,19 @@
             <i class="fas fa-lock" id="mainIcon"></i>
           </div>
         </div>
-        <h1 class="title">Confession Received Securely!</h1>
+        <h1 class="title">Thank You for Your Confession!</h1>
         <p class="message">
-          Your secret is safe with us. The confession has been encrypted and stored anonymously. 
-          No personal data or IP addresses are recorded.
+          Your secret #<span id="confessionNumber">150</span> has been received securely and will remain anonymous.
         </p>
         
-        <!-- Verified badge -->
-        <div class="verified-badge">
-          <i class="fas fa-shield-check"></i> 100% Verified & Secure
-        </div>
-        
-        <!-- Stats -->
-        <div class="stats">
+        <!-- Statistics Banner -->
+        <div class="stats-banner">
           <div class="stat-item">
-            <div class="stat-number" id="confessionCount">1.2K+</div>
+            <div class="stat-number" id="confessionsCount">150+</div>
             <div class="stat-label">Confessions</div>
           </div>
           <div class="stat-item">
-            <div class="stat-number" id="userCount">850+</div>
-            <div class="stat-label">Active Users</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number" id="daysCount">365+</div>
+            <div class="stat-number" id="daysRunning">150</div>
             <div class="stat-label">Days Running</div>
           </div>
         </div>
@@ -559,10 +346,10 @@
       
       <!-- Social sections -->
       <div class="social-section">
-        <!-- Instagram Section -->
+        <!-- Follow Us -->
         <div class="social-card">
-          <h3><i class="fab fa-instagram"></i> Our Official Instagram</h3>
-          <p>Join <strong>4,500+ Galgotians</strong> who follow our page for daily confessions, campus stories, and anonymous discussions.</p>
+          <h3><i class="fab fa-instagram"></i> Follow Us</h3>
+          <p>Stay updated with the latest confessions and campus stories</p>
           <a href="https://www.instagram.com/galgotians.unfiltered" class="social-btn" target="_blank">
             <i class="fab fa-instagram"></i> @galgotians.unfiltered
           </a>
@@ -570,188 +357,207 @@
         
         <!-- Submit Another -->
         <div class="social-card">
-          <h3><i class="fas fa-paper-plane"></i> Share More Secrets?</h3>
-          <p>Got another confession? Share it anonymously. Your identity remains completely hidden.</p>
+          <h3><i class="fas fa-paper-plane"></i> Submit Another</h3>
+          <p>Have more to share? Submit another anonymous confession</p>
           <button class="social-btn" id="submitAgainBtn">
-            <i class="fas fa-redo"></i> Submit Another Confession
+            <i class="fas fa-redo"></i> Submit Again
           </button>
         </div>
       </div>
       
       <!-- Footer -->
       <div class="footer">
-        <p>Galgotias University's Most Trusted Confession Platform</p>
-        <a href="https://www.instagram.com/galgotians.unfiltered" class="handle" target="_blank">
-          <i class="fas fa-at"></i> @galgotians.unfiltered
-        </a>
-        <div class="security-badge">
-          <i class="fas fa-user-secret"></i> End-to-End Anonymous • No Tracking
+        <p>Your secrets are safe with us</p>
+        <div class="handle">
+          <i class="fas fa-at"></i> @galgotias.gc
         </div>
-        <p style="margin-top: 15px; font-size: 14px; color: #64748b;">
-          <i class="fas fa-clock"></i> New confessions posted daily at 9 PM
+        <p style="margin-top: 15px; font-size: 14px; color: #888;">
+          <i class="fas fa-calendar-alt"></i> Started: <span id="startDate">Oct 1, 2023</span>
         </p>
       </div>
     </div>
   </div>
   
   <script>
-    // Create floating elements
-    function createFloatingElements() {
-      const container = document.getElementById('elementsContainer');
-      const symbols = ['🔒', '💬', '✨', '🤫', '🔐', '💌', '🫣', '✉️'];
+    // Create floating hearts
+    function createHearts() {
+      const heartsContainer = document.getElementById('heartsContainer');
+      const heartColors = ['#ff6b6b', '#4a6fa5', '#ff9e6b', '#6b8fc5', '#e1306c', '#2d6a4f'];
       
-      for (let i = 0; i < 20; i++) {
-        const element = document.createElement('div');
-        element.classList.add('floating-element');
-        element.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
-        element.style.left = Math.random() * 100 + 'vw';
-        element.style.animationDuration = (Math.random() * 20 + 10) + 's';
-        element.style.animationDelay = Math.random() * 8 + 's';
-        element.style.fontSize = (Math.random() * 24 + 16) + 'px';
-        element.style.opacity = Math.random() * 0.5 + 0.3;
-        container.appendChild(element);
+      for (let i = 0; i < 25; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerHTML = '<i class="fas fa-heart"></i>';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (Math.random() * 10 + 8) + 's';
+        heart.style.animationDelay = Math.random() * 5 + 's';
+        heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+        heart.style.color = heartColors[Math.floor(Math.random() * heartColors.length)];
+        heartsContainer.appendChild(heart);
       }
     }
     
-    // Icon transformation with more icons
+    // Icon transformation
     const iconContainer = document.getElementById('iconContainer');
     const mainIcon = document.getElementById('mainIcon');
     
+    // Icons to cycle through
     const icons = [
-      { class: 'fas fa-lock', gradient: '#6366f1, #8b5cf6' },
-      { class: 'fas fa-heart', gradient: '#ec4899, #f472b6' },
-      { class: 'fas fa-shield-alt', gradient: '#10b981, #34d399' },
-      { class: 'fas fa-check-circle', gradient: '#3b82f6, #60a5fa' },
-      { class: 'fas fa-user-secret', gradient: '#8b5cf6, #c4b5fd' },
-      { class: 'fas fa-key', gradient: '#f59e0b, #fbbf24' }
+      { class: 'fas fa-lock', color: '#4a6fa5' },
+      { class: 'fas fa-heart', color: '#ff6b6b' },
+      { class: 'fas fa-shield-alt', color: '#2d6a4f' },
+      { class: 'fas fa-check-circle', color: '#4a6fa5' }
     ];
     
     let currentIconIndex = 0;
     
     iconContainer.addEventListener('click', function() {
-      // Add click animation
-      this.style.transform = 'scale(0.95)';
+      // Add animation effect
+      this.classList.add('icon-click');
       setTimeout(() => {
-        this.style.transform = 'scale(1)';
-      }, 150);
+        this.classList.remove('icon-click');
+      }, 300);
       
       // Change to next icon
       currentIconIndex = (currentIconIndex + 1) % icons.length;
       const nextIcon = icons[currentIconIndex];
       
-      // Create temporary element for smooth transition
+      // Create a temporary element for smooth transition
       const tempIcon = document.createElement('i');
       tempIcon.className = nextIcon.class;
-      tempIcon.style.background = `linear-gradient(135deg, ${nextIcon.gradient})`;
-      tempIcon.style.webkitBackgroundClip = 'text';
-      tempIcon.style.webkitTextFillColor = 'transparent';
-      tempIcon.style.fontSize = '4.5rem';
+      tempIcon.style.color = nextIcon.color;
       tempIcon.style.position = 'absolute';
       tempIcon.style.opacity = '0';
-      tempIcon.style.transform = 'scale(0) translateY(20px)';
-      tempIcon.style.zIndex = '4';
+      tempIcon.style.transform = 'scale(0)';
       
       iconContainer.querySelector('.icon-wrapper').appendChild(tempIcon);
       
       // Animate transition
       setTimeout(() => {
         mainIcon.style.opacity = '0';
-        mainIcon.style.transform = 'scale(0.5) translateY(-20px)';
+        mainIcon.style.transform = 'scale(0.5) rotate(-30deg)';
         tempIcon.style.opacity = '1';
-        tempIcon.style.transform = 'scale(1) translateY(0)';
+        tempIcon.style.transform = 'scale(1)';
       }, 10);
       
       // Complete transition
       setTimeout(() => {
         mainIcon.className = nextIcon.class;
-        mainIcon.style.background = `linear-gradient(135deg, ${nextIcon.gradient})`;
+        mainIcon.style.color = nextIcon.color;
         mainIcon.style.opacity = '1';
         mainIcon.style.transform = 'scale(1)';
         iconContainer.querySelector('.icon-wrapper').removeChild(tempIcon);
-      }, 400);
+      }, 300);
     });
+    
+    // Calculate days running from start date
+    function calculateDaysRunning() {
+      // Start date (you can change this to your actual start date)
+      const startDate = new Date('2023-10-01'); // October 1, 2023
+      const today = new Date();
+      
+      // Calculate difference in days
+      const diffTime = Math.abs(today - startDate);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      
+      // Update the days running counter
+      const daysElement = document.getElementById('daysRunning');
+      daysElement.textContent = diffDays;
+      daysElement.classList.add('counting');
+      
+      // Remove animation class after animation completes
+      setTimeout(() => {
+        daysElement.classList.remove('counting');
+      }, 1000);
+      
+      // Update start date display
+      document.getElementById('startDate').textContent = startDate.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+      });
+      
+      return diffDays;
+    }
+    
+    // Generate random confession number
+    function generateConfessionNumber() {
+      // Base number is 150, add random number between 1-10
+      const baseConfessions = 150;
+      const randomAddition = Math.floor(Math.random() * 10) + 1;
+      const totalConfessions = baseConfessions + randomAddition;
+      
+      // Update confession number
+      const confessionNumElement = document.getElementById('confessionNumber');
+      const confessionsCountElement = document.getElementById('confessionsCount');
+      
+      confessionNumElement.textContent = totalConfessions;
+      confessionsCountElement.textContent = totalConfessions + '+';
+      
+      // Add counting animation
+      confessionNumElement.classList.add('counting');
+      confessionsCountElement.classList.add('counting');
+      
+      // Remove animation class after animation completes
+      setTimeout(() => {
+        confessionNumElement.classList.remove('counting');
+        confessionsCountElement.classList.remove('counting');
+      }, 1000);
+      
+      return totalConfessions;
+    }
     
     // Submit Again Button
     document.getElementById('submitAgainBtn').addEventListener('click', function() {
-      // Show loading state with animation
-      const originalHTML = this.innerHTML;
+      // Show loading state
+      const originalText = this.innerHTML;
       this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparing Form...';
-      this.style.pointerEvents = 'none';
-      
-      // Create a cool loading effect
-      const dots = document.createElement('span');
-      dots.textContent = '';
-      this.appendChild(dots);
-      
-      let dotCount = 0;
-      const dotInterval = setInterval(() => {
-        dots.textContent += '.';
-        dotCount++;
-        if (dotCount > 3) {
-          dots.textContent = '';
-          dotCount = 0;
-        }
-      }, 300);
+      this.disabled = true;
       
       // Simulate form preparation
       setTimeout(() => {
-        clearInterval(dotInterval);
+        // Increase confession count
+        const currentCount = parseInt(document.getElementById('confessionNumber').textContent);
+        document.getElementById('confessionNumber').textContent = currentCount + 1;
+        document.getElementById('confessionsCount').textContent = (currentCount + 1) + '+';
         
-        // Success animation
-        this.innerHTML = '<i class="fas fa-check-circle"></i> Form Ready!';
-        this.style.background = 'linear-gradient(135deg, #10b981, #34d399)';
+        // Animate the count increase
+        document.getElementById('confessionNumber').classList.add('counting');
+        document.getElementById('confessionsCount').classList.add('counting');
         
         setTimeout(() => {
-          alert("🚀 Redirecting to confession form...\n\nIn production, this would open:\nhttps://forms.gle/your-form-link-here");
-          this.innerHTML = originalHTML;
-          this.style.background = 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)';
-          this.style.pointerEvents = 'auto';
+          document.getElementById('confessionNumber').classList.remove('counting');
+          document.getElementById('confessionsCount').classList.remove('counting');
         }, 1000);
-      }, 2000);
+        
+        // Reset button
+        this.innerHTML = originalText;
+        this.disabled = false;
+        
+        // Show success message
+        alert("Confession form ready! You would be redirected to submit another confession.");
+      }, 1500);
     });
-    
-    // Animated counter effect
-    function animateCounter(element, target, duration = 1500) {
-      const start = 0;
-      const increment = target / (duration / 16);
-      let current = start;
-      
-      const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-          element.textContent = target + '+';
-          clearInterval(timer);
-        } else {
-          element.textContent = Math.floor(current) + '+';
-        }
-      }, 16);
-    }
     
     // Initialize the page
     window.addEventListener('load', function() {
-      createFloatingElements();
+      createHearts();
       
-      // Start counter animations
-      setTimeout(() => {
-        animateCounter(document.getElementById('confessionCount'), 1250);
-        animateCounter(document.getElementById('userCount'), 875);
-        animateCounter(document.getElementById('daysCount'), 368);
-      }, 500);
+      // Calculate and display days running
+      const daysRunning = calculateDaysRunning();
       
-      // Console welcome message
-      console.log("%c🔐 GALGOTIANS.UNFILTERED 🔐", "color: #6366f1; font-size: 18px; font-weight: 900;");
-      console.log("%cYour confession has been secured successfully!", "color: #10b981; font-size: 14px;");
-      console.log("%cJoin 4,500+ Galgotians at: @galgotians.unfiltered", "color: #ec4899; font-size: 14px;");
+      // Generate confession numbers
+      generateConfessionNumber();
       
-      // Add keyboard shortcut info
-      console.log("%c💡 Tip: Press 'C' to submit another confession", "color: #f59e0b; font-size: 12px;");
+      // Log to console
+      console.log(`🎯 Galgotias Confessions - ${daysRunning} Days Running`);
+      console.log(`📨 Total Confessions: ${document.getElementById('confessionsCount').textContent}`);
+      console.log(`📱 Follow us: @galgotians.unfiltered`);
       
-      // Keyboard shortcut
-      document.addEventListener('keydown', function(e) {
-        if (e.key.toLowerCase() === 'c') {
-          document.getElementById('submitAgainBtn').click();
-        }
-      });
+      // Update days counter every hour (in real-time)
+      setInterval(() => {
+        calculateDaysRunning();
+      }, 3600000); // 1 hour
     });
   </script>
 </body>
