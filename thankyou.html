@@ -234,7 +234,7 @@
       font-style: italic;
       font-weight: 500;
       letter-spacing: 0.5px;
-      color: white !important; /* WHITE COLOR */
+      color: white !important;
     }
     
     /* Footer */
@@ -443,28 +443,21 @@
       }, 300);
     });
     
-    // ================== SIMPLE COUNTER - EK HI BAAR +1 ==================
-    // Storage Key
-    const COUNTER_KEY = 'galgotias_confession_counter';
+    // ================== LIVE INSTANT INCREMENT ==================
+    // HAR BAAR PAGE OPEN HOTE HI +1 HO JAYEGA
     
     // Function to get current count
     function getCurrentCount() {
-      const storedCount = localStorage.getItem(COUNTER_KEY);
-      return storedCount ? parseInt(storedCount) : 130; // Default 130
+      const storedCount = localStorage.getItem('galgotias_counter');
+      // Agar pehli baar hai to 130 se start
+      if (!storedCount) {
+        localStorage.setItem('galgotias_counter', '130');
+        return 130;
+      }
+      return parseInt(storedCount);
     }
     
-    // Function to increment counter - SIRF EK HI BAAR
-    function incrementCounter() {
-      const currentCount = getCurrentCount();
-      const newCount = currentCount + 1;
-      
-      // Save to localStorage
-      localStorage.setItem(COUNTER_KEY, newCount);
-      
-      return newCount;
-    }
-    
-    // Function to update display
+    // Function to update display with animation
     function updateDisplay(count) {
       const counterElement = document.getElementById('confessionCounter');
       counterElement.textContent = count;
@@ -473,65 +466,63 @@
       // Update page title
       document.title = `Confession #${count} Received | Galgotias Confessions`;
       
-      // Remove animation after 0.5 seconds
+      // Remove animation
       setTimeout(() => {
         counterElement.classList.remove('counting');
       }, 500);
       
-      // Log to console
-      console.log(`✅ Confession counter: ${count}`);
+      return count;
     }
     
-    // ================== MAIN EXECUTION ==================
-    // Jab page load ho
+    // ================== MAIN LOGIC ==================
+    // Jab bhi page load ho, INSTANT +1
+    
     window.addEventListener('load', function() {
       createHearts();
       
-      // Check if already incremented in this session
-      const alreadyIncremented = sessionStorage.getItem('counter_incremented');
+      // 1. Pehle current count lo
+      const currentCount = getCurrentCount();
       
-      if (!alreadyIncremented) {
-        // SIRF EK HI BAAR INCREMENT KARO
-        const currentCount = getCurrentCount();
-        const newCount = incrementCounter();
-        updateDisplay(newCount);
-        
-        // Mark as incremented for this session
-        sessionStorage.setItem('counter_incremented', 'true');
-        
-        console.log(`📊 Page accessed! Count: ${currentCount} → ${newCount}`);
-      } else {
-        // Already incremented in this session, just show current count
-        const currentCount = getCurrentCount();
-        updateDisplay(currentCount);
-        console.log(`📊 Already incremented this session. Current count: ${currentCount}`);
-      }
+      // 2. DIRECT +1 KARO (koi condition nahi)
+      const newCount = currentCount + 1;
       
-      // Easter egg: Press 'R' to manually increment (for testing)
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'r' || e.key === 'R') {
-          const newCount = incrementCounter();
-          updateDisplay(newCount);
-          console.log(`🔄 Manual increment: ${newCount}`);
+      // 3. Save karo
+      localStorage.setItem('galgotias_counter', newCount.toString());
+      
+      // 4. Display update karo
+      updateDisplay(newCount);
+      
+      // Console message
+      console.log(`⚡ LIVE INCREMENT: ${currentCount} → ${newCount}`);
+      console.log(`🔁 Refresh karo, phir +1 hoga: ${newCount + 1}`);
+      
+      // Real-time simulation (optional)
+      // Har 10 seconds baad check karo agar koi aur user submit kare
+      setInterval(() => {
+        // 20% chance har 10 seconds mein
+        if (Math.random() < 0.2) {
+          const simulatedCount = parseInt(localStorage.getItem('galgotias_counter')) + 1;
+          localStorage.setItem('galgotias_counter', simulatedCount.toString());
+          updateDisplay(simulatedCount);
+          console.log(`🤖 Simulated user: ${simulatedCount}`);
         }
-      });
+      }, 10000);
     });
     
-    // Session reset at midnight
-    function resetSessionAtMidnight() {
-      const now = new Date();
-      const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-      const timeToMidnight = tomorrow - now;
-      
-      setTimeout(() => {
-        sessionStorage.removeItem('counter_incremented');
-        console.log('🔄 Session reset for new day');
-        resetSessionAtMidnight(); // Schedule next reset
-      }, timeToMidnight);
-    }
+    // Extra: Button click pe bhi increment (for testing)
+    document.addEventListener('keydown', function(e) {
+      if (e.key === '+' || e.key === '=') {
+        const currentCount = parseInt(localStorage.getItem('galgotias_counter'));
+        const newCount = currentCount + 1;
+        localStorage.setItem('galgotias_counter', newCount.toString());
+        updateDisplay(newCount);
+        console.log(`➕ Manual increment: ${newCount}`);
+      }
+    });
     
-    // Start the midnight reset timer
-    resetSessionAtMidnight();
+    // Show current count on console when page loads
+    console.log('🎯 Galgotias Confessions - Live Counter Active');
+    console.log('📊 Har baar page open hote hi +1 increment hoga');
   </script>
 </body>
 </html>
