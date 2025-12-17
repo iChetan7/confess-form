@@ -228,13 +228,13 @@
       font-size: 18px;
     }
     
-    /* Instagram username with italic font */
+    /* Instagram username with italic font - WHITE COLOR */
     .instagram-username {
       font-family: 'Georgia', 'Times New Roman', serif;
       font-style: italic;
       font-weight: 500;
       letter-spacing: 0.5px;
-      color: #4a6fa5;
+      color: white !important; /* WHITE COLOR */
     }
     
     /* Footer */
@@ -443,7 +443,7 @@
       }, 300);
     });
     
-    // ================== SIMPLE COUNTER - HAR BAAR +1 ==================
+    // ================== SIMPLE COUNTER - EK HI BAAR +1 ==================
     // Storage Key
     const COUNTER_KEY = 'galgotias_confession_counter';
     
@@ -453,7 +453,7 @@
       return storedCount ? parseInt(storedCount) : 130; // Default 130
     }
     
-    // Function to increment counter - HAR BAAR CALL HONE PAR +1
+    // Function to increment counter - SIRF EK HI BAAR
     function incrementCounter() {
       const currentCount = getCurrentCount();
       const newCount = currentCount + 1;
@@ -479,45 +479,59 @@
       }, 500);
       
       // Log to console
-      console.log(`✅ Confession counter updated: ${count}`);
+      console.log(`✅ Confession counter: ${count}`);
     }
     
     // ================== MAIN EXECUTION ==================
-    // When page loads
+    // Jab page load ho
     window.addEventListener('load', function() {
       createHearts();
       
-      // HAR BAAR PAGE LOAD HONE PAR:
-      // 1. Current count get karo
-      // 2. +1 increment karo
-      // 3. Display update karo
+      // Check if already incremented in this session
+      const alreadyIncremented = sessionStorage.getItem('counter_incremented');
       
-      const currentCount = getCurrentCount();
-      const newCount = incrementCounter(); // Yehi line har baar +1 karegi
-      updateDisplay(newCount);
+      if (!alreadyIncremented) {
+        // SIRF EK HI BAAR INCREMENT KARO
+        const currentCount = getCurrentCount();
+        const newCount = incrementCounter();
+        updateDisplay(newCount);
+        
+        // Mark as incremented for this session
+        sessionStorage.setItem('counter_incremented', 'true');
+        
+        console.log(`📊 Page accessed! Count: ${currentCount} → ${newCount}`);
+      } else {
+        // Already incremented in this session, just show current count
+        const currentCount = getCurrentCount();
+        updateDisplay(currentCount);
+        console.log(`📊 Already incremented this session. Current count: ${currentCount}`);
+      }
       
-      console.log(`📊 Page accessed! Count: ${currentCount} → ${newCount}`);
-      
-      // Easter egg: Press 'R' to refresh and increment again
+      // Easter egg: Press 'R' to manually increment (for testing)
       document.addEventListener('keydown', function(e) {
         if (e.key === 'r' || e.key === 'R') {
-          const refreshedCount = incrementCounter();
-          updateDisplay(refreshedCount);
-          console.log(`🔄 Manual refresh increment: ${refreshedCount}`);
+          const newCount = incrementCounter();
+          updateDisplay(newCount);
+          console.log(`🔄 Manual increment: ${newCount}`);
         }
       });
     });
     
-    // ================== EXTRA FEATURE ==================
-    // Agar user page ko refresh kare (F5/Ctrl+R) tab bhi increment ho
-    window.addEventListener('beforeunload', function() {
-      // Small delay to ensure counter increments before page unloads
+    // Session reset at midnight
+    function resetSessionAtMidnight() {
+      const now = new Date();
+      const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+      const timeToMidnight = tomorrow - now;
+      
       setTimeout(() => {
-        const currentCount = getCurrentCount();
-        const newCount = currentCount + 1;
-        localStorage.setItem(COUNTER_KEY, newCount);
-      }, 100);
-    });
+        sessionStorage.removeItem('counter_incremented');
+        console.log('🔄 Session reset for new day');
+        resetSessionAtMidnight(); // Schedule next reset
+      }, timeToMidnight);
+    }
+    
+    // Start the midnight reset timer
+    resetSessionAtMidnight();
   </script>
 </body>
 </html>
