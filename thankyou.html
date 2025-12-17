@@ -342,8 +342,8 @@
         <!-- Counter Display -->
         <div class="counter-container">
           <div class="counter-label">Total Confessions</div>
-          <div class="counter-number" id="confessionCounter">130</div>
-          <div class="counter-label">Live Counter</div>
+          <div class="counter-number" id="confessionCounter">Loading...</div>
+          <div class="counter-label">Permanent Live Counter</div>
         </div>
       </div>
         
@@ -443,30 +443,88 @@
       }, 300);
     });
     
-    // ================== LIVE INSTANT INCREMENT ==================
-    // HAR BAAR PAGE OPEN HOTE HI +1 HO JAYEGA
+    // ================== PERMANENT COUNTER SYSTEM ==================
+    // Yeh counter permanent rahega, 131 se restart nahi hoga
     
-    // Function to get current count
-    function getCurrentCount() {
-      const storedCount = localStorage.getItem('galgotias_counter');
-      // Agar pehli baar hai to 130 se start
-      if (!storedCount) {
-        localStorage.setItem('galgotias_counter', '130');
+    // Storage key (unique for permanent storage)
+    const PERMANENT_COUNTER_KEY = 'galgotias_permanent_counter_v2';
+    
+    // Function to get permanent count
+    function getPermanentCount() {
+      try {
+        // Pehle localStorage check karo
+        let storedCount = localStorage.getItem(PERMANENT_COUNTER_KEY);
+        
+        // Agar nahi hai to 130 se start karo
+        if (!storedCount) {
+          storedCount = '130';
+          localStorage.setItem(PERMANENT_COUNTER_KEY, storedCount);
+          console.log('🆕 First time: Starting from 130');
+        }
+        
+        const count = parseInt(storedCount);
+        
+        // Extra safety: Agar count NaN hai ya 130 se kam hai
+        if (isNaN(count) || count < 130) {
+          const defaultCount = 130;
+          localStorage.setItem(PERMANENT_COUNTER_KEY, defaultCount.toString());
+          console.log('🔄 Reset to default: 130');
+          return defaultCount;
+        }
+        
+        return count;
+      } catch (error) {
+        console.error('Error getting count:', error);
         return 130;
       }
-      return parseInt(storedCount);
     }
     
-    // Function to update display with animation
+    // Function to save permanent count
+    function savePermanentCount(count) {
+      try {
+        localStorage.setItem(PERMANENT_COUNTER_KEY, count.toString());
+        
+        // Extra backup: Cookies mein bhi save karo
+        document.cookie = `galgotias_counter=${count}; max-age=${60*60*24*365}; path=/`;
+        
+        console.log(`💾 Saved permanently: ${count}`);
+        return true;
+      } catch (error) {
+        console.error('Error saving count:', error);
+        return false;
+      }
+    }
+    
+    // Function to increment and save
+    function incrementAndSave() {
+      // Current count lo
+      const currentCount = getPermanentCount();
+      
+      // +1 karo
+      const newCount = currentCount + 1;
+      
+      // Permanent save karo
+      savePermanentCount(newCount);
+      
+      return newCount;
+    }
+    
+    // Function to update display
     function updateDisplay(count) {
       const counterElement = document.getElementById('confessionCounter');
-      counterElement.textContent = count;
+      
+      // Animation
+      counterElement.classList.remove('counting');
+      void counterElement.offsetWidth; // Trigger reflow
       counterElement.classList.add('counting');
+      
+      // Update text
+      counterElement.textContent = count;
       
       // Update page title
       document.title = `Confession #${count} Received | Galgotias Confessions`;
       
-      // Remove animation
+      // Remove animation after 0.5s
       setTimeout(() => {
         counterElement.classList.remove('counting');
       }, 500);
@@ -474,55 +532,87 @@
       return count;
     }
     
-    // ================== MAIN LOGIC ==================
-    // Jab bhi page load ho, INSTANT +1
-    
+    // ================== MAIN EXECUTION ==================
     window.addEventListener('load', function() {
       createHearts();
       
-      // 1. Pehle current count lo
-      const currentCount = getCurrentCount();
+      // 1. First, display current permanent count
+      const currentCount = getPermanentCount();
+      updateDisplay(currentCount);
       
-      // 2. DIRECT +1 KARO (koi condition nahi)
-      const newCount = currentCount + 1;
+      // 2. Then, increment and save NEW count
+      const newCount = incrementAndSave();
       
-      // 3. Save karo
-      localStorage.setItem('galgotias_counter', newCount.toString());
+      // 3. Update display with new count
+      setTimeout(() => {
+        updateDisplay(newCount);
+      }, 300);
       
-      // 4. Display update karo
-      updateDisplay(newCount);
-      
-      // Console message
-      console.log(`⚡ LIVE INCREMENT: ${currentCount} → ${newCount}`);
-      console.log(`🔁 Refresh karo, phir +1 hoga: ${newCount + 1}`);
+      // Console logs for debugging
+      console.log('🎯 PERMANENT COUNTER SYSTEM ACTIVE');
+      console.log(`📊 Current: ${currentCount}, New: ${newCount}`);
+      console.log('💾 Data saved in localStorage and cookies');
+      console.log('🔄 Refresh karo - counter permanent rahega');
       
       // Real-time simulation (optional)
-      // Har 10 seconds baad check karo agar koi aur user submit kare
+      // Har 15 seconds mein 25% chance ki "kisi aur ne" confession submit kiya
       setInterval(() => {
-        // 20% chance har 10 seconds mein
-        if (Math.random() < 0.2) {
-          const simulatedCount = parseInt(localStorage.getItem('galgotias_counter')) + 1;
-          localStorage.setItem('galgotias_counter', simulatedCount.toString());
-          updateDisplay(simulatedCount);
-          console.log(`🤖 Simulated user: ${simulatedCount}`);
+        if (Math.random() < 0.25) {
+          const simulatedCurrent = getPermanentCount();
+          const simulatedNew = simulatedCurrent + 1;
+          savePermanentCount(simulatedNew);
+          updateDisplay(simulatedNew);
+          console.log(`🤖 Simulated user confession: ${simulatedNew}`);
         }
-      }, 10000);
+      }, 15000);
+      
+      // Backup: Periodically save to multiple storage methods
+      setInterval(() => {
+        const current = getPermanentCount();
+        // Extra backup: IndexedDB ya sessionStorage
+        sessionStorage.setItem('counter_backup', current.toString());
+      }, 30000);
     });
     
-    // Extra: Button click pe bhi increment (for testing)
+    // Extra: Manual increment with '+' key
     document.addEventListener('keydown', function(e) {
       if (e.key === '+' || e.key === '=') {
-        const currentCount = parseInt(localStorage.getItem('galgotias_counter'));
-        const newCount = currentCount + 1;
-        localStorage.setItem('galgotias_counter', newCount.toString());
+        const newCount = incrementAndSave();
         updateDisplay(newCount);
         console.log(`➕ Manual increment: ${newCount}`);
       }
+      
+      // Reset to 130 with '0' key (admin only)
+      if (e.key === '0' && e.ctrlKey) {
+        if (confirm('Reset counter to 130?')) {
+          savePermanentCount(130);
+          updateDisplay(130);
+          console.log('🔄 Counter reset to 130');
+        }
+      }
     });
     
-    // Show current count on console when page loads
-    console.log('🎯 Galgotias Confessions - Live Counter Active');
-    console.log('📊 Har baar page open hote hi +1 increment hoga');
+    // Show backup count from cookies on load
+    function getCookieCount() {
+      const cookies = document.cookie.split(';');
+      for (let cookie of cookies) {
+        const [name, value] = cookie.trim().split('=');
+        if (name === 'galgotias_counter') {
+          return parseInt(value) || 130;
+        }
+      }
+      return null;
+    }
+    
+    // Check if cookies have different count (for backup restore)
+    const cookieCount = getCookieCount();
+    if (cookieCount) {
+      const localStorageCount = getPermanentCount();
+      if (cookieCount > localStorageCount) {
+        console.log(`🔄 Restoring from cookies: ${localStorageCount} → ${cookieCount}`);
+        savePermanentCount(cookieCount);
+      }
+    }
   </script>
 </body>
 </html>
