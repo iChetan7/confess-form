@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thank You | Galgotias Confessions</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
   <style>
     * {
       margin: 0;
@@ -144,7 +141,8 @@
       margin: 0 auto;
     }
     
-    .counter-container {
+    /* Simple Stats Section */
+    .stats-section {
       text-align: center;
       margin: 30px 0;
       padding: 20px;
@@ -153,20 +151,26 @@
       border: 2px dashed rgba(74, 111, 165, 0.2);
     }
     
-    .counter-number {
-      font-size: 48px;
-      font-weight: 800;
-      color: #2d6a4f;
-      margin: 10px 0;
-      transition: all 0.3s ease;
-    }
-    
-    .counter-label {
+    .stats-title {
       font-size: 14px;
       color: #4a6fa5;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+    
+    .stats-number {
+      font-size: 48px;
+      font-weight: 800;
+      color: #2d6a4f;
+      margin: 10px 0;
+    }
+    
+    .stats-subtitle {
+      font-size: 14px;
+      color: #4a6fa5;
+      font-weight: 600;
     }
     
     .social-section {
@@ -267,35 +271,6 @@
       color: #4a6fa5;
     }
     
-    @keyframes countUp {
-      0% { transform: scale(1); color: #2d6a4f; }
-      50% { transform: scale(1.1); color: #4a6fa5; }
-      100% { transform: scale(1); color: #2d6a4f; }
-    }
-    
-    .counting {
-      animation: countUp 0.5s ease-out;
-    }
-    
-    .status-indicator {
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      margin-left: 10px;
-      background: #ccc;
-      animation: pulse 1.5s infinite;
-    }
-    
-    .status-connected { background: #10b981; }
-    .status-connecting { background: #f59e0b; }
-    .status-disconnected { background: #ef4444; }
-    
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
-    
     @media (max-width: 600px) {
       .card { padding: 30px 25px; }
       .title { font-size: 24px; }
@@ -304,7 +279,7 @@
       .social-card { padding: 20px; }
       .social-btn { padding: 12px; font-size: 15px; }
       .handle { font-size: 16px; padding: 10px 20px; }
-      .counter-number { font-size: 40px; }
+      .stats-number { font-size: 40px; }
     }
   </style>
 </head>
@@ -324,13 +299,11 @@
           We respect your privacy. Your message has been received securely and will remain anonymous.
         </p>
         
-        <div class="counter-container">
-          <div class="counter-label">
-            Total Confessions 
-            <span class="status-indicator" id="statusIndicator"></span>
-          </div>
-          <div class="counter-number" id="confessionCounter">...</div>
-          <div class="counter-label" id="counterSubtitle">Connecting to cloud...</div>
+        <!-- Simple Stats Section - सिर्फ "150+" टेक्स्ट -->
+        <div class="stats-section">
+          <div class="stats-title">Total Confessions</div>
+          <div class="stats-number">150+</div>
+          <div class="stats-subtitle">And Counting...</div>
         </div>
       </div>
         
@@ -351,223 +324,30 @@
           <i class="fas fa-at"></i> 
           <span class="instagram-handle">@galgotians.confession</span>
         </div>
-        <p style="font-size: 12px; color: #888; margin-top: 10px;">
-          <i class="fas fa-cloud"></i> Cloud Counter • Live Updates
-        </p>
       </div>
     </div>
   </div>
   
   <script>
-    // ================== FIREBASE CONFIGURATION ==================
-    // Aapko yeh config apne Firebase project se mil jayega
-    const firebaseConfig = {
-      apiKey: "AIzaSyC_your_api_key_here",
-      authDomain: "galgotias-confessions.firebaseapp.com",
-      databaseURL: "https://galgotias-confessions-default-rtdb.firebaseio.com",
-      projectId: "galgotias-confessions",
-      storageBucket: "galgotias-confessions.appspot.com",
-      messagingSenderId: "123456789012",
-      appId: "1:123456789012:web:abcdef1234567890"
-    };
-    
-    // Initialize Firebase
-    let db;
-    try {
-      firebase.initializeApp(firebaseConfig);
-      db = firebase.database();
-      console.log('✅ Firebase connected successfully');
-      updateStatus('connected');
-    } catch (error) {
-      console.error('❌ Firebase initialization error:', error);
-      updateStatus('disconnected');
-    }
-    
-    // Status indicator update
-    function updateStatus(status) {
-      const indicator = document.getElementById('statusIndicator');
-      indicator.className = 'status-indicator status-' + status;
+    // Create floating hearts
+    function createHearts() {
+      const heartsContainer = document.getElementById('heartsContainer');
+      const heartColors = ['#ff6b6b', '#4a6fa5', '#ff9e6b', '#6b8fc5', '#e1306c', '#2d6a4f'];
       
-      const subtitle = document.getElementById('counterSubtitle');
-      switch(status) {
-        case 'connected':
-          subtitle.textContent = 'Live Cloud Counter';
-          break;
-        case 'connecting':
-          subtitle.textContent = 'Connecting...';
-          break;
-        case 'disconnected':
-          subtitle.textContent = 'Offline Mode';
-          break;
+      for (let i = 0; i < 25; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerHTML = '<i class="fas fa-heart"></i>';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (Math.random() * 10 + 8) + 's';
+        heart.style.animationDelay = Math.random() * 5 + 's';
+        heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+        heart.style.color = heartColors[Math.floor(Math.random() * heartColors.length)];
+        heartsContainer.appendChild(heart);
       }
     }
     
-    // Update display
-    function updateDisplay(count) {
-      const counterElement = document.getElementById('confessionCounter');
-      counterElement.textContent = count;
-      counterElement.classList.add('counting');
-      
-      document.title = `Confession #${count} Received | Galgotias Confessions`;
-      
-      setTimeout(() => {
-        counterElement.classList.remove('counting');
-      }, 500);
-      
-      console.log(`📊 Display updated: ${count}`);
-    }
-    
-    // Cloud counter functions
-    async function getCloudCount() {
-      try {
-        if (!db) throw new Error('Firebase not initialized');
-        
-        const snapshot = await db.ref('confessionCount').once('value');
-        let count = snapshot.val();
-        
-        if (count === null || count === undefined) {
-          count = 130; // Default starting value
-          await db.ref('confessionCount').set(count);
-          console.log('🆕 Initialized cloud counter with 130');
-        }
-        
-        return count;
-      } catch (error) {
-        console.error('❌ Error getting cloud count:', error);
-        // Fallback to localStorage
-        const localCount = localStorage.getItem('galgotias_counter_backup');
-        return localCount ? parseInt(localCount) : 130;
-      }
-    }
-    
-    async function incrementCloudCount() {
-      try {
-        if (!db) throw new Error('Firebase not initialized');
-        
-        // Get current count from cloud
-        const currentCount = await getCloudCount();
-        const newCount = currentCount + 1;
-        
-        // Update in cloud
-        await db.ref('confessionCount').set(newCount);
-        
-        // Also backup locally
-        localStorage.setItem('galgotias_counter_backup', newCount.toString());
-        localStorage.setItem('galgotias_last_sync', Date.now().toString());
-        
-        console.log(`☁️ Cloud counter incremented: ${currentCount} → ${newCount}`);
-        return newCount;
-      } catch (error) {
-        console.error('❌ Error incrementing cloud count:', error);
-        
-        // Fallback: Use local storage
-        let localCount = localStorage.getItem('galgotias_counter_backup');
-        localCount = localCount ? parseInt(localCount) : 130;
-        const newLocalCount = localCount + 1;
-        localStorage.setItem('galgotias_counter_backup', newLocalCount.toString());
-        
-        console.log(`📱 Local fallback: ${localCount} → ${newLocalCount}`);
-        return newLocalCount;
-      }
-    }
-    
-    // Real-time listener for counter updates
-    function setupRealtimeListener() {
-      if (!db) return;
-      
-      try {
-        db.ref('confessionCount').on('value', (snapshot) => {
-          const count = snapshot.val();
-          if (count !== null) {
-            updateDisplay(count);
-            // Backup locally
-            localStorage.setItem('galgotias_counter_backup', count.toString());
-            
-            // If multiple users are on the page, show real-time update
-            const counterElement = document.getElementById('confessionCounter');
-            if (parseInt(counterElement.textContent) !== count) {
-              console.log(`🔄 Real-time update: ${counterElement.textContent} → ${count}`);
-            }
-          }
-        });
-        
-        console.log('👂 Real-time listener active');
-      } catch (error) {
-        console.error('❌ Error setting up real-time listener:', error);
-      }
-    }
-    
-    // Main execution
-    window.addEventListener('load', async function() {
-      createHearts();
-      updateStatus('connecting');
-      
-      try {
-        // 1. First display current count
-        const currentCount = await getCloudCount();
-        updateDisplay(currentCount);
-        
-        // 2. Then increment (after a short delay for better UX)
-        setTimeout(async () => {
-          const newCount = await incrementCloudCount();
-          updateDisplay(newCount);
-          updateStatus('connected');
-        }, 800);
-        
-        // 3. Setup real-time updates
-        setupRealtimeListener();
-        
-      } catch (error) {
-        console.error('❌ Main execution error:', error);
-        updateStatus('disconnected');
-        
-        // Fallback to local
-        let localCount = localStorage.getItem('galgotias_counter_backup') || '130';
-        updateDisplay(parseInt(localCount));
-        
-        // Still increment locally
-        const newLocalCount = parseInt(localCount) + 1;
-        localStorage.setItem('galgotias_counter_backup', newLocalCount.toString());
-        setTimeout(() => updateDisplay(newLocalCount), 800);
-      }
-      
-      // Simulate other users (optional)
-      setInterval(async () => {
-        if (Math.random() < 0.15) { // 15% chance every 20 seconds
-          try {
-            const current = await getCloudCount();
-            const simulated = current + 1;
-            await db.ref('confessionCount').set(simulated);
-            console.log(`🤖 Simulated user confession: ${simulated}`);
-          } catch (error) {
-            // Silent fail for simulations
-          }
-        }
-      }, 20000);
-    });
-    
-    // Manual override for testing
-    document.addEventListener('keydown', async function(e) {
-      if (e.key === '+' && e.ctrlKey) {
-        const newCount = await incrementCloudCount();
-        updateDisplay(newCount);
-        console.log(`➕ Manual cloud increment: ${newCount}`);
-      }
-      
-      if (e.key === '0' && e.ctrlKey && e.shiftKey) {
-        if (confirm('Reset cloud counter to 130?')) {
-          try {
-            await db.ref('confessionCount').set(130);
-            updateDisplay(130);
-            console.log('🔄 Cloud counter reset to 130');
-          } catch (error) {
-            console.error('Reset failed:', error);
-          }
-        }
-      }
-    });
-    
-    // Icon transformation (same as before)
+    // Icon transformation
     const iconContainer = document.getElementById('iconContainer');
     const mainIcon = document.getElementById('mainIcon');
     
@@ -614,23 +394,15 @@
       }, 300);
     });
     
-    // Create floating hearts
-    function createHearts() {
-      const heartsContainer = document.getElementById('heartsContainer');
-      const heartColors = ['#ff6b6b', '#4a6fa5', '#ff9e6b', '#6b8fc5', '#e1306c', '#2d6a4f'];
+    // Initialize
+    window.addEventListener('load', function() {
+      createHearts();
       
-      for (let i = 0; i < 25; i++) {
-        const heart = document.createElement('div');
-        heart.classList.add('heart');
-        heart.innerHTML = '<i class="fas fa-heart"></i>';
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.animationDuration = (Math.random() * 10 + 8) + 's';
-        heart.style.animationDelay = Math.random() * 5 + 's';
-        heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
-        heart.style.color = heartColors[Math.floor(Math.random() * heartColors.length)];
-        heartsContainer.appendChild(heart);
-      }
-    }
+      // सिर्फ एक सरल लॉग
+      console.log('🙏 Thank you for your confession!');
+      console.log('📊 Total confessions: 150+');
+      console.log('📱 Follow: @galgotians.confession');
+    });
   </script>
 </body>
 </html>
